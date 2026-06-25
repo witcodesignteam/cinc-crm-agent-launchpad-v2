@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Log — CINC Agent Launchpad</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      padding: 40px 24px;
+    }
+
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .page-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: #29abe2;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1a1f2e;
+    }
+
+    .page-subtitle {
+      font-size: 13px;
+      color: #8892a4;
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a8bbf;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-back:hover { text-decoration: underline; }
+
+    .btn-back svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .btn-clear {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e63946;
+      background: none;
+      border: 1.5px solid #e63946;
+      border-radius: 8px;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    .btn-clear:hover {
+      background: #fef2f2;
+    }
+
+    .count-bar {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8892a4;
+      margin-bottom: 14px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      color: #8892a4;
+    }
+
+    .empty-state svg {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 14px;
+      color: #c8d0dc;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .feedback-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      margin-bottom: 14px;
+    }
+
+    .feedback-card:last-child { margin-bottom: 0; }
+
+    .feedback-card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .feedback-card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1f2e;
+    }
+
+    .feedback-card-time {
+      font-size: 12px;
+      color: #8892a4;
+    }
+
+    .feedback-card-message {
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirm-overlay.open { display: flex; }
+
+    .confirm-modal {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px;
+      width: 360px;
+      max-width: 92vw;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      text-align: center;
+    }
+
+    .confirm-modal h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1f2e;
+      margin-bottom: 10px;
+    }
+
+    .confirm-modal p {
+      font-size: 13px;
+      color: #4a5568;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .confirm-modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .confirm-cancel {
+      padding: 9px 24px;
+      background: none;
+      border: 1.5px solid #d0d7e2;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4a5568;
+      cursor: pointer;
+    }
+
+    .confirm-cancel:hover { border-color: #8892a4; }
+
+    .confirm-delete {
+      padding: 9px 24px;
+      background: #e63946;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .confirm-delete:hover { background: #c0303b; }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="page-title">Feedback Log</div>
+          <div class="page-subtitle">CINC Agent Launchpad</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn-back" href="cinc-launchpad.html">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to Launchpad
+        </a>
+      </div>
+    </div>
+
+    <div class="count-bar" id="count-bar"></div>
+    <div id="feedback-list"></div>
+  </div>
+
+  <!-- Clear confirmation modal -->
+  <div class="confirm-overlay" id="confirm-overlay" onclick="if(event.target===this) closeConfirm()">
+    <div class="confirm-modal">
+      <h3>Clear all feedback?</h3>
+      <p>This will permanently delete all submitted feedback entries. This cannot be undone.</p>
+      <div class="confirm-modal-actions">
+        <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
+        <button class="confirm-delete" onclick="clearAll()">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function formatDate(iso) {
+      const d = new Date(iso);
+      const date = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      return date + ' at ' + time;
+    }
+
+    function render() {
+      const entries = JSON.parse(localStorage.getItem('launchpad-feedback') || '[]');
+      const list = document.getElementById('feedback-list');
+      const countBar = document.getElementById('count-bar');
+
+      countBar.textContent = entries.length === 0
+        ? 'No entries'
+        : entries.length === 1 ? '1 entry' : entries.length + ' entries';
+
+      if (entries.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <p>No feedback has been submitted yet.<br>Entries will appear here once agents send feedback.</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = entries.map(e => `
+        <div class="feedback-card">
+          <div class="feedback-card-header">
+            <span class="feedback-card-name">${escapeHtml(e.name)}</span>
+            <span class="feedback-card-time">${formatDate(e.timestamp)}</span>
+          </div>
+          <div class="feedback-card-message">${escapeHtml(e.message)}</div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function promptClear() {
+      document.getElementById('confirm-overlay').classList.add('open');
+    }
+
+    function closeConfirm() {
+      document.getElementById('confirm-overlay').classList.remove('open');
+    }
+
+    function clearAll() {
+      localStorage.removeItem('launchpad-feedback');
+      closeConfirm();
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINC Playbook</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      padding: 32px;
+      color: #1a1f2e;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      color: #1a1f2e;
+    }
+
+    /* ── Card ── */
+    .playbook-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      border: 1px solid #e2e6ea;
+    }
+
+    .card-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1f2e;
+      margin-bottom: 16px;
+    }
+
+    /* ── Workflow steps ── */
+    .workflow {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .workflow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #29abe2;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(41,171,226,0.3);
+    }
+
+    .step-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d3748;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .workflow-arrow {
+      flex-shrink: 0;
+      color: #b0bec5;
+      margin-bottom: 22px;
+    }
+
+    .workflow-arrow svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ── Second card tabs ── */
+    .playbook-card + .playbook-card {
+      margin-top: 20px;
+    }
+
+    .pb-tabs {
+      display: flex;
+      border-bottom: 1px solid #e8ecf0;
+      margin: -24px -28px 24px -28px;
+      padding: 0 28px;
+    }
+
+    .pb-tab {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #8892a4;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .pb-tab.active {
+      color: #1a8bbf;
+      border-bottom: 2px solid #1a8bbf;
+    }
+
+    .pb-tab:hover:not(.active) {
+      color: #4a5568;
+    }
+
+    .pb-panel {
+      display: none;
+    }
+
+    .pb-panel.active {
+      display: block;
+    }
+
+    /* ── Text & Email Guide ── */
+    .guide-intro {
+      font-size: 13.5px;
+      color: #4a5568;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .guide-card {
+      border: 1px solid #e2e6ea;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+
+    .guide-card-heading {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1f2e;
+      margin-bottom: 8px;
+    }
+
+    .guide-card-heading.uppercase {
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .guide-card-body {
+      font-size: 13.5px;
+      color: #4a5568;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .guide-italic {
+      font-style: italic;
+    }
+
+    .guide-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #d97706;
+      line-height: 1.4;
+    }
+
+    .guide-warning svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: #d97706;
+    }
+
+    .guide-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0e7490;
+      line-height: 1.4;
+    }
+
+    /* ── Step cards (Bad Data) ── */
+    .step-card {
+      border: 1px solid #e2e6ea;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+
+    .step-card-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0e7490;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1f2e;
+    }
+
+    .step-body {
+      font-size: 13.5px;
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    /* ── Objection cards ── */
+    .objection-card {
+      border: 1px solid #e2e6ea;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+
+    .objection-heading {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #b45309;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .objection-response {
+      font-size: 13.5px;
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    .guide-tip svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: #0e7490;
+    }
+
+    /* ── Follow Up Frequency ── */
+    .followup-freq {
+      border-top: 1px solid #edf0f4;
+      padding-top: 16px;
+    }
+
+    .followup-freq-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1f2e;
+      margin-bottom: 12px;
+    }
+
+    .freq-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .freq-card {
+      border-radius: 8px;
+      padding: 12px 14px;
+      border-left: 4px solid;
+    }
+
+    .freq-card.red,
+    .freq-card.amber,
+    .freq-card.olive,
+    .freq-card.teal  { background: #f0fdfe; border-color: #d0d7e2; }
+
+    .freq-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .freq-card.red   .freq-label,
+    .freq-card.amber .freq-label,
+    .freq-card.olive .freq-label,
+    .freq-card.teal  .freq-label { color: #0e7490; }
+
+    .freq-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1f2e;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CINC Playbook</h1>
+
+  <div class="playbook-card">
+    <div class="card-heading">Got a Conversation? Do These 5 Things:</div>
+
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">1</div>
+        <div class="step-label">Update<br>Pipeline</div>
+      </div>
+      <div class="workflow-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">2</div>
+        <div class="step-label">Add Pinned<br>Note</div>
+      </div>
+      <div class="workflow-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">3</div>
+        <div class="step-label">Update<br>Search</div>
+      </div>
+      <div class="workflow-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">4</div>
+        <div class="step-label">Set Follow Up<br>Reminder</div>
+      </div>
+      <div class="workflow-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">5</div>
+        <div class="step-label">Mute<br>Alex AI</div>
+      </div>
+    </div>
+
+    <div class="followup-freq">
+      <div class="followup-freq-title">How Often to Follow Up After Contact</div>
+      <div class="freq-grid">
+        <div class="freq-card red">
+          <div class="freq-label">0–3 Months</div>
+          <div class="freq-value">Every 0–7 days</div>
+        </div>
+        <div class="freq-card amber">
+          <div class="freq-label">3–6 Months</div>
+          <div class="freq-value">Every 7–14 days</div>
+        </div>
+        <div class="freq-card olive">
+          <div class="freq-label">6–12 Months</div>
+          <div class="freq-value">Every 14–21 days</div>
+        </div>
+        <div class="freq-card teal">
+          <div class="freq-label">12+ Months</div>
+          <div class="freq-value">Every 21–28 days</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="playbook-card">
+    <div class="pb-tabs">
+      <div class="pb-tab active" onclick="switchPbTab(this, 'text-email')">Text &amp; Email Guide</div>
+      <div class="pb-tab" onclick="switchPbTab(this, 'buyer-scripts')">Buyer Scripts</div>
+      <div class="pb-tab" onclick="switchPbTab(this, 'seller-scripts')">Seller Scripts</div>
+      <div class="pb-tab" onclick="switchPbTab(this, 'objections')">Objections</div>
+      <div class="pb-tab" onclick="switchPbTab(this, 'bad-data')">Bad Data</div>
+    </div>
+
+    <div class="pb-panel active" id="pb-text-email">
+      <p class="guide-intro">Texting and email are <strong>supplemental</strong> — never a replacement for a call. Use them to stay in the conversation when you can't get a live answer.</p>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">WHEN TO TEXT</div>
+        <p class="guide-card-body">Text after 2 unanswered dials on the same lead in the same session. Keep it short, curious, and low-pressure — the goal is to get a reply that moves you to a call.</p>
+        <div class="guide-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Never leave a voicemail AND send a text at the same time. Pick one.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">TEXT TEMPLATE — ATTEMPTED CONTACT (2+ DIALS, NO ANSWER)</div>
+        <p class="guide-card-body guide-italic">"Hey [FIRST NAME], this is [YOUR NAME] with the home search site. Tried calling a couple times — texting in case that's easier. Still looking? Happy to help, no pressure."</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">TEXT TEMPLATE — NEW LEAD (CAN'T REACH BY PHONE)</div>
+        <p class="guide-card-body guide-italic">"Hi [FIRST NAME], [YOUR NAME] here. Just saw you registered — exciting! I have some great options for what you're looking for. When's a good time to connect for a quick chat?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">TEXT TEMPLATE — TRENDING LEAD (ON SITE / HIGH ACTIVITY)</div>
+        <p class="guide-card-body guide-italic">"Hey [FIRST NAME], [YOUR NAME] here. Noticed you've been active on the site — looks like something caught your eye! Anything specific I can pull together for you?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">EMAIL — WHEN TO USE IT</div>
+        <p class="guide-card-body">Email works best for: sending a promised resource (lender list, market report, saved search), following up after a live conversation, or nurturing long-timeline leads (6+ months out). Don't use email as your first outreach on a fresh lead.</p>
+        <div class="guide-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          All Contacted leads should have a follow-up reminder set — email alone doesn't count as a follow-up.
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-panel" id="pb-buyer-scripts">
+
+      <p class="guide-intro">30% contacted-to-appointment ratio with CINC scripting · $10K potential commission per hour of calling</p>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 1 &nbsp;</span>Opening Line</div>
+        <p class="guide-card-body">The one sentence that starts every CINC call — memorize it.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Hey, this is [YOUR NAME] with the home search site. I noticed you were looking at some homes in [FAVORITE CITY], just curious, are you looking to make a move in the next few months or are you just browsing?"</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          DON'T say their name. DON'T ask "How are you doing". DON'T say you're a real estate agent right away. Avoid yes/no questions.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 2 &nbsp;</span>Get the 5 W's</div>
+        <p class="guide-card-body">Uncover what matters — Who, What, Where, When, Why.</p>
+        <p class="guide-card-body" style="margin-top:8px;">Who are they? · What do they want in a home? · Where are they looking? · When are they looking to move? · Why are they wanting to move?</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Tell me more about your current situation?" · "What else?" · "Why is that important for you?" · "What would that mean for your family?"</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          If they aren't opening up — use A/B questions: "3 or 4 bedrooms? Home or condo?"
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 3 &nbsp;</span>Set the Appointment</div>
+        <p class="guide-card-body">Close to an in-person meeting using their own answers.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Let me ask you this — if I could find you that [WHAT] that would get you [WHY], would you consider moving sooner?"</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">Example: "If I could find you that 4 bed, 3 bath near the highway that gets you closer to your parent's house, would you consider moving sooner?"</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Use everything you learned in the 5 W's. This is how you set the appointment.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pb-panel" id="pb-seller-scripts">
+
+      <p class="guide-intro">30% contacted-to-appointment ratio with CINC scripting · $10K potential commission per hour of calling</p>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 1 &nbsp;</span>Get to the Why</div>
+        <p class="guide-card-body">Uncover their motivation for selling.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Hi, this is [AGENT NAME] with the home search site! I saw that you were looking to get the estimated value of your house. Why are you looking to sell?"</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">OR: "What is prompting your move?" · OR: "Why are you moving?"</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Learn their WHY behind needing to sell — uncover challenges and position yourself as their best resource.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 2 &nbsp;</span>No Listing Address? (Approach 1)</div>
+        <p class="guide-card-body">When their address didn't come through.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Hi, this is [AGENT NAME] with the home search site. I saw you were looking to get a value of your house, but I couldn't get that information pushed over into my system. I do have multiple buyers in the area looking to purchase right now — what is the address of your house?"</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">Follow up: "What prompted you to start thinking about selling your house?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 3 &nbsp;</span>"Just curious about value / not ready to sell"</div>
+        <p class="guide-card-body">Reframe curiosity into a CMA opportunity.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"That's great — 75% of my clients say the same thing when we first speak. Since you're seeking info on the value of your home, let me tell you why a CMA by a professional realtor is much more valuable than the info you get from a website analysis."</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 4 &nbsp;</span>Seller Objection: "I want to try selling it myself (FSBO)"</div>
+        <p class="guide-card-body">Don't argue — reframe around their priority.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"I totally respect that — a lot of sellers start there. Can I ask: what's most important to you in the process — getting the highest price, the fastest close, or the least hassle?" PAUSE and listen. Then: "The reason I ask is — most FSBO sellers end up netting less after factoring in buyer agent commissions, marketing costs, and negotiation gaps. I'd love to show you what a professional sale looks like for your specific home. No pressure, just data."</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Don't argue. Get their WHY first, then reframe around their priority.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 5 &nbsp;</span>Seller Objection: "I need to talk to my spouse / partner first"</div>
+        <p class="guide-card-body">Get the second person on the next call.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Absolutely — this is a big decision and it makes total sense to align together. When would be a good time to do a quick 15-minute call with both of you? I can walk through the numbers and answer any questions you both have — no obligation, just information so you can make the best decision together."</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Always try to get the second person on the next call — never let it become a one-sided phone tag loop.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 6 &nbsp;</span>Circle Prospecting Script</div>
+        <p class="guide-card-body">For calling neighbors of listings or recent sales.</p>
+        <p class="guide-card-body guide-italic" style="margin-top:8px;">"Hi, this is [AGENT NAME] with the home search site. Just wondering — I have ready-to-go buyers (or super hot buyers) in your area. Do you know anyone looking to sell?"</p>
+        <div class="guide-tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Use this when calling neighbors of a listing or recent sale. Short, low-pressure, referral-framed.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pb-panel" id="pb-objections">
+
+      <div class="guide-card">
+        <div class="guide-card-heading">"I am just browsing."</div>
+        <p class="guide-card-body">"Just looking, great! That's exactly what the site is for. So, tell me, are you thinking 3 bedrooms or 4?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">"I already have a realtor."</div>
+        <p class="guide-card-body">"I totally get it! If I were to find you a home that checked all the boxes, but wasn't on the market yet, would you want me to send them to you?" &rarr; LEAD: "Sure" &rarr; "Perfect, so I don't send you a bunch of useless emails — what are those boxes?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">"I'm looking for my friend / family member."</div>
+        <p class="guide-card-body">"Wow, what a nice thing to do! Does your friend already live in town, or are they relocating here?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">"Interest rates are too high."</div>
+        <p class="guide-card-body">"I totally get it. Let's do this — let's put the interest rate going up or down to the side." PAUSE and with curiosity ask: "What has you looking in the first place?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">"Just email me."</div>
+        <p class="guide-card-body">"I'll set your search up so homes you're interested in get emailed to you. I want to make sure they fit what you're looking for though. So, are you just interested in [CITY], or are you open to other areas as well?"</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading">"I'm already pre-qualified / have a lender."</div>
+        <p class="guide-card-body">"That is great! Just so we can confirm you're getting the best rate and service, we'll have our lending partner reach out. No obligation — they just have a proven track record that we respect."</p>
+      </div>
+
+    </div>
+
+    <div class="pb-panel" id="pb-bad-data">
+
+      <p class="guide-intro">Bad phone numbers happen. Here's the standard workflow so your pipeline stays clean and your dial counts stay accurate.</p>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 1 &nbsp;</span>Confirm it's Bad Data</div>
+        <p class="guide-card-body">Dial at least twice. If both attempts return a disconnected/invalid signal (not just no answer), proceed. A lead that doesn't answer is NOT bad data — keep dialing per the 6-dial minimum rule.</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 2 &nbsp;</span>Try a Text First</div>
+        <p class="step-body guide-italic">"Hi [FIRST NAME], [YOUR NAME] here from the home search site. I've been trying to reach you by phone — if there's a better number, reply here and I'll give you a call!"</p>
+        <div class="guide-tip" style="margin-top:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Sometimes bad-number dials still deliver texts. Worth one attempt.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 3 &nbsp;</span>Mark as Invalid &amp; Add a Note</div>
+        <p class="guide-card-body">In CINC, add a pinned note: "Phone number invalid as of [DATE] — confirmed disconnected after 2 dial attempts + text." Do not advance the pipeline stage. The lead stays in its current stage.</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 4 &nbsp;</span>Email Attempt</div>
+        <p class="guide-card-body">If an email address is on file, send one short email: "Hi [FIRST NAME] — I've been trying to reach you by phone but it doesn't seem to be connecting. Is there a better number I can use to help with your home search?" Do not spam — one email attempt only.</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-heading uppercase"><span class="step-label">Step 5 &nbsp;</span>Set a 30-Day Re-check Reminder</div>
+        <p class="guide-card-body">Set a reminder to check back in 30 days. Leads sometimes update their info or log back in. If there's still no valid contact info after 30 days, you can deprioritize the lead — but do not delete it.</p>
+        <div class="guide-tip" style="margin-top:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          DO NOT set reminders on New Leads or Attempted Contacts — only on Contacted leads and beyond.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function switchPbTab(tabEl, panelId) {
+      document.querySelectorAll('.pb-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pb-panel').forEach(p => p.classList.remove('active'));
+      tabEl.classList.add('active');
+      document.getElementById('pb-' + panelId).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

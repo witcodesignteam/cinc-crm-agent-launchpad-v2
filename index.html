@@ -1465,35 +1465,23 @@
       border-bottom: 3px solid #1a8bbf;
     }
 
-    .dmp-step-num {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-      flex-shrink: 0;
-      background: #e8ecf0;
-      color: #8892a4;
+    .dmp-step {
+      background: #e8f4fb;
     }
 
-    .dmp-step.active .dmp-step-num {
-      background: #1a8bbf;
-      color: #fff;
+    .dmp-step.active {
+      background: #ffffff;
     }
 
     .dmp-step-info strong {
-      font-size: 13.5px;
+      font-size: 24px;
       font-weight: 700;
-      color: #1a1f2e;
+      color: #4a7a9b;
       display: block;
     }
 
-    .dmp-step-info span {
-      font-size: 12px;
-      color: #8892a4;
+    .dmp-step.active .dmp-step-info strong {
+      color: #1a1f2e;
     }
 
     .dmp-step-badge {
@@ -1509,12 +1497,6 @@
     .badge-orange { background: #fef3e2; color: #d97706; }
     .badge-teal   { background: #e2f5eb; color: #27ae60; border: 1.5px solid #27ae60; }
 
-    .dmp-step-arrow {
-      color: #c8d0dc;
-      font-size: 16px;
-      padding: 0 4px;
-      align-self: center;
-    }
 
     /* Body */
     .dmp-body {
@@ -3085,10 +3067,10 @@
           </div>
 
           <!-- Dials widget -->
-          <div class="dials-widget">
+          <div class="dials-widget" id="dials-widget">
             <div class="dials-header">
               <span class="dials-label">Weekly Dials</span>
-              <button class="dials-update-btn" onclick="openDialsModal()">Update</button>
+              <button class="dials-update-btn" id="dials-update-btn" onclick="handleDialsBtnClick()">Update</button>
             </div>
             <div class="dials-count" id="dials-count-display">28 <span id="dials-goal-display">/ 75</span></div>
             <div class="dials-progress-bar">
@@ -3104,19 +3086,14 @@
           <!-- Step tabs -->
           <div class="dmp-steps">
             <div class="dmp-step active" data-step="1" onclick="switchStep(this)">
-              <div class="dmp-step-num">1</div>
               <div class="dmp-step-info">
                 <strong>DIAL!</strong>
-                <span>Daily Money Play #1</span>
               </div>
               <span class="dmp-step-badge badge-red" id="dial-count"></span>
             </div>
-            <div class="dmp-step-arrow">›</div>
             <div class="dmp-step" data-step="2" onclick="switchStep(this)">
-              <div class="dmp-step-num">2</div>
               <div class="dmp-step-info">
                 <strong>Follow Ups</strong>
-                <span>Daily Money Play #2</span>
               </div>
               <span class="dmp-step-badge badge-orange" id="followups-count">6</span>
             </div>
@@ -3152,7 +3129,7 @@
                 <span class="dmp-filter-group-label">Status</span>
                 <div class="dmp-filter" data-filter="awaiting-response" onclick="toggleFilter(this)">AWAITING RESPONSE</div>
                 <div class="dmp-filter" data-filter="acted-on" onclick="toggleFilter(this)">ACTED ON</div>
-                <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">DISMISSED</div>
+                <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">SILENCED</div>
               </div>
             </div>
 
@@ -3162,6 +3139,7 @@
                 <div class="dmp-filter active" data-filter="p1-new-lead" data-permanent="true" onclick="toggleFilter(this)">NEW LEAD</div>
                 <div class="dmp-filter" data-filter="p1-etta-app" onclick="toggleFilter(this)">ETTA APP</div>
                 <div class="dmp-filter" data-filter="p1-homepulse" onclick="toggleFilter(this)">HOMEPULSE REPORT</div>
+                <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">SILENCED</div>
               </div>
             </div>
 
@@ -3186,7 +3164,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3219,7 +3197,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3243,7 +3221,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3276,7 +3254,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3309,7 +3287,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3342,7 +3320,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3375,7 +3353,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3408,7 +3386,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3432,7 +3410,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3465,7 +3443,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3498,7 +3476,7 @@
                   <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                   <div class="lead-cr-actions-row">
                     <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                    <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </button>
                   </div>
@@ -3541,7 +3519,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3569,7 +3547,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3597,7 +3575,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3625,7 +3603,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3653,7 +3631,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3667,6 +3645,7 @@
             <div class="dmp-filters-pills">
               <div class="dmp-filter active" data-filter="p2-attempted" data-permanent="true" onclick="toggleFilter(this)">PIPELINE: ATTEMPTED CONTACT</div>
               <div class="dmp-filter" data-filter="p2-ai" onclick="toggleFilter(this)">AI CONVERSATIONS</div>
+              <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">SILENCED</div>
             </div>
           </div>
 
@@ -3694,7 +3673,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3722,7 +3701,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3750,7 +3729,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3778,7 +3757,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3906,6 +3885,7 @@
             <div class="dmp-filters-pills">
               <div class="dmp-filter" data-filter="trending-ai" onclick="toggleFilter(this)">AI AGENT READY</div>
               <div class="dmp-filter" data-filter="trending-pond" onclick="toggleFilter(this)">POND LEADS</div>
+              <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">SILENCED</div>
             </div>
             <div class="actions-btn-wrap">
               <button class="actions-btn visible" id="sort-btn-trending" onclick="toggleSortDropdown()">
@@ -3950,7 +3930,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -3978,7 +3958,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -4006,7 +3986,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -4034,7 +4014,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -4062,7 +4042,7 @@
                 <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
                 <div class="lead-cr-actions-row">
                   <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
-                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Dismiss">
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
                 </div>
@@ -4109,7 +4089,7 @@
                   <div class="dmp-filter" data-fu-filter="fu-call" onclick="toggleFuFilter(this)">CALL</div>
                   <div class="dmp-filter" data-fu-filter="fu-email" onclick="toggleFuFilter(this)">EMAIL</div>
                   <div class="dmp-filter" data-fu-filter="fu-other" onclick="toggleFuFilter(this)">OTHER</div>
-                  <div class="dmp-filter" data-fu-filter="fu-dismissed" onclick="toggleFuFilter(this)">DISMISSED</div>
+                  <div class="dmp-filter" data-fu-filter="fu-dismissed" onclick="toggleFuFilter(this)">SILENCED</div>
                 </div>
               </div>
 
@@ -4204,7 +4184,11 @@
             <!-- Needs Reminders sub-panel -->
             <div id="fu-reminders-panel" style="display:none;">
 
-
+              <div class="dmp-filters-row" style="margin: 0; padding: 10px 20px;">
+                <div class="dmp-filters-pills">
+                  <div class="dmp-filter" data-fu-reminders-filter="fu-reminders-dismissed" onclick="toggleRemindersFilter(this)">SILENCED</div>
+                </div>
+              </div>
 
               <div class="followup-row border-overdue" data-fu-type="fu-call">
                 <div class="followup-main">
@@ -4444,8 +4428,8 @@
         </button>
         <button class="update-task-option dismiss" onclick="resolveTask('dismiss')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-          Dismiss
-          <span class="update-task-option-sub">Remove from your list</span>
+          Silence
+          <span class="update-task-option-sub">Silence until tomorrow</span>
         </button>
       </div>
     </div>
@@ -4486,7 +4470,7 @@
       </div>
       <div class="connected-modal-footer">
         <button class="connected-save-btn" id="connected-save-btn" onclick="saveConnected()" disabled>Save</button>
-        <button class="connected-dismiss-btn" onclick="dismissFromModal()">Dismiss Reminder</button>
+        <button class="connected-dismiss-btn" onclick="dismissFromModal()">Silence Reminder</button>
       </div>
     </div>
   </div>
@@ -4649,6 +4633,7 @@
       dial1Panel.style.display = 'none';
       followupsPanel.style.display = 'block';
       showMoreBtn.style.display = 'none';
+      switchFollowupsTab(document.querySelector('#followups-tabs .dmp-tab[data-fu-tab="overdue"]'));
     } else {
       dial1Panel.style.display = 'block';
       followupsPanel.style.display = 'none';
@@ -4736,8 +4721,13 @@
   }
 
   function rowMatchesFilters(row) {
-    if (activeFilters.size === 0) return true;
     const rowFilters = (row.dataset.filters || '').split(' ');
+    const isSilenced = rowFilters.includes('dismissed');
+    // Silenced rows only show when the SILENCED filter is explicitly active
+    if (isSilenced) return activeFilters.has('dismissed');
+    // Non-silenced rows never show when SILENCED filter is active
+    if (activeFilters.has('dismissed')) return false;
+    if (activeFilters.size === 0) return true;
     for (const f of activeFilters) {
       if (rowFilters.includes(f)) return true;
     }
@@ -4899,6 +4889,23 @@
     });
   }
 
+  function toggleRemindersFilter(pill) {
+    pill.classList.toggle('active');
+    applyRemindersFilter();
+  }
+
+  function applyRemindersFilter() {
+    const active = document.querySelector('#fu-reminders-panel .dmp-filter[data-fu-reminders-filter].active');
+    document.querySelectorAll('#fu-reminders-panel .followup-row').forEach(row => {
+      const isSilenced = row.dataset.fuRemindersFilter === 'fu-reminders-dismissed';
+      if (isSilenced) {
+        row.style.display = active ? '' : 'none';
+      } else {
+        row.style.display = active ? 'none' : '';
+      }
+    });
+  }
+
   // Sort dropdown for Trending Leads
   function toggleSortDropdown() {
     const dd = document.getElementById('sort-dropdown-trending');
@@ -4988,6 +4995,7 @@
     const row = updateTaskTargetRow;
     updateTaskTargetRow = null;
     if (action === 'dismiss') {
+      const isReminder = !!row.closest('#fu-reminders-panel');
       row.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
       row.style.opacity = '0';
       row.style.transform = 'translateX(12px)';
@@ -4995,9 +5003,15 @@
         row.style.transition = '';
         row.style.opacity = '';
         row.style.transform = '';
-        row.dataset.fuFilter = 'fu-dismissed';
-        document.getElementById('fu-overdue-panel').appendChild(row);
-        applyFuFilters();
+        if (isReminder) {
+          row.dataset.fuRemindersFilter = 'fu-reminders-dismissed';
+          document.getElementById('fu-reminders-panel').appendChild(row);
+          applyRemindersFilter();
+        } else {
+          row.dataset.fuFilter = 'fu-dismissed';
+          document.getElementById('fu-overdue-panel').appendChild(row);
+          applyFuFilters();
+        }
         updateFollowupCounts();
       }, 260);
     } else {
@@ -5029,7 +5043,7 @@
   function updateFollowupCounts() {
     const overdueCount    = document.querySelectorAll('#fu-overdue-panel .followup-row[data-fu-filter="overdue"]').length;
     const dueTodayCount   = document.querySelectorAll('#fu-overdue-panel .followup-row[data-fu-filter="due-today"]').length;
-    const remindersCount  = document.querySelectorAll('#fu-reminders-panel .followup-row').length;
+    const remindersCount  = document.querySelectorAll('#fu-reminders-panel .followup-row:not([data-fu-reminders-filter="fu-reminders-dismissed"])').length;
     const dealsCount      = document.querySelectorAll('#fu-deals-panel .followup-row').length;
     const overdueTabCount   = document.getElementById('fu-overdue-count');
     const remindersTabCount = document.getElementById('fu-reminders-count');
@@ -5093,6 +5107,7 @@
       // Capture data before removal
       const leadId = row.dataset.leadId;
       const existingFilters = row.dataset.filters || '';
+      const container = row.closest('.dmp-leads') || getActiveLeadsContainer();
 
       row.classList.remove('selected');
       row.querySelector('.lead-radio').classList.remove('selected');
@@ -5101,7 +5116,6 @@
       fadeAndRemove(row, () => {
         remaining--;
         // Re-add as a dismissed lead (hidden, tagged with 'dismissed')
-        const container = document.getElementById('dmp-leads');
         const clone = row.cloneNode(true);
         clone.dataset.filters = (existingFilters + ' dismissed').trim();
         clone.dataset.extra = 'false';
@@ -5114,7 +5128,7 @@
         if (meta && !meta.querySelector('.dismissed-badge')) {
           const badge = document.createElement('span');
           badge.className = 'dismissed-badge';
-          badge.textContent = 'Dismissed';
+          badge.textContent = 'Silenced';
           meta.appendChild(badge);
         }
         container.appendChild(clone);
@@ -5295,7 +5309,7 @@
     'cash-offer':        { label: 'Cash Offer Inquiry',  color: '#d97706', bg: '#fef3e2' },
     'awaiting-response': { label: 'Awaiting Response',   color: '#1a8bbf', bg: '#e2f4fb' },
     'acted-on':          { label: 'Acted On',            color: '#27ae60', bg: '#e2f5eb' },
-    'dismissed':         { label: 'Dismissed',           color: '#9ca3af', bg: '#f3f4f6' },
+    'dismissed':         { label: 'Silenced',            color: '#9ca3af', bg: '#f3f4f6' },
   };
 
   function openConnectedModal(btn) {
@@ -5345,14 +5359,21 @@
       const row = connectedTargetRow;
       connectedTargetRow = null;
       const existingFilters = row.dataset.filters || '';
+      const container = row.closest('.dmp-leads') || getActiveLeadsContainer();
       row.classList.remove('is-selected');
       fadeAndRemove(row, () => {
-        const container = document.getElementById('dmp-leads');
         const clone = row.cloneNode(true);
         clone.dataset.filters = (existingFilters + ' dismissed').trim();
         clone.dataset.extra = 'false';
         clone.style.display = 'none';
         clone.classList.remove('fading-out');
+        const meta = clone.querySelector('.lead-meta');
+        if (meta && !meta.querySelector('.dismissed-badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'dismissed-badge';
+          badge.textContent = 'Silenced';
+          meta.appendChild(badge);
+        }
         container.appendChild(clone);
         promoteExtras();
         updateActionsBtn();
@@ -5377,7 +5398,7 @@
       if (meta && !meta.querySelector('.dismissed-badge')) {
         const badge = document.createElement('span');
         badge.className = 'dismissed-badge';
-        badge.textContent = 'Dismissed';
+        badge.textContent = 'Silenced';
         meta.appendChild(badge);
       }
       container.appendChild(clone);
@@ -5448,6 +5469,8 @@
 
   function openCallBlockModal() {
     if (document.getElementById('call-block-row').classList.contains('skipped')) return;
+    document.getElementById('cb-start').value = cbStart;
+    document.getElementById('cb-end').value   = cbEnd;
     document.getElementById('cb-modal-overlay').classList.add('open');
   }
 
@@ -5459,17 +5482,19 @@
   function saveCallBlock() {
     const startVal = document.getElementById('cb-start').value;
     const endVal   = document.getElementById('cb-end').value;
+    cbStart = startVal;
+    cbEnd   = endVal;
+
+    document.getElementById('call-block-time-display').textContent = `${formatTime(startVal)} – ${formatTime(endVal)}`;
+    checkCallBlockConflicts(startVal, endVal);
+    document.getElementById('cb-modal-overlay').classList.remove('open');
+  }
+
+  function checkCallBlockConflicts(startVal, endVal) {
     const [sh, sm] = startVal.split(':').map(Number);
     const [eh, em] = endVal.split(':').map(Number);
     const startMins = sh * 60 + sm;
     const endMins   = eh * 60 + em;
-
-    const start = formatTime(startVal);
-    const end   = formatTime(endVal);
-    const label = `${start} – ${end}`;
-    document.getElementById('call-block-time-display').textContent = label;
-
-    // Check for conflicts
     const conflicts = Object.values(apptData).filter(a => a.startMins >= startMins && a.startMins < endMins);
     const conflictEl = document.getElementById('call-block-conflict');
     if (conflicts.length > 0) {
@@ -5479,8 +5504,6 @@
     } else {
       conflictEl.style.display = 'none';
     }
-
-    document.getElementById('cb-modal-overlay').classList.remove('open');
   }
 
   function skipCallingToday() {
@@ -5489,17 +5512,34 @@
     row.classList.add('skipped');
     document.getElementById('call-block-time-display').style.display = 'none';
     document.getElementById('call-block-conflict').style.display = 'none';
+    // Only snapshot if skipDialsToday hasn't already done so
+    if (!dialSnapshotTaken) {
+      preSkipDialCount = dialCount;
+      preSkipDialGoal = dialGoal;
+      dialSnapshotTaken = true;
+    }
+    dialCount = 0;
+    dialGoal = 0;
+    document.getElementById('dials-count-display').innerHTML = '— <span id="dials-goal-display"></span>';
+    document.getElementById('dials-progress-fill').style.width = '0%';
+    document.getElementById('dials-sub').textContent = 'Calling skipped for today.';
+    document.getElementById('dials-widget').classList.add('skipped');
+    document.getElementById('dials-update-btn').textContent = 'Reactivate';
   }
 
   // Dials widget
   let dialCount = 28;
   let dialGoal = 75;
+  let preSkipDialCount = 28;
+  let preSkipDialGoal = 75;
+  let dialSnapshotTaken = false;
+  let cbStart = '09:00';
+  let cbEnd   = '11:30';
 
   function renderDials() {
     const remaining = Math.max(dialGoal - dialCount, 0);
     const pct = Math.min(Math.round((dialCount / dialGoal) * 100), 100);
-    document.getElementById('dials-count-display').childNodes[0].textContent = dialCount + ' ';
-    document.getElementById('dials-goal-display').textContent = '/ ' + dialGoal;
+    document.getElementById('dials-count-display').innerHTML = dialCount + ' <span id="dials-goal-display">/ ' + dialGoal + '</span>';
     document.getElementById('dials-progress-fill').style.width = pct + '%';
     const sub = document.getElementById('dials-sub');
     if (dialCount === 0) {
@@ -5509,6 +5549,30 @@
     } else {
       sub.textContent = remaining + ' to go — you got this 💪';
     }
+  }
+
+  function handleDialsBtnClick() {
+    if (document.getElementById('dials-widget').classList.contains('skipped')) {
+      reactivateDials();
+    } else {
+      openDialsModal();
+    }
+  }
+
+  function reactivateDials() {
+    dialCount = preSkipDialCount;
+    dialGoal = preSkipDialGoal;
+    dialSnapshotTaken = false;
+    document.getElementById('dials-widget').classList.remove('skipped');
+    document.getElementById('dials-update-btn').textContent = 'Update';
+    renderDials();
+    // Restore call block
+    const row = document.getElementById('call-block-row');
+    row.classList.remove('skipped');
+    const timeDisplay = document.getElementById('call-block-time-display');
+    timeDisplay.textContent = `${formatTime(cbStart)} – ${formatTime(cbEnd)}`;
+    timeDisplay.style.display = '';
+    checkCallBlockConflicts(cbStart, cbEnd);
   }
 
   function openDialsModal() {
@@ -5533,10 +5597,12 @@
   }
 
   function skipDialsToday() {
+    preSkipDialCount = dialCount;
+    preSkipDialGoal = dialGoal;
+    dialSnapshotTaken = true;
     dialCount = 0;
     dialGoal = 0;
-    document.getElementById('dials-count-display').childNodes[0].textContent = '—';
-    document.getElementById('dials-goal-display').textContent = '';
+    document.getElementById('dials-count-display').innerHTML = '— <span id="dials-goal-display"></span>';
     document.getElementById('dials-progress-fill').style.width = '0%';
     document.getElementById('dials-sub').textContent = 'Calling skipped for today.';
     document.getElementById('dials-modal-overlay').classList.remove('open');

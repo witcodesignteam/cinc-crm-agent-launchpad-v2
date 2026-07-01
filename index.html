@@ -372,6 +372,62 @@
       text-decoration: underline;
     }
 
+    /* Educational Mode toggle */
+    .edu-mode-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4a5568;
+      white-space: nowrap;
+    }
+
+    .edu-mode-label { cursor: default; }
+
+    .edu-toggle {
+      position: relative;
+      width: 34px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .edu-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .edu-toggle-track {
+      position: absolute;
+      inset: 0;
+      background: #c8d0dc;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .edu-toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+
+    .edu-toggle input:checked + .edu-toggle-track {
+      background: #29abe2;
+    }
+
+    .edu-toggle input:checked + .edu-toggle-track::after {
+      transform: translateX(16px);
+    }
+
     .subline-peek-btn {
       display: inline-flex;
       align-items: center;
@@ -503,6 +559,103 @@
     .playbook-pill:hover {
       background: #c9ecf8;
     }
+
+    /* ── Educational Mode cards ── */
+    .edu-card {
+      width: 100%;
+      margin-top: 10px;
+      background: #fffbf0;
+      border: 1px solid #f5d97a;
+      border-left: 3px solid #f0b429;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .edu-card-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #92600a;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .edu-card-heading-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .edu-card-mode-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #b07d2a;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+
+    .edu-card-heading svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      color: #f0b429;
+    }
+
+    .edu-card-body {
+      font-size: 12px;
+      color: #6b4c11;
+      line-height: 1.5;
+    }
+
+    .edu-card-action {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #92600a;
+      border-top: 1px solid #f5d97a;
+      padding-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .edu-card-action-text {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .edu-card-action svg {
+      width: 11px;
+      height: 11px;
+      flex-shrink: 0;
+      color: #f0b429;
+    }
+
+    .edu-card-action-btn {
+      font-size: 11px;
+      font-weight: 700;
+      color: #92600a;
+      background: #f5d97a;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 9px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+
+    .edu-card-action-btn:hover { background: #f0c840; }
 
     /* Dials widget */
     .dials-widget {
@@ -2547,9 +2700,9 @@
 
     .reminder-risk-note {
       font-size: 11.5px;
-      color: #b45309;
-      background: #fffbeb;
-      border: 1px solid #fde68a;
+      color: #6b7280;
+      background: #f8f9fa;
+      border: 1px solid #e2e5e9;
       border-radius: 6px;
       padding: 6px 10px;
       margin-top: 6px;
@@ -3051,18 +3204,19 @@
               </button>
             </div>
             <div class="welcome-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-                <span id="today-date"></span>
-              </span>
               <button class="playbook-pill" onclick="openPlaybook()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
                 </svg>
                 CINC Mini Playbook
               </button>
+              <div class="edu-mode-wrap">
+                <label class="edu-toggle" title="Toggle Educational Mode">
+                  <input type="checkbox" id="edu-mode-toggle" checked onchange="toggleEduMode(this.checked)">
+                  <span class="edu-toggle-track"></span>
+                </label>
+                <span class="edu-mode-label">Educational Mode</span>
+              </div>
             </div>
           </div>
 
@@ -3127,7 +3281,7 @@
               </div>
               <div class="dmp-filter-group">
                 <span class="dmp-filter-group-label">Status</span>
-                <div class="dmp-filter" data-filter="awaiting-response" onclick="toggleFilter(this)">AWAITING RESPONSE</div>
+                <div class="dmp-filter active" data-filter="awaiting-response" onclick="toggleFilter(this)">AWAITING RESPONSE</div>
                 <div class="dmp-filter" data-filter="acted-on" onclick="toggleFilter(this)">ACTED ON</div>
                 <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">SILENCED</div>
               </div>
@@ -3147,7 +3301,7 @@
             <div class="dmp-leads" id="dmp-leads">
 
               <!-- Brian Turner — showing-request, ai-ready -->
-              <div class="lead-row border-showing" data-lead-id="brian-turner" data-filters="showing-request ai-ready awaiting-response">
+              <div class="lead-row border-showing" data-lead-id="brian-turner" data-filters="showing-request ai-ready awaiting-response trending-ai-conversation">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Brian Turner</span>
@@ -3178,10 +3332,29 @@
                   </div>
                   <button class="lead-property-view">View Property</button>
                 </div>
+
+                <!-- Educational Mode: Showing Request tip -->
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                      Showing Request
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">A showing request is a strong buying signal. Leads who ask to view a property convert at 3–4x the rate of general inquiries — respond within 5 minutes to maximize your chance of booking.</div>
+                  <div class="edu-card-action">
+                    <div class="edu-card-action-text">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      Call now to confirm the showing time and ask one qualifying question.
+                    </div>
+                    <button class="edu-card-action-btn" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                  </div>
+                </div>
               </div>
 
               <!-- Donna Parks — ai-ready -->
-              <div class="lead-row border-ai" data-lead-id="donna-parks" data-filters="ai-ready acted-on">
+              <div class="lead-row border-ai" data-lead-id="donna-parks" data-filters="ai-ready acted-on trending-ai-conversation">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Donna Parks</span>
@@ -3205,7 +3378,7 @@
               </div>
 
               <!-- Marcus Reynolds — property-inquiry -->
-              <div class="lead-row border-property" data-lead-id="marcus-reynolds" data-filters="property-inquiry awaiting-response">
+              <div class="lead-row border-property" data-lead-id="marcus-reynolds" data-filters="property-inquiry awaiting-response trending-high-property-views">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Marcus Reynolds</span>
@@ -3238,7 +3411,7 @@
               </div>
 
               <!-- Sandra Cho — homepulse-inquiry -->
-              <div class="lead-row border-home-pulse" data-lead-id="sandra-cho" data-filters="homepulse-inquiry acted-on">
+              <div class="lead-row border-home-pulse" data-lead-id="sandra-cho" data-filters="homepulse-inquiry acted-on trending-claimed-homepulse">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Sandra Cho</span>
@@ -3304,7 +3477,7 @@
               </div>
 
               <!-- Priya Nair — property-inquiry, ai-ready -->
-              <div class="lead-row border-property" data-lead-id="priya-nair" data-filters="property-inquiry ai-ready acted-on">
+              <div class="lead-row border-property" data-lead-id="priya-nair" data-filters="property-inquiry ai-ready acted-on trending-high-property-views trending-ai-conversation">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Priya Nair</span>
@@ -3337,7 +3510,7 @@
               </div>
 
               <!-- Tom Garrett — homepulse-inquiry -->
-              <div class="lead-row border-home-pulse" data-lead-id="tom-garrett" data-filters="homepulse-inquiry awaiting-response">
+              <div class="lead-row border-home-pulse" data-lead-id="tom-garrett" data-filters="homepulse-inquiry awaiting-response trending-claimed-homepulse" style="flex-wrap:wrap;">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Tom Garrett</span>
@@ -3367,6 +3540,25 @@
                   </div>
                   <button class="lead-property-view">View Property</button>
                 </div>
+
+                <!-- Educational Mode: HomePulse seller lead tip -->
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                      HomePulse Seller Lead
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">This lead opened a home valuation report — a strong seller intent signal. Your goal on this call is not to pitch, but to validate: confirm they're thinking about selling and ask what their timeline looks like.</div>
+                  <div class="edu-card-action">
+                    <div class="edu-card-action-text">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      Call to ask: "I saw you checked your home's value — are you thinking about making a move?"
+                    </div>
+                    <button class="edu-card-action-btn" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                  </div>
+                </div>
               </div>
 
               <!-- Aisha Brooks — etta-message -->
@@ -3394,7 +3586,7 @@
               </div>
 
               <!-- Derek Olson — property-inquiry -->
-              <div class="lead-row border-property" data-lead-id="derek-olson" data-filters="property-inquiry awaiting-response">
+              <div class="lead-row border-property" data-lead-id="derek-olson" data-filters="property-inquiry awaiting-response trending-high-property-views">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Derek Olson</span>
@@ -3427,7 +3619,7 @@
               </div>
 
               <!-- Victor Hale — cash-offer (extra) -->
-              <div class="lead-row border-grey" data-lead-id="victor-hale" data-filters="cash-offer awaiting-response" data-extra="true" style="display:none;">
+              <div class="lead-row border-grey" data-lead-id="victor-hale" data-filters="cash-offer awaiting-response" data-extra="true" style="display:none;flex-wrap:wrap;">
                 <div class="lead-main">
                   <div class="lead-top-row">
                     <span class="lead-name">Victor Hale</span>
@@ -3456,6 +3648,25 @@
                     <div class="lead-property-meta">5 bed &middot; 4 bath &middot; 3,800 sqft</div>
                   </div>
                   <button class="lead-property-view">View Property</button>
+                </div>
+
+                <!-- Educational Mode: Cash Offer Inquiry tip -->
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                      Cash Offer Inquiry
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">Cash buyers move fast and expect the same in return. Don't negotiate over the phone — your job on this call is to qualify their timeline, confirm proof of funds, and get a showing on the calendar.</div>
+                  <div class="edu-card-action">
+                    <div class="edu-card-action-text">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      Ask: "Are you working with a lender or is this a cash purchase — and what's your timeframe?"
+                    </div>
+                    <button class="edu-card-action-btn" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                  </div>
                 </div>
               </div>
 
@@ -3499,7 +3710,7 @@
           <div class="dmp-leads" id="p1-leads" style="display:none; padding: 0 20px;">
 
             <!-- Ryan Foster — new lead, buyer -->
-            <div class="lead-row border-showing" data-lead-id="ryan-foster" data-filters="p1-new-lead p1-buyer">
+            <div class="lead-row border-showing" data-lead-id="ryan-foster" data-filters="p1-new-lead p1-buyer trending-high-property-views">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Ryan Foster</span>
@@ -3527,7 +3738,7 @@
             </div>
 
             <!-- Keisha Monroe — new lead, buyer -->
-            <div class="lead-row border-property" data-lead-id="keisha-monroe" data-filters="p1-new-lead p1-buyer">
+            <div class="lead-row border-property" data-lead-id="keisha-monroe" data-filters="p1-new-lead p1-buyer trending-frequent-visitor">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Keisha Monroe</span>
@@ -3555,7 +3766,7 @@
             </div>
 
             <!-- Nathan Cole — new lead, homepulse (extra) -->
-            <div class="lead-row border-home-pulse" data-lead-id="nathan-cole" data-filters="p1-new-lead p1-homepulse" data-extra="true" style="display:none;">
+            <div class="lead-row border-home-pulse" data-lead-id="nathan-cole" data-filters="p1-new-lead p1-homepulse trending-claimed-homepulse" data-extra="true" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Nathan Cole</span>
@@ -3583,7 +3794,7 @@
             </div>
 
             <!-- Olivia Grant — new lead, etta app (extra) -->
-            <div class="lead-row border-etta" data-lead-id="olivia-grant" data-filters="p1-new-lead p1-etta-app" data-extra="true" style="display:none;">
+            <div class="lead-row border-etta" data-lead-id="olivia-grant" data-filters="p1-new-lead p1-etta-app trending-verified-account" data-extra="true" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Olivia Grant</span>
@@ -3611,7 +3822,7 @@
             </div>
 
             <!-- Carlos Mendez — new lead, seller (extra) -->
-            <div class="lead-row border-ai" data-lead-id="carlos-mendez" data-filters="p1-new-lead p1-seller" data-extra="true" style="display:none;">
+            <div class="lead-row border-ai" data-lead-id="carlos-mendez" data-filters="p1-new-lead p1-seller trending-ai-conversation" data-extra="true" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Carlos Mendez</span>
@@ -3653,7 +3864,7 @@
           <div class="dmp-leads" id="p2-leads" style="display:none; padding: 0 20px;">
 
             <!-- Victor Hale — attempted contact -->
-            <div class="lead-row border-grey" data-lead-id="victor-hale" data-filters="p2-attempted">
+            <div class="lead-row border-grey" data-lead-id="victor-hale" data-filters="p2-attempted" style="flex-wrap:wrap;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Victor Hale</span>
@@ -3678,10 +3889,29 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Educational Mode: Attempted Contact cadence tip -->
+              <div class="edu-card edu-mode-item">
+                <div class="edu-card-heading">
+                  <div class="edu-card-heading-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    Attempted Contact
+                  </div>
+                  <span class="edu-card-mode-label">Educational Mode</span>
+                </div>
+                <div class="edu-card-body">No answer doesn't mean no interest. The P2 cadence is: call → voicemail → text within the hour. Leads who receive all three touchpoints connect at 2x the rate of single-attempt outreach.</div>
+                <div class="edu-card-action">
+                  <div class="edu-card-action-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    Follow up with a text if you haven't yet — keep it short and specific to their listing.
+                  </div>
+                  <button class="edu-card-action-btn" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                </div>
+              </div>
             </div>
 
             <!-- Grace Kim — AI attempted contact -->
-            <div class="lead-row border-ai" data-lead-id="grace-kim" data-filters="p2-attempted p2-ai">
+            <div class="lead-row border-ai" data-lead-id="grace-kim" data-filters="p2-attempted p2-ai trending-ai-conversation" style="flex-wrap:wrap;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Grace Kim</span>
@@ -3706,10 +3936,29 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Educational Mode: AI handoff tip -->
+              <div class="edu-card edu-mode-item">
+                <div class="edu-card-heading">
+                  <div class="edu-card-heading-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    Time for a Human Touch
+                  </div>
+                  <span class="edu-card-mode-label">Educational Mode</span>
+                </div>
+                <div class="edu-card-body">AI can warm a lead, but it can't close one. When a lead has been in an AI conversation for 3+ hours without booking, a personal call from you breaks the pattern and builds trust that automation can't replicate.</div>
+                <div class="edu-card-action">
+                  <div class="edu-card-action-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    Step in now — introduce yourself personally and reference the open house they asked about.
+                  </div>
+                  <button class="edu-card-action-btn" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                </div>
+              </div>
             </div>
 
             <!-- Darnell Webb — attempted contact (extra) -->
-            <div class="lead-row border-grey" data-lead-id="darnell-webb" data-filters="p2-attempted" data-extra="true" style="display:none;">
+            <div class="lead-row border-grey" data-lead-id="darnell-webb" data-filters="p2-attempted trending-high-property-views" data-extra="true" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Darnell Webb</span>
@@ -3737,7 +3986,7 @@
             </div>
 
             <!-- Tamara Fox — AI attempted contact (extra) -->
-            <div class="lead-row border-ai" data-lead-id="tamara-fox" data-filters="p2-attempted p2-ai" data-extra="true" style="display:none;">
+            <div class="lead-row border-ai" data-lead-id="tamara-fox" data-filters="p2-attempted p2-ai trending-claimed-homepulse trending-high-property-views" data-extra="true" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Tamara Fox</span>
@@ -3779,7 +4028,7 @@
           <div class="dmp-leads" id="p3-leads" style="display:none; padding: 0 20px;">
 
             <!-- Jordan Ellis — recent login, high activity -->
-            <div class="lead-row border-grey" data-lead-id="jordan-ellis" data-filters="p3-recent-login p3-high-activity">
+            <div class="lead-row border-grey" data-lead-id="jordan-ellis" data-filters="p3-recent-login p3-high-activity trending-high-favorites" style="flex-wrap:wrap;">
               <div class="lead-radio" onclick="toggleLead(this)"></div>
               <div class="lead-main">
                 <div class="lead-top-row">
@@ -3796,10 +4045,29 @@
                 <span class="lead-score">90</span>
                 <span class="lead-score-label">Lead Score</span>
               </div>
+
+              <!-- Educational Mode: Saved properties review tip -->
+              <div class="edu-card edu-mode-item">
+                <div class="edu-card-heading">
+                  <div class="edu-card-heading-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    Review Saved Properties
+                  </div>
+                  <span class="edu-card-mode-label">Educational Mode</span>
+                </div>
+                <div class="edu-card-body">Jordan saved 3 properties this session — that's a buying signal worth acting on. Review what they saved before you call so you can speak specifically to those listings and show you're paying attention.</div>
+                <div class="edu-card-action">
+                  <div class="edu-card-action-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    Check their saved properties in CINC before calling — then reference them by address.
+                  </div>
+                  <button class="edu-card-action-btn">Open Lead Details</button>
+                </div>
+              </div>
             </div>
 
             <!-- Mia Torres — on site now -->
-            <div class="lead-row border-home-pulse" data-lead-id="mia-torres" data-filters="p3-on-site-now p3-high-activity">
+            <div class="lead-row border-home-pulse" data-lead-id="mia-torres" data-filters="p3-on-site-now p3-high-activity trending-high-property-views trending-shared-listing">
               <div class="lead-radio" onclick="toggleLead(this)"></div>
               <div class="lead-main">
                 <div class="lead-top-row">
@@ -3819,7 +4087,7 @@
             </div>
 
             <!-- Brett Lawson — recent login (extra) -->
-            <div class="lead-row border-grey" data-lead-id="brett-lawson" data-filters="p3-recent-login" data-extra="true" style="display:none;">
+            <div class="lead-row border-grey" data-lead-id="brett-lawson" data-filters="p3-recent-login trending-frequent-visitor" data-extra="true" style="display:none;">
               <div class="lead-radio" onclick="toggleLead(this)"></div>
               <div class="lead-main">
                 <div class="lead-top-row">
@@ -3839,7 +4107,7 @@
             </div>
 
             <!-- Naomi Slade — on site now, high activity (extra) -->
-            <div class="lead-row border-home-pulse" data-lead-id="naomi-slade" data-filters="p3-on-site-now p3-high-activity" data-extra="true" style="display:none;">
+            <div class="lead-row border-home-pulse" data-lead-id="naomi-slade" data-filters="p3-on-site-now p3-high-activity trending-calculated-mortgage trending-high-property-views" data-extra="true" style="display:none;">
               <div class="lead-radio" onclick="toggleLead(this)"></div>
               <div class="lead-main">
                 <div class="lead-top-row">
@@ -3859,7 +4127,7 @@
             </div>
 
             <!-- Felix Grant — high activity (extra) -->
-            <div class="lead-row border-grey" data-lead-id="felix-grant" data-filters="p3-high-activity" data-extra="true" style="display:none;">
+            <div class="lead-row border-grey" data-lead-id="felix-grant" data-filters="p3-high-activity trending-frequent-visitor trending-high-property-views" data-extra="true" style="display:none;flex-wrap:wrap;">
               <div class="lead-radio" onclick="toggleLead(this)"></div>
               <div class="lead-main">
                 <div class="lead-top-row">
@@ -3876,15 +4144,42 @@
                 <span class="lead-score">78</span>
                 <span class="lead-score-label">Lead Score</span>
               </div>
+
+              <!-- Educational Mode: Send recommendation listings tip -->
+              <div class="edu-card edu-mode-item">
+                <div class="edu-card-heading">
+                  <div class="edu-card-heading-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    Send Recommendations
+                  </div>
+                  <span class="edu-card-mode-label">Educational Mode</span>
+                </div>
+                <div class="edu-card-body">Felix has browsed 31 listings this week in a clear price range and area — he knows what he wants. Sending a curated shortlist of 3–5 matching listings shows expertise and keeps you top of mind before he finds them himself.</div>
+                <div class="edu-card-action">
+                  <div class="edu-card-action-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    Pull 3–5 listings in the $500k–$600k Northside range and send them with a personal note.
+                  </div>
+                  <button class="edu-card-action-btn">Send Listings</button>
+                </div>
+              </div>
             </div>
 
           </div>
 
           <!-- Trending Filter pills + Actions button (hidden by default) -->
           <div class="dmp-filters-row" id="filter-pills-row-trending" style="display:none; margin: 0; padding: 12px 20px;">
-            <div class="dmp-filters-pills">
-              <div class="dmp-filter" data-filter="trending-ai" onclick="toggleFilter(this)">AI AGENT READY</div>
-              <div class="dmp-filter" data-filter="trending-pond" onclick="toggleFilter(this)">POND LEADS</div>
+            <div class="dmp-filters-pills" style="flex-wrap:wrap; gap:6px;">
+              <div class="dmp-filter" data-filter="trending-ai-conversation" onclick="toggleFilter(this)">AI CONVERSATION</div>
+              <div class="dmp-filter" data-filter="trending-claimed-homepulse" onclick="toggleFilter(this)">CLAIMED HOMEPULSE</div>
+              <div class="dmp-filter" data-filter="trending-frequent-visitor" onclick="toggleFilter(this)">FREQUENT VISITOR</div>
+              <div class="dmp-filter" data-filter="trending-high-favorites" onclick="toggleFilter(this)">HIGH FAVORITES</div>
+              <div class="dmp-filter" data-filter="trending-high-property-views" onclick="toggleFilter(this)">HIGH PROPERTY VIEWS</div>
+              <div class="dmp-filter" data-filter="trending-shared-listing" onclick="toggleFilter(this)">SHARED LISTING</div>
+              <div class="dmp-filter" data-filter="trending-updated-contact-info" onclick="toggleFilter(this)">UPDATED CONTACT INFO</div>
+              <div class="dmp-filter" data-filter="trending-updated-saved-search" onclick="toggleFilter(this)">UPDATED SAVED SEARCH</div>
+              <div class="dmp-filter" data-filter="trending-calculated-mortgage" onclick="toggleFilter(this)">CALCULATED MORTGAGE</div>
+              <div class="dmp-filter" data-filter="trending-verified-account" onclick="toggleFilter(this)">VERIFIED ACCOUNT</div>
               <div class="dmp-filter" data-filter="dismissed" onclick="toggleFilter(this)">SILENCED</div>
             </div>
             <div class="actions-btn-wrap">
@@ -3910,7 +4205,7 @@
           <div class="dmp-leads" id="trending-leads" style="display:none; padding: 0 20px;">
 
             <!-- Isabelle Marsh — ai agent ready -->
-            <div class="lead-row border-ai" data-lead-id="isabelle-marsh" data-filters="trending-ai" data-last-call="14" data-last-activity="1">
+            <div class="lead-row border-ai" data-lead-id="isabelle-marsh" data-filters="trending-ai-conversation trending-high-property-views" data-last-call="14" data-last-activity="1">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Isabelle Marsh</span>
@@ -3938,7 +4233,7 @@
             </div>
 
             <!-- Harold Simms — pond lead -->
-            <div class="lead-row border-pond" data-lead-id="harold-simms" data-filters="trending-pond" data-last-call="21" data-last-activity="3">
+            <div class="lead-row border-pond" data-lead-id="harold-simms" data-filters="trending-updated-saved-search trending-frequent-visitor" data-last-call="21" data-last-activity="3" style="flex-wrap:wrap;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Harold Simms</span>
@@ -3963,10 +4258,29 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Educational Mode: Pond Lead re-engagement tip -->
+              <div class="edu-card edu-mode-item">
+                <div class="edu-card-heading">
+                  <div class="edu-card-heading-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    Pond Lead
+                  </div>
+                  <span class="edu-card-mode-label">Educational Mode</span>
+                </div>
+                <div class="edu-card-body">Pond leads have shown interest but gone quiet. Their return activity is a re-engagement signal — this is the moment to reach out before they find another agent. Keep the opener casual and low-pressure.</div>
+                <div class="edu-card-action">
+                  <div class="edu-card-action-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    Try: "Hey Harold, noticed you were looking at townhomes again — anything catch your eye?"
+                  </div>
+                  <button class="edu-card-action-btn" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                </div>
+              </div>
             </div>
 
             <!-- Cleo Barnett — ai agent ready (extra) -->
-            <div class="lead-row border-ai" data-lead-id="cleo-barnett" data-filters="trending-ai" data-extra="true" data-last-call="7" data-last-activity="2" style="display:none;">
+            <div class="lead-row border-ai" data-lead-id="cleo-barnett" data-filters="trending-ai-conversation trending-updated-saved-search" data-extra="true" data-last-call="7" data-last-activity="2" style="display:none;flex-wrap:wrap;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Cleo Barnett</span>
@@ -3991,10 +4305,29 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Educational Mode: Update search with school parameter -->
+              <div class="edu-card edu-mode-item">
+                <div class="edu-card-heading">
+                  <div class="edu-card-heading-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    Update Their Search
+                  </div>
+                  <span class="edu-card-mode-label">Educational Mode</span>
+                </div>
+                <div class="edu-card-body">Cleo specifically mentioned Riverside Elementary — that's a search parameter, not just small talk. Adding a school district filter to their saved search means every match you send is already pre-qualified against their top priority.</div>
+                <div class="edu-card-action">
+                  <div class="edu-card-action-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    Update their saved search in CINC to include the Riverside Elementary school boundary.
+                  </div>
+                  <button class="edu-card-action-btn">Update Search</button>
+                </div>
+              </div>
             </div>
 
             <!-- Ray Donovan — pond lead (extra) -->
-            <div class="lead-row border-pond" data-lead-id="ray-donovan" data-filters="trending-pond" data-extra="true" data-last-call="30" data-last-activity="2" style="display:none;">
+            <div class="lead-row border-pond" data-lead-id="ray-donovan" data-filters="trending-high-favorites trending-frequent-visitor" data-extra="true" data-last-call="30" data-last-activity="2" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Ray Donovan</span>
@@ -4022,7 +4355,7 @@
             </div>
 
             <!-- Vera Hutchins — ai agent ready (extra) -->
-            <div class="lead-row border-ai" data-lead-id="vera-hutchins" data-filters="trending-ai" data-extra="true" data-last-call="45" data-last-activity="1" style="display:none;">
+            <div class="lead-row border-ai" data-lead-id="vera-hutchins" data-filters="trending-calculated-mortgage trending-verified-account" data-extra="true" data-last-call="45" data-last-activity="1" style="display:none;">
               <div class="lead-main">
                 <div class="lead-top-row">
                   <span class="lead-name">Vera Hutchins</span>
@@ -4045,6 +4378,466 @@
                   <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sandra Cho — claimed homepulse (CR) -->
+            <div class="lead-row border-home-pulse" data-lead-id="sandra-cho" data-filters="trending-claimed-homepulse" data-extra="true" data-last-call="0" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Sandra Cho</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-home-pulse"></span>
+                  Opened HomePulse report &middot; $380K &middot; New Lead stage
+                </div>
+                <div class="lead-quote">"Can you send me more details about the 3-bed on Maple? Looks perfect for us."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">78</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tom Garrett — claimed homepulse (CR) -->
+            <div class="lead-row border-home-pulse" data-lead-id="tom-garrett" data-filters="trending-claimed-homepulse" data-extra="true" data-last-call="3" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Tom Garrett</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-home-pulse"></span>
+                  Claimed HomePulse report &middot; Seller lead &middot; Thinking of selling in spring
+                </div>
+                <div class="lead-quote">"Curious what my home is worth — we're thinking about selling in the spring."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">74</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Brian Turner — ai conversation (CR) -->
+            <div class="lead-row border-ai" data-lead-id="brian-turner" data-filters="trending-ai-conversation" data-extra="true" data-last-call="0" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Brian Turner</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-ai"></span>
+                  AI conversation in progress &middot; Showing request &middot; Dearborn property
+                </div>
+                <div class="lead-quote">"I'd like to schedule a viewing for the property on Dearborn — are you free today or tomorrow?"</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">85</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Donna Parks — ai conversation (CR) -->
+            <div class="lead-row border-ai" data-lead-id="donna-parks" data-filters="trending-ai-conversation" data-extra="true" data-last-call="1" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Donna Parks</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-ai"></span>
+                  AI conversation in progress &middot; Elm property inquiry
+                </div>
+                <div class="lead-quote">"I'm interested in viewing the property on Elm — are you available this week?"</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">80</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Priya Nair — ai conversation + high property views (CR) -->
+            <div class="lead-row border-ai" data-lead-id="priya-nair" data-filters="trending-ai-conversation trending-high-property-views" data-extra="true" data-last-call="1" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Priya Nair</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-ai"></span>
+                  AI conversation active &middot; Comparing multiple properties &middot; HOA question
+                </div>
+                <div class="lead-quote">"What's the HOA fee for the condo on Lakeview? Trying to compare a few options."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">82</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Marcus Reynolds — high property views (CR) -->
+            <div class="lead-row border-property" data-lead-id="marcus-reynolds" data-filters="trending-high-property-views" data-extra="true" data-last-call="2" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Marcus Reynolds</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-property"></span>
+                  Pre-approved &middot; High property view activity &middot; Oak Street inquiry
+                </div>
+                <div class="lead-quote">"We're pre-approved and looking to move quickly — do you have anything on Oak Street?"</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">88</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ryan Foster — high property views (P1) -->
+            <div class="lead-row border-showing" data-lead-id="ryan-foster" data-filters="trending-high-property-views" data-extra="true" data-last-call="2" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Ryan Foster</span>
+                  <span class="lead-status-tag status-new-lead">New Lead — P1</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-showing"></span>
+                  Viewed HomePulse report &middot; 4-bed search &middot; Budget ~$450K
+                </div>
+                <div class="lead-quote">"Looking for a 4-bed in the suburbs — budget around $450k."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">79</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Keisha Monroe — frequent visitor (P1) -->
+            <div class="lead-row border-property" data-lead-id="keisha-monroe" data-filters="trending-frequent-visitor" data-extra="true" data-last-call="3" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Keisha Monroe</span>
+                  <span class="lead-status-tag status-new-lead">New Lead — P1</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-property"></span>
+                  Frequent site visitor &middot; Downtown condo search &middot; Under $300K
+                </div>
+                <div class="lead-quote">"Just moved to the area — interested in condos downtown under $300k."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">72</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nathan Cole — claimed homepulse (P1) -->
+            <div class="lead-row border-home-pulse" data-lead-id="nathan-cole" data-filters="trending-claimed-homepulse" data-extra="true" data-last-call="4" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Nathan Cole</span>
+                  <span class="lead-status-tag status-new-lead">New Lead — P1</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-home-pulse"></span>
+                  Claimed HomePulse report &middot; First-time buyer &middot; Process questions
+                </div>
+                <div class="lead-quote">"First-time buyer — what's the process look like from start to finish?"</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">69</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Olivia Grant — verified account (P1) -->
+            <div class="lead-row border-etta" data-lead-id="olivia-grant" data-filters="trending-verified-account" data-extra="true" data-last-call="5" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Olivia Grant</span>
+                  <span class="lead-status-tag status-new-lead">New Lead — P1</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-etta"></span>
+                  Verified account &middot; Relocating from Chicago &middot; School district focus
+                </div>
+                <div class="lead-quote">"We're relocating from Chicago — need something close to good schools."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">76</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carlos Mendez — ai conversation (P1) -->
+            <div class="lead-row border-ai" data-lead-id="carlos-mendez" data-filters="trending-ai-conversation" data-extra="true" data-last-call="6" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Carlos Mendez</span>
+                  <span class="lead-status-tag status-new-lead">New Lead — P1</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-ai"></span>
+                  AI conversation active &middot; Investment property interest &middot; Rental yield focus
+                </div>
+                <div class="lead-quote">"Interested in investment properties — looking for something with good rental yield."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">77</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Derek Olson — high property views (CR) -->
+            <div class="lead-row border-property" data-lead-id="derek-olson" data-filters="trending-high-property-views" data-extra="true" data-last-call="5" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Derek Olson</span>
+                  <span class="lead-status-tag status-new-lead">Contact Requested</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-property"></span>
+                  Multiple property views &middot; Cedar Ave inquiry &middot; Must-have basement
+                </div>
+                <div class="lead-quote">"Does the listing on Cedar Ave have a finished basement? That's a must-have for us."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">71</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grace Kim — ai conversation (P2) -->
+            <div class="lead-row border-ai" data-lead-id="grace-kim" data-filters="trending-ai-conversation" data-extra="true" data-last-call="8" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Grace Kim</span>
+                  <span class="lead-status-tag status-attempted">Attempted — P2</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-ai"></span>
+                  AI conversation active &middot; Followed up on Willow Lane open house
+                </div>
+                <div class="lead-quote">"Followed up via text about the open house on Willow Lane."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">73</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Darnell Webb — high property views (P2) -->
+            <div class="lead-row border-grey" data-lead-id="darnell-webb" data-filters="trending-high-property-views" data-extra="true" data-last-call="10" data-last-activity="3" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Darnell Webb</span>
+                  <span class="lead-status-tag status-attempted">Attempted — P2</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-grey"></span>
+                  Viewed properties on Elm and Birch St &middot; High browse activity
+                </div>
+                <div class="lead-quote">"Sent intro email — lead viewed properties on Elm and Birch St last week."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">65</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tamara Fox — claimed homepulse + high property views (P2) -->
+            <div class="lead-row border-ai" data-lead-id="tamara-fox" data-filters="trending-claimed-homepulse trending-high-property-views" data-extra="true" data-last-call="12" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Tamara Fox</span>
+                  <span class="lead-status-tag status-attempted">Attempted — P2</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-ai"></span>
+                  Opened HomePulse report 3× this week &middot; High intent signal
+                </div>
+                <div class="lead-quote">"Opened Home Pulse report 3 times this week — high intent signal."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">81</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Jordan Ellis — high favorites (P3) -->
+            <div class="lead-row border-grey" data-lead-id="jordan-ellis" data-filters="trending-high-favorites" data-extra="true" data-last-call="9" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Jordan Ellis</span>
+                  <span class="lead-status-tag status-active">Active — P3</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-grey"></span>
+                  Saved 3 properties last session &middot; Strong buyer signals
+                </div>
+                <div class="lead-quote">"Saved 3 properties in the last session — strong buyer signals."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">84</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mia Torres — high property views + shared listing (P3) -->
+            <div class="lead-row border-home-pulse" data-lead-id="mia-torres" data-filters="trending-high-property-views trending-shared-listing" data-extra="true" data-last-call="11" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Mia Torres</span>
+                  <span class="lead-status-tag status-active">Active — P3</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-home-pulse"></span>
+                  On-site now &middot; Viewing Park Ave listing &middot; Opened photos &amp; floor plan
+                </div>
+                <div class="lead-quote">"Viewing listing on Park Ave — opened photos and floor plan."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">90</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Brett Lawson — frequent visitor (P3) -->
+            <div class="lead-row border-grey" data-lead-id="brett-lawson" data-filters="trending-frequent-visitor" data-extra="true" data-last-call="15" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Brett Lawson</span>
+                  <span class="lead-status-tag status-active">Active — P3</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-grey"></span>
+                  Returned after 2 weeks &middot; Checking Westside prices again
+                </div>
+                <div class="lead-quote">"Returned after 2 weeks — checking prices on Westside listings again."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">67</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Naomi Slade — calculated mortgage + high property views (P3) -->
+            <div class="lead-row border-home-pulse" data-lead-id="naomi-slade" data-filters="trending-calculated-mortgage trending-high-property-views" data-extra="true" data-last-call="13" data-last-activity="1" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Naomi Slade</span>
+                  <span class="lead-status-tag status-active">Active — P3</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-home-pulse"></span>
+                  Browsing 4-bed homes &middot; Opened mortgage calculator twice
+                </div>
+                <div class="lead-quote">"Browsing 4-bed homes — opened mortgage calculator twice."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">86</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Felix Grant — frequent visitor + high property views (P3) -->
+            <div class="lead-row border-grey" data-lead-id="felix-grant" data-filters="trending-frequent-visitor trending-high-property-views" data-extra="true" data-last-call="16" data-last-activity="2" style="display:none;">
+              <div class="lead-main">
+                <div class="lead-top-row">
+                  <span class="lead-name">Felix Grant</span>
+                  <span class="lead-status-tag status-active">Active — P3</span>
+                </div>
+                <div class="lead-meta">
+                  <span class="lead-meta-dot dot-grey"></span>
+                  Consistent browser &middot; $500K–$600K Northside range
+                </div>
+                <div class="lead-quote">"Consistently browsing listings in the $500k–$600k range near Northside."</div>
+              </div>
+              <div class="lead-score-wrap"><span class="lead-score">70</span><span class="lead-score-label">Lead Score</span></div>
+              <div class="lead-cr-actions">
+                <button class="btn-fu-dialer" onclick="addLeadToDialer(this)">Add to Dialer</button>
+                <div class="lead-cr-actions-row">
+                  <button class="btn-fu-update" onclick="openConnectedModal(this)">Connected</button>
+                  <button class="btn-dismiss-icon" onclick="dismissLeadCard(this)" title="Silence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
                 </div>
               </div>
             </div>
@@ -4079,8 +4872,8 @@
               <div class="dmp-filters-row" style="flex-direction:column; align-items:stretch; margin:0; padding: 10px 20px;">
                 <div class="dmp-filter-group">
                   <span class="dmp-filter-group-label">Due Date</span>
-                  <div class="dmp-filter" data-fu-filter="overdue" onclick="toggleFuFilter(this)">OVERDUE</div>
-                  <div class="dmp-filter" data-fu-filter="due-today" onclick="toggleFuFilter(this)">DUE TODAY</div>
+                  <div class="dmp-filter active" data-fu-filter="overdue" onclick="toggleFuFilter(this)">OVERDUE</div>
+                  <div class="dmp-filter active" data-fu-filter="due-today" onclick="toggleFuFilter(this)">DUE TODAY</div>
                   <div class="dmp-filter" data-fu-filter="due-this-week" onclick="toggleFuFilter(this)">DUE THIS WEEK</div>
                   <div class="dmp-filter" data-fu-filter="due-next-week" onclick="toggleFuFilter(this)">DUE NEXT WEEK</div>
                 </div>
@@ -4094,7 +4887,7 @@
               </div>
 
               <!-- Overdue items — sorted most days overdue first -->
-              <div class="followup-row border-overdue" data-fu-filter="overdue" data-fu-type="fu-call">
+              <div class="followup-row border-overdue" data-fu-filter="overdue" data-fu-type="fu-call" style="flex-wrap:wrap;">
                 <div class="followup-main">
                   <span class="followup-badge badge-overdue">4 DAYS OVERDUE</span>
                   <div class="followup-title">Price drop alert — 842 N Clark St saved listing</div>
@@ -4103,6 +4896,20 @@
                 <div class="followup-actions">
                   <button class="btn-fu-dialer" onclick="addFollowupToDialer(this)">Add to Dialer</button>
                   <button class="btn-fu-update" onclick="openUpdateTaskModal(this)">Update Task</button>
+                </div>
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b07d2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                      <span style="font-size:12px; font-weight:600; color:#7a4f10;">Why Overdue Matters</span>
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">Each day a follow-up sits overdue, the chance of reaching that lead drops sharply. Overdue tasks signal the lead is slipping — prioritize these first to protect your pipeline.</div>
+                  <div class="edu-card-action">
+                    <span class="edu-card-action-text">Call Sandra Hill now to stay top of mind.</span>
+                    <button class="edu-card-action-btn" onclick="addFollowupToDialer(this)">Add to Dialer</button>
+                  </div>
                 </div>
               </div>
 
@@ -4216,7 +5023,7 @@
                 </div>
               </div>
 
-              <div class="followup-row border-overdue" data-fu-type="fu-email">
+              <div class="followup-row border-overdue" data-fu-type="fu-email" style="flex-wrap:wrap;">
                 <div class="followup-main">
                   <span class="followup-badge" style="background:#fde8ea; color:#e63946; margin-bottom:5px; display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px;">APPOINTMENT NO-SHOW</span>
                   <div class="followup-title">Send follow-up after missed consultation</div>
@@ -4226,6 +5033,20 @@
                 <div class="followup-actions">
                   <button class="btn-fu-dialer" onclick="addFollowupToDialer(this)">Add to Dialer</button>
                   <button class="btn-fu-update" onclick="openUpdateTaskModal(this)">Update Task</button>
+                </div>
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b07d2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                      <span style="font-size:12px; font-weight:600; color:#7a4f10;">No-Show Recovery</span>
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">A no-show doesn't mean a lost lead. Try a quick "missed you" call within 24 hours, then a short text. Life happens — a low-pressure check-in often reschedules the appointment and builds trust.</div>
+                  <div class="edu-card-action">
+                    <span class="edu-card-action-text">Call Omar to reschedule — don't let the gap grow.</span>
+                    <button class="edu-card-action-btn" onclick="addFollowupToDialer(this)">Add to Dialer</button>
+                  </div>
                 </div>
               </div>
 
@@ -4242,7 +5063,7 @@
                 </div>
               </div>
 
-              <div class="followup-row border-overdue" data-fu-type="fu-call">
+              <div class="followup-row border-overdue" data-fu-type="fu-call" style="flex-wrap:wrap;">
                 <div class="followup-main">
                   <span class="followup-badge" style="background:#fde8ea; color:#e63946; margin-bottom:5px; display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px;">CONTRACT DEADLINE · 3 DAYS</span>
                   <div class="followup-title">Confirm inspection scheduling before deadline</div>
@@ -4252,6 +5073,20 @@
                 <div class="followup-actions">
                   <button class="btn-fu-dialer" onclick="addFollowupToDialer(this)">Add to Dialer</button>
                   <button class="btn-fu-update" onclick="openUpdateTaskModal(this)">Update Task</button>
+                </div>
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b07d2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                      <span style="font-size:12px; font-weight:600; color:#7a4f10;">Contingency Deadlines</span>
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">Inspection contingencies are hard contract deadlines — missing them can void the deal entirely. Confirm the inspector is booked and remind your clients of the date so nothing falls through the cracks.</div>
+                  <div class="edu-card-action">
+                    <span class="edu-card-action-text">Call the Whitfields to confirm the inspector is scheduled.</span>
+                    <button class="edu-card-action-btn" onclick="addFollowupToDialer(this)">Add to Dialer</button>
+                  </div>
                 </div>
               </div>
 
@@ -4263,26 +5098,54 @@
               <!-- Due Date filter pills -->
               <div class="dmp-filters-row" style="margin: 0; padding: 10px 20px;">
                 <div class="dmp-filter-group" style="gap: 6px;">
-                  <div class="dmp-filter" data-deals-filter="overdue" onclick="toggleDealsFilter(this)">OVERDUE</div>
-                  <div class="dmp-filter" data-deals-filter="due-today" onclick="toggleDealsFilter(this)">DUE TODAY</div>
+                  <div class="dmp-filter active" data-deals-filter="overdue" onclick="toggleDealsFilter(this)">OVERDUE</div>
+                  <div class="dmp-filter active" data-deals-filter="due-today" onclick="toggleDealsFilter(this)">DUE TODAY</div>
                   <div class="dmp-filter" data-deals-filter="due-this-week" onclick="toggleDealsFilter(this)">DUE THIS WEEK</div>
                   <div class="dmp-filter" data-deals-filter="due-next-week" onclick="toggleDealsFilter(this)">DUE NEXT WEEK</div>
                 </div>
               </div>
 
-              <div class="followup-row border-due" data-fu-filter="due-today" data-fu-type="fu-call">
+              <div class="followup-row border-due" data-fu-filter="due-today" data-fu-type="fu-call" style="flex-wrap:wrap;">
                 <div class="followup-main">
                   <span class="followup-badge badge-due-today">DUE TODAY</span>
                   <div class="followup-title">Schedule Inspection — 842 N Clark St</div>
                   <div class="followup-sub">Carlos Cortez &middot; $670K &middot; Active Client stage</div>
                 </div>
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b07d2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                      <span style="font-size:12px; font-weight:600; color:#7a4f10;">The Inspection Step</span>
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">Scheduling the inspection promptly protects your buyer's contingency window. A delayed inspection is one of the most common reasons deals fall apart — confirming this today keeps the transaction on track.</div>
+                  <div class="edu-card-action">
+                    <span class="edu-card-action-text">Confirm the inspector is booked with Carlos.</span>
+                    <button class="edu-card-action-btn" style="cursor:default; opacity:0.6;" disabled>Call Client</button>
+                  </div>
+                </div>
               </div>
 
-              <div class="followup-row border-due" data-fu-filter="due-today" data-fu-type="fu-email">
+              <div class="followup-row border-due" data-fu-filter="due-today" data-fu-type="fu-email" style="flex-wrap:wrap;">
                 <div class="followup-main">
                   <span class="followup-badge badge-due-today">DUE TODAY</span>
                   <div class="followup-title">Send updated market report to buyer consult</div>
                   <div class="followup-sub">Marcus Reynolds &middot; $850K &middot; Appointment Set stage</div>
+                </div>
+                <div class="edu-card edu-mode-item">
+                  <div class="edu-card-heading">
+                    <div class="edu-card-heading-left">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b07d2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                      <span style="font-size:12px; font-weight:600; color:#7a4f10;">Market Reports Build Trust</span>
+                    </div>
+                    <span class="edu-card-mode-label">Educational Mode</span>
+                  </div>
+                  <div class="edu-card-body">Sending a current market report before a buyer consult positions you as the expert and sets realistic expectations. Buyers who arrive informed are more decisive — and more likely to make an offer.</div>
+                  <div class="edu-card-action">
+                    <span class="edu-card-action-text">Send Marcus the report before his consult.</span>
+                    <button class="edu-card-action-btn" style="cursor:default; opacity:0.6;" disabled>Send Report</button>
+                  </div>
                 </div>
               </div>
 
@@ -4327,6 +5190,7 @@
             </div>
             <button class="appt-add-btn">+ Add</button>
           </div>
+          <div id="today-date" style="font-size:12px;color:#8892a4;margin:-8px 0 12px;"></div>
 
           <!-- Call Block -->
           <div class="call-block-row" id="call-block-row" onclick="openCallBlockModal()">
@@ -4389,6 +5253,25 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.36 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
             <div class="dialer-empty-text">No leads in your dialer queue.<br>Add leads to start calling.</div>
+          </div>
+
+          <!-- Educational Mode: Dialer prompt -->
+          <div class="edu-card edu-mode-item" id="dialer-edu-card" style="display:none;margin-top:12px;">
+            <div class="edu-card-heading">
+              <div class="edu-card-heading-left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                Before You Dial
+              </div>
+              <span class="edu-card-mode-label">Educational Mode</span>
+            </div>
+            <div class="edu-card-body">Review the script and objection handlers before your session — agents who prep before calling convert at a significantly higher rate.</div>
+            <div class="edu-card-action">
+              <div class="edu-card-action-text">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                Open the playbook to review scripts and objections.
+              </div>
+              <button class="edu-card-action-btn" onclick="openPlaybook()">Open Playbook</button>
+            </div>
           </div>
 
           <div class="dialer-footer" id="dialer-footer">
@@ -4644,7 +5527,7 @@
   }
 
   // Active filters set — empty means show all
-  let activeFilters = new Set();
+  let activeFilters = new Set(['awaiting-response']);
   let showingExtra = false;
   let activeTab = 'contact-requested';
 
@@ -4927,8 +5810,8 @@
     document.querySelectorAll('#sort-dropdown-trending .dropdown-item').forEach(el => el.classList.remove('active'));
     const clickedItem = document.querySelector(`#sort-dropdown-trending .dropdown-item[onclick="sortTrending('${mode}')"]`);
     if (clickedItem) clickedItem.classList.add('active');
-    const container = document.getElementById('dmp-leads');
-    const rows = Array.from(container.querySelectorAll('.lead-row[data-filters*="trending"]'));
+    const container = document.getElementById('trending-leads');
+    const rows = Array.from(container.querySelectorAll('.lead-row'));
     rows.sort((a, b) => {
       if (mode === 'last-call') {
         // Least recent = highest days value first
@@ -5132,6 +6015,7 @@
           meta.appendChild(badge);
         }
         container.appendChild(clone);
+        if (leadId) silenceLeadInOtherTabs(leadId, container);
 
         if (remaining === 0) {
           promoteExtras();
@@ -5266,9 +6150,10 @@
   }
 
   function renderDialer() {
-    const emptyEl  = document.getElementById('dialer-empty');
-    const listEl   = document.getElementById('dialer-list');
-    const footerEl = document.getElementById('dialer-footer');
+    const emptyEl   = document.getElementById('dialer-empty');
+    const listEl    = document.getElementById('dialer-list');
+    const footerEl  = document.getElementById('dialer-footer');
+    const eduCardEl = document.getElementById('dialer-edu-card');
 
     const badge = document.getElementById('dialer-count-badge');
     if (dialerLeads.length === 0) {
@@ -5276,12 +6161,14 @@
       listEl.style.display = 'none';
       footerEl.classList.remove('visible');
       badge.style.display = 'none';
+      eduCardEl.style.display = 'none';
     } else {
       emptyEl.style.display = 'none';
       listEl.style.display = '';
       footerEl.classList.add('visible');
       badge.textContent = dialerLeads.length;
       badge.style.display = '';
+      eduCardEl.style.display = eduModeEnabled ? '' : 'none';
       listEl.innerHTML = dialerLeads.map((lead, i) => `
         <div class="dialer-lead-item">
           <div class="dialer-lead-num">${i + 1}</div>
@@ -5359,6 +6246,7 @@
       const row = connectedTargetRow;
       connectedTargetRow = null;
       const existingFilters = row.dataset.filters || '';
+      const leadId = row.dataset.leadId || '';
       const container = row.closest('.dmp-leads') || getActiveLeadsContainer();
       row.classList.remove('is-selected');
       fadeAndRemove(row, () => {
@@ -5375,12 +6263,41 @@
           meta.appendChild(badge);
         }
         container.appendChild(clone);
+        // Cross-tab silence: silence same lead in any other tab
+        if (leadId) silenceLeadInOtherTabs(leadId, container);
         promoteExtras();
         updateActionsBtn();
         applyFilters();
         updateTabCounts();
       });
     }
+  }
+
+  // Silence a lead by data-lead-id in all containers except the one already handled
+  function silenceLeadInOtherTabs(leadId, excludeContainer) {
+    document.querySelectorAll('.lead-row[data-lead-id="' + leadId + '"]').forEach(otherRow => {
+      if (otherRow.closest('.dmp-leads') === excludeContainer) return;
+      // Skip rows already silenced
+      if ((otherRow.dataset.filters || '').split(' ').includes('dismissed')) return;
+      const otherFilters = otherRow.dataset.filters || '';
+      const otherContainer = otherRow.closest('.dmp-leads');
+      if (!otherContainer) return;
+      fadeAndRemove(otherRow, () => {
+        const otherClone = otherRow.cloneNode(true);
+        otherClone.dataset.filters = (otherFilters + ' dismissed').trim();
+        otherClone.dataset.extra = 'false';
+        otherClone.style.display = 'none';
+        otherClone.classList.remove('fading-out');
+        const otherMeta = otherClone.querySelector('.lead-meta');
+        if (otherMeta && !otherMeta.querySelector('.dismissed-badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'dismissed-badge';
+          badge.textContent = 'Silenced';
+          otherMeta.appendChild(badge);
+        }
+        otherContainer.appendChild(otherClone);
+      });
+    });
   }
 
   function dismissCrLead(btn) {
@@ -5465,6 +6382,17 @@
 
   function openPlaybook() {
     window.open('cinc-playbook.html', 'cincPlaybook', 'width=860,height=640');
+  }
+
+  // Educational Mode
+  let eduModeEnabled = true;
+
+  function toggleEduMode(enabled) {
+    eduModeEnabled = enabled;
+    document.querySelectorAll('.edu-mode-item').forEach(el => {
+      el.style.display = enabled ? '' : 'none';
+    });
+    renderDialer();
   }
 
   function openCallBlockModal() {
@@ -5654,6 +6582,8 @@
   applyFilters();
   updateTabCounts();
   updateFollowupCounts();
+  applyFuFilters();
+  applyDealsFilters();
 
   // ── Feedback modal ──
   function openFeedbackModal() {

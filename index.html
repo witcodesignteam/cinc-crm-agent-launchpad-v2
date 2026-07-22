@@ -246,48 +246,28 @@
       margin-left: 4px;
     }
 
-    .view-toggle-label {
+    .view-mode-select {
       font-size: 11px;
       font-weight: 600;
-      color: #9aa5b4;
+      color: #1a1f2e;
       letter-spacing: 0.3px;
       text-transform: uppercase;
-      transition: color 180ms ease;
-      user-select: none;
-    }
-
-    .view-toggle-label.active {
-      color: #1a1f2e;
-    }
-
-    .view-toggle-track {
-      position: relative;
-      width: 36px;
-      height: 20px;
-      background: #0080A3;
-      border-radius: 10px;
+      background: #f0f2f5;
+      border: 1px solid #d0d7e2;
+      border-radius: 5px;
+      padding: 3px 6px;
       cursor: pointer;
-      transition: background 180ms ease;
-      flex-shrink: 0;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239aa5b4' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      padding-right: 20px;
     }
 
-    .view-toggle-track.min {
-      background: #9aa5b4;
-    }
-
-    .view-toggle-thumb {
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 14px;
-      height: 14px;
-      background: #ffffff;
-      border-radius: 50%;
-      transition: transform 180ms ease;
-    }
-
-    .view-toggle-track:not(.min) .view-toggle-thumb {
-      transform: translateX(16px);
+    .view-mode-select:hover {
+      border-color: #0080A3;
     }
 
     .topbar-prototype-badge svg {
@@ -1079,6 +1059,23 @@
       transform: translateX(16px);
     }
 
+    #modal-pin-note:checked + .modal-reminder-slider {
+      background: #10b981;
+    }
+
+    #modal-pin-note:checked + .modal-reminder-slider::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 8px;
+      height: 5px;
+      border-left: 2px solid #ffffff;
+      border-bottom: 2px solid #ffffff;
+      transform: rotate(-45deg);
+      pointer-events: none;
+    }
+
     .modal-reminder-label {
       font-size: 13px;
       color: #3d4a5a;
@@ -1347,6 +1344,7 @@
     .tl-yellow              { background: #d4a017; }
     .tl-mint                { background: #1aab7a; }
     .tl-green               { background: #10b981; }
+    .tl-orange              { background: #E97F04; }
     .tl-purple              { background: #7c3aed; }
     .cr-teal                { background: #0080A3; }
     .cr-blue                { background: #3B8AFD; }
@@ -1412,34 +1410,47 @@
     }
 
     .badge-new-lead {
+      background: #ffffff;
+      color: #dc2626;
+      border: 1px solid #dc2626;
+    }
+
+    .badge-attempted {
+      background: #ffffff;
+      color: #E97F04;
+      border: 1px solid #E97F04;
+    }
+
+    .badge-contacted {
+      background: #ffffff;
+      color: #10b981;
+      border: 1px solid #10b981;
+    }
+
+    .badge-active-client {
+      background: #ffffff;
+      color: #10b981;
+      border: 1px solid #10b981;
+    }
+
+    .badge-buyer {
+      background: #4a5568;
+      color: #f0f2f5;
+    }
+
+    .badge-partial {
+      background: #0080A3;
+      color: #ffffff;
+    }
+
+    .badge-pond-lead {
       background: #BAEAFE;
       color: #0B6886;
     }
 
-    .badge-attempted {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .badge-contacted {
-      background: #C5DCFF;
-      color: #0B5ED7;
-    }
-
-    .badge-active-client {
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .badge-buyer {
-      background: #f0f2f5;
-      color: #4a5568;
-      border: 1px solid #d0d7e2;
-    }
-
     .badge-seller {
-      background: #4a5568;
-      color: #f0f2f5;
+      background: #10b981;
+      color: #ffffff;
     }
 
     .lead-meta {
@@ -2675,13 +2686,11 @@
           </svg>
           AI Prototype
         </span>
-        <span class="view-toggle" onclick="toggleViewMode()">
-          <span class="view-toggle-label active" id="view-label-min">Min</span>
-          <span class="view-toggle-track min" id="view-toggle-track">
-            <span class="view-toggle-thumb"></span>
-          </span>
-          <span class="view-toggle-label" id="view-label-max">Max</span>
-        </span>
+        <select class="view-mode-select" id="view-mode-select" onchange="setViewMode(this.value)">
+          <option value="mvp" selected>MVP</option>
+          <option value="iter2">Iteration 2</option>
+          <option value="future">Future Updates</option>
+        </select>
       </span>
       <div class="topbar-right">
         <a href="#" class="topbar-help">HELP</a>
@@ -3000,6 +3009,7 @@
                   <span class="lead-name">Eva Wallace</span>
                   <span class="lead-badge badge-new-lead">New Lead</span>
                   <span class="lead-badge badge-buyer">Buyer</span>
+                  <span class="lead-badge badge-pond-lead">Pond Lead</span>
                   <img class="status-icon" src="icons/158_locked.svg" alt="Locked" title="Locked">
                 </div>
                 <div class="lead-meta">Registered &middot; Jun 30, 2026 at 3:52 am</div>
@@ -3144,6 +3154,7 @@
                   <span class="lead-name">Priya Nair</span>
                   <span class="lead-badge badge-attempted">Attempted Contact</span>
                   <span class="lead-badge badge-buyer">Buyer</span>
+                  <span class="lead-badge badge-pond-lead">Pond Lead</span>
                   <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                 </div>
                 <div class="lead-meta">Last attempt &middot; 5 days ago</div>
@@ -3725,6 +3736,7 @@
                       <span class="lead-name">Priya Nair</span>
                       <span class="lead-badge badge-attempted">Attempted Contact</span>
                       <span class="lead-badge badge-buyer">Buyer</span>
+                      <span class="lead-badge badge-partial">Partial</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
                     <div class="lead-meta overdue">
@@ -3779,6 +3791,7 @@
                       <span class="lead-name">Marcus Webb</span>
                       <span class="lead-badge badge-attempted">Attempted Contact</span>
                       <span class="lead-badge badge-buyer">Buyer</span>
+                      <span class="lead-badge badge-partial">Partial</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
                     <div class="lead-meta overdue">
@@ -4736,7 +4749,7 @@
             <!-- Card 1: Property Inquiry — Natalie Cruz -->
             <div class="lead-card" data-cr-status="awaiting" data-cr-type="property-inquiry">
               <div class="lead-card-main">
-                <div class="card-identifier cr-teal">
+                <div class="card-identifier cr-blue">
                   <img src="icons/353_contact_requested.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5002,7 +5015,7 @@
             <!-- Card 5: Etta Message — Carlos Reyes -->
             <div class="lead-card" data-cr-status="awaiting" data-cr-type="etta-message">
               <div class="lead-card-main">
-                <div class="card-identifier cr-green">
+                <div class="card-identifier cr-mint">
                   <img src="icons/211_etta_1.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5206,7 +5219,7 @@
             <!-- Card 1: High Property Views — Jordan Hayes -->
             <div class="lead-card" data-tl-type="high-property-views">
               <div class="lead-card-main">
-                <div class="card-identifier good-contact">
+                <div class="card-identifier tl-orange">
                   <img src="icons/127_hot_lead.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5387,7 +5400,7 @@
             <!-- Card 4: Frequent Visitor — Simone Carter -->
             <div class="lead-card" data-tl-type="frequent-visitor">
               <div class="lead-card-main">
-                <div class="card-identifier good-contact">
+                <div class="card-identifier tl-orange">
                   <img src="icons/127_hot_lead.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5504,7 +5517,7 @@
             <!-- Card 6: Shared Listings — Marcus Webb -->
             <div class="lead-card" data-tl-type="shared-listings">
               <div class="lead-card-main">
-                <div class="card-identifier good-contact">
+                <div class="card-identifier cr-blue">
                   <img src="icons/133_share.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5746,7 +5759,7 @@
             <!-- Card 9: Calculated Mortgage — Priya Nair -->
             <div class="lead-card" data-tl-type="calculated-mortgage">
               <div class="lead-card-main">
-                <div class="card-identifier bad-contact">
+                <div class="card-identifier tl-yellow">
                   <img src="icons/calculator.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5809,7 +5822,7 @@
             <!-- Card 10: Verified Account — Jordan Hayes (2nd instance) -->
             <div class="lead-card" data-tl-type="verified-account">
               <div class="lead-card-main">
-                <div class="card-identifier tl-green">
+                <div class="card-identifier cr-teal">
                   <img src="icons/verified_status.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -5896,7 +5909,8 @@
         const badge = document.createElement('span');
         badge.className = 'lead-badge badge-in-dialer';
         badge.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>In Dialer';
-        if (document.getElementById('view-toggle-track').classList.contains('min')) {
+        const currentView = document.getElementById('view-mode-select').value;
+        if (currentView === 'mvp' || currentView === 'iter2') {
           badge.style.display = 'none';
         }
         nameRow.appendChild(badge);
@@ -6590,21 +6604,10 @@
       showToast('Weekly dials updated.');
     }
 
-    function toggleViewMode() {
-      const track = document.getElementById('view-toggle-track');
-      const labelMin = document.getElementById('view-label-min');
-      const labelMax = document.getElementById('view-label-max');
-      const isMax = !track.classList.contains('min');
-      track.classList.toggle('min', isMax);
-      labelMin.classList.toggle('active', isMax);
-      labelMax.classList.toggle('active', !isMax);
-
-      const isNowMin = isMax;
-      document.body.classList.toggle('body-min', isNowMin);
-
-
-      // Sync select values to match active pills
-      if (isNowMin) syncSelectsToActivePills();
+    function setViewMode(value) {
+      const isMinLike = (value === 'mvp' || value === 'iter2');
+      document.body.classList.toggle('body-min', isMinLike);
+      if (isMinLike) syncSelectsToActivePills();
     }
 
     function syncSelectsToActivePills() {
@@ -6767,6 +6770,17 @@
           <textarea class="modal-textarea" id="modal-note-text" placeholder="Add your note here..."></textarea>
         </div>
 
+        <!-- Pin Note -->
+        <div class="modal-reminder-row">
+          <label class="modal-reminder-toggle">
+            <input type="checkbox" id="modal-pin-note">
+            <span class="modal-reminder-slider"></span>
+          </label>
+          <span class="modal-reminder-label" style="display:inline-flex;align-items:center;gap:5px;">
+            <img src="icons/134_sticky.svg" width="14" height="14" style="flex-shrink:0;opacity:0.6;">
+            Pin the Note
+          </span>
+        </div>
 
       </div>
       <div class="modal-footer">

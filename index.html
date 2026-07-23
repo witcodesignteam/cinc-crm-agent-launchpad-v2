@@ -396,7 +396,7 @@
       padding: 4px 12px;
       border-radius: 999px;
       border: none;
-      background: linear-gradient(135deg, #0080A3 0%, #63DBB2 100%);
+      background: linear-gradient(135deg, #0080A3 40%, #44BF98 100%);
       color: #ffffff;
       font-size: 12px;
       font-weight: 600;
@@ -427,7 +427,7 @@
     }
 
     .dials-top {
-      background: linear-gradient(135deg, #0080A3 0%, #63DBB2 100%);
+      background: linear-gradient(135deg, #0080A3 40%, #44BF98 100%);
       padding: 12px 14px 10px;
       display: flex;
       align-items: flex-start;
@@ -510,7 +510,7 @@
 
     .dials-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #0080A3, #63DBB2);
+      background: linear-gradient(90deg, #0080A3 40%, #44BF98);
       border-radius: 99px;
       width: 37%; /* 28/75 */
       transition: width 400ms ease;
@@ -572,6 +572,156 @@
       padding: 0 16px;
       height: 48px;
       gap: 0;
+    }
+
+    .tab-view-btn {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 28px;
+      padding: 0 10px;
+      border: 1px solid #c8dff0;
+      border-radius: 6px;
+      background: #ffffff;
+      cursor: pointer;
+      color: #0080A3;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+      transition: border-color 180ms ease, background 180ms ease;
+      white-space: nowrap;
+    }
+
+    .tab-view-btn:hover {
+      border-color: #0080A3;
+      background: #f0f9fb;
+    }
+
+    .tab-view-btn svg {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .tab-view-btn.active {
+      border-color: #0080A3;
+      background: #ffffff;
+    }
+
+    .tab-view-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: #ffffff;
+      border: 1px solid #e4e8ed;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      min-width: 200px;
+      z-index: 200;
+      overflow: hidden;
+    }
+
+    .tab-view-dropdown.open {
+      display: block;
+    }
+
+    .tab-view-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #1a1f2e;
+      cursor: pointer;
+      transition: background 120ms ease;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .tab-view-dropdown-item:hover {
+      background: #f5f7fa;
+    }
+
+    .tab-view-dropdown-item svg {
+      width: 14px;
+      height: 14px;
+      stroke: #6b7a8d;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .tab-view-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    /* ─── USER PICKER MODAL ──────────────────────────────────── */
+
+    .user-picker-list {
+      max-height: 260px;
+      overflow-y: auto;
+      margin-top: 4px;
+    }
+
+    .user-picker-search {
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 13px;
+      border: 1px solid #d0d7e2;
+      border-radius: 6px;
+      outline: none;
+      color: #1a1f2e;
+      box-sizing: border-box;
+    }
+
+    .user-picker-search:focus {
+      border-color: #0080A3;
+    }
+
+    .user-picker-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 4px;
+      font-size: 13px;
+      color: #1a1f2e;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 120ms ease;
+    }
+
+    .user-picker-item:hover {
+      background: #f5f7fa;
+      padding-left: 8px;
+    }
+
+    .user-picker-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e4e8ed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #5a6475;
+      flex-shrink: 0;
     }
 
     .primary-tab {
@@ -662,7 +812,7 @@
       color: #9aa5b4;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      margin-right: 4px;
+      margin-right: 2px;
       white-space: nowrap;
     }
 
@@ -719,6 +869,37 @@
       flex: 1;
     }
 
+    .filter-select-group {
+      display: none;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .filter-select-group + .filter-select-group {
+      margin-left: 24px;
+    }
+
+    .body-min .filter-select-group {
+      display: inline-flex;
+    }
+
+    .filter-bar.filter-bar-row1 {
+      padding-bottom: 4px;
+    }
+
+    .body-min .filter-bar.filter-bar-row1 {
+      padding-bottom: 8px;
+    }
+
+    .body-min .fu-main-label,
+    .body-min .cr-main-label {
+      display: none;
+    }
+
+    .body-min .filter-bar {
+      flex-wrap: nowrap;
+    }
+
     .filter-select {
       display: none;
       height: 30px;
@@ -762,10 +943,50 @@
       display: none !important;
     }
 
+
     .filter-bar-actions {
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .select-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 30px;
+      padding: 0 4px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #5a6475;
+      transition: color 120ms ease;
+    }
+
+    .select-all-btn:hover {
+      color: #0080A3;
+    }
+
+    .select-all-btn input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #0080A3;
+      flex-shrink: 0;
+      border: none;
+      outline: none;
+    }
+
+    .select-all-btn svg {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
     }
 
     .icon-btn-sm {
@@ -1342,13 +1563,13 @@
     .bad-contact            { background: #E97F04; }
     .tl-pink                { background: #e84393; }
     .tl-yellow              { background: #d4a017; }
-    .tl-mint                { background: #1aab7a; }
+    .tl-mint                { background: #008767; }
     .tl-green               { background: #10b981; }
     .tl-orange              { background: #E97F04; }
     .tl-purple              { background: #7c3aed; }
     .cr-teal                { background: #0080A3; }
     .cr-blue                { background: #3B8AFD; }
-    .cr-mint                { background: #1aab7a; }
+    .cr-mint                { background: #008767; }
     .cr-orange              { background: #E97F04; }
     .cr-purple              { background: #7c3aed; }
     .cr-green               { background: #10b981; }
@@ -1961,6 +2182,10 @@
       background: #2e6b84;
     }
 
+    .chat-avatar.ai-avatar img {
+      filter: brightness(0) invert(1);
+    }
+
     .chat-avatar.ai-avatar svg {
       width: 18px;
       height: 18px;
@@ -2076,6 +2301,28 @@
       color: #9aa5b4;
     }
 
+    .note-edit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-start;
+      margin-top: 6px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #5a6475;
+      background: #ffffff;
+      border: 1.5px solid #d0d7e2;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      min-height: 34px;
+    }
+    .note-edit-btn:hover {
+      border-color: #0080A3;
+      color: #0080A3;
+    }
+
     .property-preview {
       display: flex;
       flex-direction: column;
@@ -2130,9 +2377,28 @@
     }
 
     .property-preview-address {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+
+    .property-preview-street {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 400;
       color: #1a1f2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .property-preview-city {
+      font-size: 12px;
+      font-weight: 400;
+      color: #1a1f2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .property-preview-price {
@@ -2314,6 +2580,36 @@
       width: 320px;
     }
 
+    .inline-info-card.comm-card.user-highlights-card {
+      border: none;
+      padding: 2px;
+      background: linear-gradient(135deg, #0080A3 40%, #44BF98);
+    }
+
+    .inline-info-card.comm-card.user-highlights-card > * {
+      background: #ffffff;
+    }
+
+    .inline-info-card.comm-card.user-highlights-card .comm-card-top {
+      border-radius: 0 0 4px 4px;
+    }
+    .inline-info-card.comm-card.user-highlights-card .inline-info-card-header {
+      border-radius: 4px 4px 0 0;
+      background: #f0f2f5;
+      color: #5a6475;
+    }
+
+    .inline-info-card.comm-card.user-highlights-card .comm-card-bottom {
+      border-top: 1px solid #e4e8ed;
+      border-radius: 0 0 4px 4px;
+    }
+    .inline-info-card.comm-card.user-highlights-card .comm-card-stat-value {
+      font-size: 11px;
+    }
+    .inline-info-card.comm-card.user-highlights-card .comm-card-top {
+      border-radius: 0;
+    }
+
     .comm-card-top {
       display: flex;
       border-bottom: 1px solid #e4e8ed;
@@ -2378,8 +2674,7 @@
     }
 
     .homepulse-card {
-      min-width: 170px;
-      max-width: 280px;
+      width: 320px;
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid #e4e8ed;
@@ -2388,12 +2683,41 @@
       flex-direction: column;
     }
 
-    .homepulse-card-header {
-      background: #63DBB2;
+    .reg-info-card {
+      width: 320px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #e4e8ed;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      margin-top: 6px;
+    }
+
+    .reg-info-card-header {
+      background: #0080A3;
       padding: 4px 10px;
       font-size: 10px;
       font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .reg-info-card-body {
+      background: #ffffff;
+      padding: 8px 10px;
+      font-size: 12.5px;
       color: #1a1f2e;
+      line-height: 1.4;
+    }
+
+    .homepulse-card-header {
+      background: #008767;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
@@ -2713,7 +3037,7 @@
     <!-- Greeting + Dials Row -->
     <div class="greeting-row">
       <div class="greeting-text">
-        <h1>Good morning, Alice.</h1>
+        <h1 id="greeting-name">Good morning, Alice.</h1>
         <p>You have <a href="#" class="appt-link">3 appointments</a> scheduled today.</p>
         <a href="#" onclick="window.open('cinc-playbook.html','playbookWindow','width=1000,height=750,resizable=yes,scrollbars=yes'); return false;" class="playbook-pill">
           CINC Mini Playbook
@@ -2776,6 +3100,19 @@
             Trending Leads
             <span class="trending-dot" id="trending-dot"></span>
           </a>
+          <div class="tab-view-wrapper">
+            <button class="tab-view-btn" id="tab-view-btn" onclick="toggleViewDropdown()">
+              <span id="tab-view-label">VIEW: Default</span>
+              <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="1 1 5 5 9 1"/>
+              </svg>
+            </button>
+            <div class="tab-view-dropdown" id="tab-view-dropdown">
+              <button class="tab-view-dropdown-item" onclick="viewAllPondLeads(event)">View all Pond Leads</button>
+              <button class="tab-view-dropdown-item" onclick="openUserPickerModal()">View Dashboard of...</button>
+              <button class="tab-view-dropdown-item" id="reset-view-item" onclick="resetView()" style="display:none; color:#dc2626;">Reset View</button>
+            </div>
+          </div>
         </div>
 
         <!-- ─── PROSPECTING TAB PANEL ─── -->
@@ -2783,7 +3120,6 @@
 
         <!-- Filter Bar -->
         <div class="filter-bar">
-          <span class="filter-label">Filter</span>
           <button class="filter-pill active" data-filter="p1" onclick="switchFilter(this)">
             New Lead - P1
             <span class="pill-badge">3</span>
@@ -2796,11 +3132,15 @@
             Recent Login - P3
             <span class="pill-badge">5</span>
           </button>
-          <select class="filter-select" id="prospecting-select" onchange="switchFilterSelect(this)">
-            <option value="p1">New Lead - P1</option>
-            <option value="p2">Attempted Contact - P2</option>
-            <option value="p3">Recent Login - P3</option>
-          </select>
+          <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
+          <div class="filter-select-group">
+            <span class="filter-label">Filter</span>
+            <select class="filter-select" id="prospecting-select" onchange="switchFilterSelect(this)">
+              <option value="p1">New Lead - P1</option>
+              <option value="p2">Attempted Contact - P2</option>
+              <option value="p3">Recent Login - P3</option>
+            </select>
+          </div>
           <div class="filter-bar-spacer"></div>
           <div class="filter-bar-actions">
             <div class="icon-btn-sm" title="Refresh">
@@ -2832,6 +3172,10 @@
                 </button>
               </div>
             </div>
+            <button class="select-all-btn" onclick="toggleSelectAll(this)" data-tab="tab-prospecting" title="Select all">
+              <input type="checkbox" tabindex="-1" onclick="event.stopPropagation(); toggleSelectAll(this.closest('.select-all-btn'))">
+              <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+            </button>
           </div>
         </div>
 
@@ -2908,6 +3252,31 @@
                 <span class="reg-question">Have you been prequalified for a mortgage?</span>
                 <span class="reg-answer">No</span>
               </div>
+              <div class="inline-info-cards">
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Today at 9:04 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Austin, TX</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">—</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">0</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2979,6 +3348,31 @@
               <div class="reg-qa">
                 <span class="reg-question">Have you been prequalified for a mortgage?</span>
                 <span class="reg-answer">No</span>
+              </div>
+              <div class="inline-info-cards">
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Today at 8:58 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Nashville, TN</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 21 at 2:15 pm</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">2</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="homepulse-card" style="margin-top: 6px;">
                 <div class="homepulse-card-header">HomePulse Report</div>
@@ -3067,6 +3461,31 @@
                 <span class="reg-question">Have you been prequalified for a mortgage?</span>
                 <span class="reg-answer">Yes</span>
               </div>
+              <div class="inline-info-cards">
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jun 30 at 3:52 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Denver, CO</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">—</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">0</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -3138,6 +3557,31 @@
               <div class="reg-qa">
                 <span class="reg-question">Have you been prequalified for a mortgage?</span>
                 <span class="reg-answer">Yes</span>
+              </div>
+              <div class="inline-info-cards">
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jul 20 at 7:30 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Phoenix, AZ</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 20 at 11:08 am</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">3</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -3211,6 +3655,31 @@
               <div class="reg-qa">
                 <span class="reg-question">Have you been prequalified for a mortgage?</span>
                 <span class="reg-answer">No</span>
+              </div>
+              <div class="inline-info-cards">
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jul 17 at 6:12 pm</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Seattle, WA</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 18 at 4:30 pm</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">2</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -3665,28 +4134,35 @@
 
         <!-- ─── FOLLOW UP TAB PANEL ─── -->
         <div id="tab-followup" style="display:none;">
-          <div class="filter-bar" style="padding-bottom: 4px;">
-            <span class="filter-label">Due</span>
+          <div class="filter-bar filter-bar-row1">
+            <span class="filter-label fu-main-label">Due</span>
+            <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
             <button class="filter-pill active" data-due="today-overdue" onclick="switchDueFilter(this)">Today &amp; Overdue</button>
             <button class="filter-pill" data-due="today" onclick="switchDueFilter(this)">Today</button>
             <button class="filter-pill" data-due="this-week" onclick="switchDueFilter(this)">This Week</button>
             <button class="filter-pill" data-due="next-week" onclick="switchDueFilter(this)">Next Week</button>
             <button class="filter-pill" data-due="overdue" onclick="switchDueFilter(this)">Overdue</button>
             <button class="filter-pill" data-due="all" onclick="switchDueFilter(this)">Anytime</button>
-            <select class="filter-select" id="fu-due-select" onchange="switchDueSelect(this)">
-              <option value="today-overdue">Today &amp; Overdue</option>
-              <option value="today">Today</option>
-              <option value="this-week">This Week</option>
-              <option value="next-week">Next Week</option>
-              <option value="overdue">Overdue</option>
-              <option value="all">Anytime</option>
-            </select>
-            <select class="filter-select" id="fu-type-select-inline" onchange="switchTypeSelect(this)">
-              <option value="all">All Types</option>
-              <option value="call">Call</option>
-              <option value="email">Email</option>
-              <option value="other">Other</option>
-            </select>
+            <div class="filter-select-group">
+              <span class="filter-label">Due</span>
+              <select class="filter-select" id="fu-due-select" onchange="switchDueSelect(this)">
+                <option value="today-overdue">Today &amp; Overdue</option>
+                <option value="today">Today</option>
+                <option value="this-week">This Week</option>
+                <option value="next-week">Next Week</option>
+                <option value="overdue">Overdue</option>
+                <option value="all">Anytime</option>
+              </select>
+            </div>
+            <div class="filter-select-group">
+              <span class="filter-label">Type</span>
+              <select class="filter-select" id="fu-type-select-inline" onchange="switchTypeSelect(this)">
+                <option value="all">All Types</option>
+                <option value="call">Call</option>
+                <option value="email">Email</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
             <div class="filter-bar-spacer"></div>
             <div class="filter-bar-actions">
               <div class="actions-dropdown-wrapper">
@@ -3712,6 +4188,10 @@
                   </button>
                 </div>
               </div>
+              <button class="select-all-btn" onclick="toggleSelectAll(this)" data-tab="tab-followup" title="Select all">
+                <input type="checkbox" tabindex="-1" onclick="event.stopPropagation(); toggleSelectAll(this.closest('.select-all-btn'))">
+                <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+              </button>
             </div>
           </div>
           <div class="filter-bar fu-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
@@ -4225,21 +4705,24 @@
         <!-- ─── DEAL REMINDERS TAB PANEL ─── -->
         <div id="tab-deal-reminders" style="display:none;">
           <div class="filter-bar">
-            <span class="filter-label">Due</span>
+            <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
             <button class="filter-pill active" data-dr-due="today-overdue" onclick="switchDrDueFilter(this)">Today &amp; Overdue</button>
             <button class="filter-pill" data-dr-due="today" onclick="switchDrDueFilter(this)">Today</button>
             <button class="filter-pill" data-dr-due="this-week" onclick="switchDrDueFilter(this)">This Week</button>
             <button class="filter-pill" data-dr-due="next-week" onclick="switchDrDueFilter(this)">Next Week</button>
             <button class="filter-pill" data-dr-due="overdue" onclick="switchDrDueFilter(this)">Overdue</button>
             <button class="filter-pill" data-dr-due="all" onclick="switchDrDueFilter(this)">Anytime</button>
-            <select class="filter-select" id="dr-due-select" onchange="switchDrDueSelect(this)">
-              <option value="today-overdue">Today &amp; Overdue</option>
-              <option value="today">Today</option>
-              <option value="this-week">This Week</option>
-              <option value="next-week">Next Week</option>
-              <option value="overdue">Overdue</option>
-              <option value="all">Anytime</option>
-            </select>
+            <div class="filter-select-group">
+              <span class="filter-label">Due</span>
+              <select class="filter-select" id="dr-due-select" onchange="switchDrDueSelect(this)">
+                <option value="today-overdue">Today &amp; Overdue</option>
+                <option value="today">Today</option>
+                <option value="this-week">This Week</option>
+                <option value="next-week">Next Week</option>
+                <option value="overdue">Overdue</option>
+                <option value="all">Anytime</option>
+              </select>
+            </div>
             <div class="filter-bar-spacer"></div>
             <div class="filter-bar-actions">
               <div class="actions-dropdown-wrapper">
@@ -4265,6 +4748,10 @@
                   </button>
                 </div>
               </div>
+              <button class="select-all-btn" onclick="toggleSelectAll(this)" data-tab="tab-deal-reminders" title="Select all">
+                <input type="checkbox" tabindex="-1" onclick="event.stopPropagation(); toggleSelectAll(this.closest('.select-all-btn'))">
+                <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+              </button>
             </div>
           </div>
           <div class="lead-cards">
@@ -4688,25 +5175,32 @@
 
         <!-- ─── CONTACT REQUESTED TAB PANEL ─── -->
         <div id="tab-contact-requested" style="display:none;">
-          <div class="filter-bar" style="padding-bottom: 4px;">
-            <span class="filter-label">Status</span>
+          <div class="filter-bar filter-bar-row1">
+            <span class="filter-label cr-main-label">Status</span>
+            <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
             <button class="filter-pill active" data-cr-status="awaiting" onclick="switchCrStatusFilter(this)">Awaiting Response</button>
             <button class="filter-pill" data-cr-status="acted-on" onclick="switchCrStatusFilter(this)">Acted On</button>
             <button class="filter-pill" data-cr-status="dismissed" onclick="switchCrStatusFilter(this)">Dismissed</button>
-            <select class="filter-select" id="cr-status-select" onchange="switchCrStatusSelect(this)">
-              <option value="awaiting">Awaiting Response</option>
-              <option value="acted-on">Acted On</option>
-              <option value="dismissed">Dismissed</option>
-            </select>
-            <select class="filter-select" id="cr-type-select-inline" onchange="switchCrTypeSelect(this)">
-              <option value="all">All Types</option>
-              <option value="ai-ready">AI Ready</option>
-              <option value="cash-offer">Cash Offer Inquiry</option>
-              <option value="etta-message">Etta Message</option>
-              <option value="homepulse">HomePulse Inquiry</option>
-              <option value="property-inquiry">Property Inquiry</option>
-              <option value="showing-request">Showing Request</option>
-            </select>
+            <div class="filter-select-group">
+              <span class="filter-label">Status</span>
+              <select class="filter-select" id="cr-status-select" onchange="switchCrStatusSelect(this)">
+                <option value="awaiting">Awaiting Response</option>
+                <option value="acted-on">Acted On</option>
+                <option value="dismissed">Dismissed</option>
+              </select>
+            </div>
+            <div class="filter-select-group">
+              <span class="filter-label">Type</span>
+              <select class="filter-select" id="cr-type-select-inline" onchange="switchCrTypeSelect(this)">
+                <option value="all">All Types</option>
+                <option value="ai-ready">AI Ready</option>
+                <option value="cash-offer">Cash Offer Inquiry</option>
+                <option value="etta-message">Etta Message</option>
+                <option value="homepulse">HomePulse Inquiry</option>
+                <option value="property-inquiry">Property Inquiry</option>
+                <option value="showing-request">Showing Request</option>
+              </select>
+            </div>
             <div class="filter-bar-spacer"></div>
             <div class="filter-bar-actions">
               <div class="actions-dropdown-wrapper">
@@ -4732,6 +5226,10 @@
                   </button>
                 </div>
               </div>
+              <button class="select-all-btn" onclick="toggleSelectAll(this)" data-tab="tab-contact-requested" title="Select all">
+                <input type="checkbox" tabindex="-1" onclick="event.stopPropagation(); toggleSelectAll(this.closest('.select-all-btn'))">
+                <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+              </button>
             </div>
           </div>
           <div class="filter-bar cr-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
@@ -4790,19 +5288,28 @@
                     <div class="activity-detail">
                       <span class="activity-label">Requested more info on a property</span>
                       <span class="activity-sub">12 min ago</span>
-                      <div class="property-preview" style="margin-top:6px; max-width:340px;">
+                      <div class="property-preview" style="margin-top:6px; width:320px;">
                         <div class="property-preview-header">Inquired About</div>
                         <div class="property-preview-body">
                           <div class="property-preview-image"></div>
                           <div class="property-preview-info">
                             <div class="property-preview-info-top">
                               <span class="property-preview-price">$425,000</span>
-                              <span class="property-preview-address">2218 Vine St, Denver, CO 80205</span>
+                              <span class="property-preview-address"><span class="property-preview-street">2218 Vine St</span><span class="property-preview-city">Denver, CO 80205</span></span>
                             </div>
                             <a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Last Pinned Note</span>
+                      <span class="activity-sub">Yesterday at 3:12 pm &middot; Call</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Left voicemail, mentioned she was browsing listings in the area. Will follow up tomorrow."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
                     </div>
                   </div>
                 </div>
@@ -4853,14 +5360,14 @@
                     <div class="activity-detail">
                       <span class="activity-label">Requested a showing</span>
                       <span class="activity-sub">34 min ago</span>
-                      <div class="property-preview" style="margin-top:6px; max-width:340px;">
+                      <div class="property-preview" style="margin-top:6px; width:320px;">
                         <div class="property-preview-header">Showing Requested</div>
                         <div class="property-preview-body">
                           <div class="property-preview-image"></div>
                           <div class="property-preview-info">
                             <div class="property-preview-info-top">
                               <span class="property-preview-price">$519,000</span>
-                              <span class="property-preview-address">840 Clarkson St, Denver, CO 80218</span>
+                              <span class="property-preview-address"><span class="property-preview-street">840 Clarkson St</span><span class="property-preview-city">Denver, CO 80218</span></span>
                             </div>
                             <a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                           </div>
@@ -4886,6 +5393,15 @@
                           </button>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Most Recent Note</span>
+                      <span class="activity-sub">Today at 8:45 am &middot; Call</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Called but no answer. Sent a follow-up text about the Clarkson St showing request."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
                     </div>
                   </div>
                 </div>
@@ -4948,6 +5464,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Last Pinned Note</span>
+                      <span class="activity-sub">Yesterday at 11:30 am &middot; Call</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Spoke briefly — Raymond confirmed he wants to sell within 60 days. Will reach out again this week."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -5006,6 +5531,15 @@
                           </a>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Most Recent Note</span>
+                      <span class="activity-sub">Today at 7:55 am &middot; Email</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Sent intro email with a CMA overview for the Spruce Ave property. Waiting on response."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
                     </div>
                   </div>
                 </div>
@@ -5093,6 +5627,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Last Pinned Note</span>
+                      <span class="activity-sub">Jul 19 at 2:00 pm &middot; Text</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Texted Carlos about the Clarkson neighborhood. He replied asking about parking — following up."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -5141,11 +5684,70 @@
                     <div class="activity-detail">
                       <span class="activity-label">Marked ready for an agent by AI</span>
                       <span class="activity-sub">Just now</span>
-                      <div class="search-params" style="margin-top:6px;">
-                        <span class="search-param-pill" style="background:#dcfce7; color:#166534; border-color:#86efac;">AI Qualified</span>
-                        <span class="search-param-pill">Budget $400K–$500K</span>
-                        <span class="search-param-pill">Denver Metro</span>
+                      <div class="reg-info-card" style="margin-top:8px; width:100%; max-width:600px;">
+                        <div class="reg-info-card-header">Conversation Highlights</div>
+                        <div class="reg-info-card-body">
+                          <ul style="margin:0; padding-left:14px; line-height:1.8;">
+                            <li>Budget $400K–$500K</li>
+                            <li>Denver Metro</li>
+                          </ul>
+                        </div>
                       </div>
+                      <div class="chat-thread" style="margin-top:12px;">
+
+                        <!-- Message 3: Lead -->
+                        <div class="chat-message lead">
+                          <div class="chat-avatar">DF</div>
+                          <div class="chat-bubble">
+                            I'm thinking somewhere between $400,000 and $500,000. I want a 3-bedroom with a yard if possible.
+                            <span class="chat-timestamp">Today at 9:16 am</span>
+                          </div>
+                        </div>
+
+                        <!-- Message 4: AI -->
+                        <div class="chat-message ai">
+                          <div class="chat-avatar ai-avatar">
+                            <img src="icons/277_bot.svg" width="16" height="16">
+                          </div>
+                          <div class="chat-bubble">
+                            That budget is very workable in the Denver Metro — areas like Arvada, Lakewood, and Aurora have solid inventory in that range. Are you pre-approved or still in the early stages?
+                            <span class="chat-timestamp">Today at 9:17 am</span>
+                          </div>
+                        </div>
+
+                        <!-- Message 5: Lead -->
+                        <div class="chat-message lead">
+                          <div class="chat-avatar">DF</div>
+                          <div class="chat-bubble">
+                            Still early stages. I'd love to talk to an agent soon though.
+                            <span class="chat-timestamp">Today at 9:18 am</span>
+                          </div>
+                        </div>
+
+                        <!-- Message 6: AI -->
+                        <div class="chat-message ai">
+                          <div class="chat-avatar ai-avatar">
+                            <img src="icons/277_bot.svg" width="16" height="16">
+                          </div>
+                          <div class="chat-bubble">
+                            Perfect! I'll connect you with an agent who knows the Denver Metro well. They'll be in touch shortly.
+                            <span class="chat-timestamp">Today at 9:18 am</span>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div style="max-width:600px; display:flex; justify-content:center;">
+                        <button class="chat-view-full">View Full Conversation</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Most Recent Note</span>
+                      <span class="activity-sub">Today at 9:22 am &middot; Call</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Reached Danielle — she's actively looking in Denver Metro with a budget around $450K. Scheduling a call."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
                     </div>
                   </div>
                 </div>
@@ -5157,27 +5759,30 @@
 
         <!-- ─── TRENDING LEADS TAB PANEL ─── -->
         <div id="tab-trending" style="display:none;">
-          <div class="filter-bar" style="padding-bottom: 4px;">
-            <span class="filter-label">Type</span>
+          <div class="filter-bar filter-bar-row1">
+            <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
             <button class="filter-pill active" data-tl-type="all" onclick="switchTlTypeFilter(this)">All</button>
             <button class="filter-pill" data-tl-type="ai-conversation" onclick="switchTlTypeFilter(this)">AI Conversation</button>
             <button class="filter-pill" data-tl-type="claimed-homepulse" onclick="switchTlTypeFilter(this)">Claimed HomePulse</button>
             <button class="filter-pill" data-tl-type="frequent-visitor" onclick="switchTlTypeFilter(this)">Frequent Visitor</button>
             <button class="filter-pill" data-tl-type="high-favorites" onclick="switchTlTypeFilter(this)">High Favorites</button>
             <button class="filter-pill" data-tl-type="high-property-views" onclick="switchTlTypeFilter(this)">High Property Views</button>
-            <select class="filter-select" id="tl-type-select" onchange="switchTlTypeSelect(this)">
-              <option value="all">All Types</option>
-              <option value="ai-conversation">AI Conversation</option>
-              <option value="claimed-homepulse">Claimed HomePulse</option>
-              <option value="frequent-visitor">Frequent Visitor</option>
-              <option value="high-favorites">High Favorites</option>
-              <option value="high-property-views">High Property Views</option>
-              <option value="shared-listings">Shared Listings</option>
-              <option value="updated-contact-info">Updated Contact Info</option>
-              <option value="updated-saved-search">Updated Saved Search</option>
-              <option value="calculated-mortgage">Calculated Mortgage</option>
-              <option value="verified-account">Verified Account</option>
-            </select>
+            <div class="filter-select-group">
+              <span class="filter-label">Type</span>
+              <select class="filter-select" id="tl-type-select" onchange="switchTlTypeSelect(this)">
+                <option value="all">All Types</option>
+                <option value="ai-conversation">AI Conversation</option>
+                <option value="claimed-homepulse">Claimed HomePulse</option>
+                <option value="frequent-visitor">Frequent Visitor</option>
+                <option value="high-favorites">High Favorites</option>
+                <option value="high-property-views">High Property Views</option>
+                <option value="shared-listings">Shared Listings</option>
+                <option value="updated-contact-info">Updated Contact Info</option>
+                <option value="updated-saved-search">Updated Saved Search</option>
+                <option value="calculated-mortgage">Calculated Mortgage</option>
+                <option value="verified-account">Verified Account</option>
+              </select>
+            </div>
             <div class="filter-bar-spacer"></div>
             <div class="filter-bar-actions">
               <div class="actions-dropdown-wrapper">
@@ -5204,6 +5809,10 @@
                   </button>
                 </div>
               </div>
+              <button class="select-all-btn" onclick="toggleSelectAll(this)" data-tab="tab-trending" title="Select all">
+                <input type="checkbox" tabindex="-1" onclick="event.stopPropagation(); toggleSelectAll(this.closest('.select-all-btn'))">
+                <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+              </button>
             </div>
           </div>
           <div class="filter-bar tl-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
@@ -5263,11 +5872,11 @@
                       <div class="property-carousel">
                         <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
                         <div class="property-carousel-track">
-                          <div class="property-preview"><div class="property-preview-header">Last Viewed</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$649,000</span><span class="property-preview-address">1842 N Dearborn St, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$612,000</span><span class="property-preview-address">2204 N Lincoln Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$588,000</span><span class="property-preview-address">955 W Wrightwood Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$627,000</span><span class="property-preview-address">414 W Dickens Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$603,000</span><span class="property-preview-address">1631 N Wells St, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Last Viewed</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$649,000</span><span class="property-preview-address"><span class="property-preview-street">1842 N Dearborn St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$612,000</span><span class="property-preview-address"><span class="property-preview-street">2204 N Lincoln Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$588,000</span><span class="property-preview-address"><span class="property-preview-street">955 W Wrightwood Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$627,000</span><span class="property-preview-address"><span class="property-preview-street">414 W Dickens Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$603,000</span><span class="property-preview-address"><span class="property-preview-street">1631 N Wells St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                         </div>
                         <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
                       </div>
@@ -5324,14 +5933,14 @@
                       <div class="property-carousel">
                         <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
                         <div class="property-carousel-track">
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$724,000</span><span class="property-preview-address">2209 N Clark St, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$698,000</span><span class="property-preview-address">1704 N Wells St, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$741,000</span><span class="property-preview-address">1530 N State Pkwy, Chicago, IL 60610</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$679,000</span><span class="property-preview-address">2440 N Lakeview Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$715,000</span><span class="property-preview-address">1800 N Lincoln Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$662,000</span><span class="property-preview-address">2100 N Halsted St, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$708,000</span><span class="property-preview-address">555 W Belden Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$689,000</span><span class="property-preview-address">433 W Deming Pl, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$724,000</span><span class="property-preview-address"><span class="property-preview-street">2209 N Clark St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$698,000</span><span class="property-preview-address"><span class="property-preview-street">1704 N Wells St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$741,000</span><span class="property-preview-address"><span class="property-preview-street">1530 N State Pkwy</span><span class="property-preview-city">Chicago, IL 60610</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$679,000</span><span class="property-preview-address"><span class="property-preview-street">2440 N Lakeview Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$715,000</span><span class="property-preview-address"><span class="property-preview-street">1800 N Lincoln Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$662,000</span><span class="property-preview-address"><span class="property-preview-street">2100 N Halsted St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$708,000</span><span class="property-preview-address"><span class="property-preview-street">555 W Belden Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$689,000</span><span class="property-preview-address"><span class="property-preview-street">433 W Deming Pl</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                         </div>
                         <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
                       </div>
@@ -5444,10 +6053,10 @@
                       <div class="property-carousel">
                         <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
                         <div class="property-carousel-track">
-                          <div class="property-preview"><div class="property-preview-header">Last Viewed</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$455,000</span><span class="property-preview-address">3142 N Halsted St, Chicago, IL 60657</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$479,000</span><span class="property-preview-address">2817 N Southport Ave, Chicago, IL 60657</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$491,000</span><span class="property-preview-address">1733 W Diversey Pkwy, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$462,000</span><span class="property-preview-address">2540 N Racine Ave, Chicago, IL 60614</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Last Viewed</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$455,000</span><span class="property-preview-address"><span class="property-preview-street">3142 N Halsted St</span><span class="property-preview-city">Chicago, IL 60657</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$479,000</span><span class="property-preview-address"><span class="property-preview-street">2817 N Southport Ave</span><span class="property-preview-city">Chicago, IL 60657</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$491,000</span><span class="property-preview-address"><span class="property-preview-street">1733 W Diversey Pkwy</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$462,000</span><span class="property-preview-address"><span class="property-preview-street">2540 N Racine Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                         </div>
                         <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
                       </div>
@@ -5501,7 +6110,7 @@
                     <div class="activity-detail">
                       <span class="activity-label">Claimed a HomePulse report</span>
                       <span class="activity-sub">4 hours ago</span>
-                      <div class="homepulse-card" style="margin-top:6px;max-width:280px;">
+                      <div class="homepulse-card" style="margin-top:6px;width:320px;">
                         <div class="homepulse-card-header">HomePulse Report</div>
                         <div class="homepulse-card-body">
                           <span class="homepulse-address">524 Maple Ave<br>Evanston, IL 60201</span>
@@ -5561,9 +6170,9 @@
                       <div class="property-carousel">
                         <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
                         <div class="property-carousel-track">
-                          <div class="property-preview"><div class="property-preview-header">Last Shared</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$539,000</span><span class="property-preview-address">1120 N Lake Shore Dr, Chicago, IL 60611</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$515,000</span><span class="property-preview-address">860 N DeWitt Pl, Chicago, IL 60611</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
-                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$498,000</span><span class="property-preview-address">222 E Pearson St, Chicago, IL 60611</span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Last Shared</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$539,000</span><span class="property-preview-address"><span class="property-preview-street">1120 N Lake Shore Dr</span><span class="property-preview-city">Chicago, IL 60611</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$515,000</span><span class="property-preview-address"><span class="property-preview-street">860 N DeWitt Pl</span><span class="property-preview-city">Chicago, IL 60611</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$498,000</span><span class="property-preview-address"><span class="property-preview-street">222 E Pearson St</span><span class="property-preview-city">Chicago, IL 60611</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                         </div>
                         <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
                       </div>
@@ -5704,6 +6313,15 @@
                     <div class="activity-detail" style="flex:1; min-width:0;">
                       <span class="activity-label">AI Conversation</span>
                       <span class="activity-sub">30 min ago</span>
+                      <div class="reg-info-card" style="margin-top:8px; width:100%; max-width:600px;">
+                        <div class="reg-info-card-header">Conversation Highlights</div>
+                        <div class="reg-info-card-body">
+                          <ul style="margin:0; padding-left:14px; line-height:1.8;">
+                            <li>Considering selling in 6 months</li>
+                            <li>Interested in home valuation</li>
+                          </ul>
+                        </div>
+                      </div>
                       <div class="chat-thread">
 
                         <!-- Message 1: Lead -->
@@ -5718,7 +6336,7 @@
                         <!-- Message 2: AI -->
                         <div class="chat-message ai">
                           <div class="chat-avatar ai-avatar">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="8" r="1.5"/><circle cx="7" cy="8" r="1.5"/></svg>
+                            <img src="icons/277_bot.svg" width="16" height="16">
                           </div>
                           <div class="chat-bubble">
                             Great question, Eva! Home values in your area have been trending up. Are you thinking about selling, or just keeping tabs on the market?
@@ -5738,7 +6356,7 @@
                         <!-- Message 4: AI -->
                         <div class="chat-message ai">
                           <div class="chat-avatar ai-avatar">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="8" r="1.5"/><circle cx="7" cy="8" r="1.5"/></svg>
+                            <img src="icons/277_bot.svg" width="16" height="16">
                           </div>
                           <div class="chat-bubble">
                             That's a great time to start planning! I'd love to connect you with an agent who can walk you through what your home could sell for. Would that be helpful?
@@ -5800,14 +6418,14 @@
                     <div class="activity-detail">
                       <span class="activity-label">Used mortgage calculator</span>
                       <span class="activity-sub">45 min ago</span>
-                      <div class="property-preview" style="margin-top:6px; max-width:340px;">
+                      <div class="property-preview" style="margin-top:6px; width:320px;">
                         <div class="property-preview-header">Last Viewed</div>
                         <div class="property-preview-body">
                           <div class="property-preview-image"></div>
                           <div class="property-preview-info">
                             <div class="property-preview-info-top">
                               <span class="property-preview-price">$580,000</span>
-                              <span class="property-preview-address">4821 Maple Ave, Denver, CO 80222</span>
+                              <span class="property-preview-address"><span class="property-preview-street">4821 Maple Ave</span><span class="property-preview-city">Denver, CO 80222</span></span>
                             </div>
                             <a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                           </div>
@@ -5880,11 +6498,11 @@
   <script>
     const actionsBtn = document.getElementById('actions-btn');
 
-    // Keep Actions button in sync with checkboxes
+    // Keep Actions button and select-all in sync with checkboxes
     document.addEventListener('change', function(e) {
       if (e.target.classList.contains('lead-checkbox')) {
         const anyChecked = document.querySelectorAll('.lead-checkbox:checked').length > 0;
-        [actionsBtn, document.getElementById('fu-actions-btn'), document.getElementById('cr-actions-btn'), document.getElementById('tl-actions-btn')].forEach(function(btn) {
+        [actionsBtn, document.getElementById('fu-actions-btn'), document.getElementById('dr-actions-btn'), document.getElementById('cr-actions-btn'), document.getElementById('tl-actions-btn')].forEach(function(btn) {
           if (!btn) return;
           btn.disabled = !anyChecked;
           if (!anyChecked) {
@@ -5892,8 +6510,38 @@
             btn.classList.remove('open');
           }
         });
+        // Sync select-all checkbox state for the tab containing this checkbox
+        const tab = e.target.closest('[id^="tab-"]');
+        if (tab) {
+          const selectAllBtn = tab.querySelector('.select-all-btn input[type="checkbox"]');
+          if (selectAllBtn) {
+            const visibleCards = Array.from(tab.querySelectorAll('.lead-card')).filter(c => c.style.display !== 'none');
+            const checkedCount = visibleCards.filter(c => c.querySelector('.lead-checkbox').checked).length;
+            selectAllBtn.checked = checkedCount === visibleCards.length && visibleCards.length > 0;
+            selectAllBtn.indeterminate = checkedCount > 0 && checkedCount < visibleCards.length;
+          }
+        }
       }
     });
+
+    function toggleSelectAll(btn) {
+      const tab = document.getElementById(btn.dataset.tab);
+      const checkbox = btn.querySelector('input[type="checkbox"]');
+      const visibleCards = Array.from(tab.querySelectorAll('.lead-card')).filter(c => c.style.display !== 'none');
+      const allChecked = visibleCards.every(c => c.querySelector('.lead-checkbox').checked);
+      // Toggle: if all are checked, uncheck all; otherwise check all
+      const shouldCheck = !allChecked;
+      visibleCards.forEach(c => { c.querySelector('.lead-checkbox').checked = shouldCheck; });
+      checkbox.checked = shouldCheck;
+      checkbox.indeterminate = false;
+      // Sync Actions buttons
+      const anyChecked = document.querySelectorAll('.lead-checkbox:checked').length > 0;
+      [actionsBtn, document.getElementById('fu-actions-btn'), document.getElementById('dr-actions-btn'), document.getElementById('cr-actions-btn'), document.getElementById('tl-actions-btn')].forEach(function(b) {
+        if (!b) return;
+        b.disabled = !anyChecked;
+        if (!anyChecked) { b.nextElementSibling.classList.remove('open'); b.classList.remove('open'); }
+      });
+    }
 
     function toggleActionsDropdown(btn) {
       if (btn.disabled) return;
@@ -6030,8 +6678,43 @@
       contactNoteSourceBtn = btn;
       const card = btn.closest('.lead-card');
       const leadName = card.querySelector('.lead-name').textContent;
+      document.getElementById('modal-title').textContent = 'Add Contact Note';
       document.getElementById('modal-lead-name').textContent = leadName;
       document.getElementById('modal-note-text').value = '';
+      document.getElementById('modal-pin-note').checked = false;
+      // Reset note type to Call
+      document.querySelectorAll('.note-type-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.note-type-btn').classList.add('active');
+      document.getElementById('contact-note-modal').classList.add('open');
+    }
+
+    function openEditNoteModal(btn) {
+      contactNoteSourceBtn = btn;
+      const card = btn.closest('.lead-card');
+      const leadName = card.querySelector('.lead-name').textContent;
+      const detail = btn.closest('.activity-detail');
+
+      // Prefill note type from the activity-sub timestamp line (e.g. "Today at 8:45 am · Call")
+      const subSpans = detail.querySelectorAll('.activity-sub');
+      const typeLine = subSpans[0] ? subSpans[0].textContent : '';
+      const typeMatch = typeLine.match(/·\s*(\w[\w ]+)$/);
+      const noteType = typeMatch ? typeMatch[1].trim() : 'Call';
+
+      // Prefill note text — strip surrounding quotes from the note body span
+      const noteBody = subSpans[1] ? subSpans[1].textContent.replace(/^"|"$/g, '').trim() : '';
+
+      const isPinned = detail.querySelector('.activity-label').textContent.trim() === 'Last Pinned Note';
+
+      document.getElementById('modal-title').textContent = 'Edit Note';
+      document.getElementById('modal-lead-name').textContent = leadName;
+      document.getElementById('modal-note-text').value = noteBody;
+      document.getElementById('modal-pin-note').checked = isPinned;
+
+      // Activate the matching note type button
+      document.querySelectorAll('.note-type-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent.trim() === noteType);
+      });
+
       document.getElementById('contact-note-modal').classList.add('open');
     }
 
@@ -6197,18 +6880,24 @@
     }
 
     function switchDrDueFilter(pill) {
-      pill.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.closest('.filter-bar').querySelectorAll('.filter-pill[data-dr-due]').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
-      const val = pill.dataset.drDue;
-      document.querySelectorAll('#tab-deal-reminders .lead-card').forEach(card => {
+      applyDrFilters();
+    }
+
+    function applyDrFilters() {
+      const tab = document.getElementById('tab-deal-reminders');
+      const activePill = tab.querySelector('.filter-pill[data-dr-due].active');
+      const val = activePill ? activePill.dataset.drDue : 'all';
+      const pondOnly = isPondActive(tab);
+      tab.querySelectorAll('.lead-card').forEach(card => {
         const due = card.dataset.drDue;
-        if (val === 'all') {
-          card.style.display = '';
-        } else if (val === 'today-overdue') {
-          card.style.display = (due === 'today' || due === 'overdue') ? '' : 'none';
-        } else {
-          card.style.display = due === val ? '' : 'none';
-        }
+        let dueMatch;
+        if      (val === 'all')           dueMatch = true;
+        else if (val === 'today-overdue') dueMatch = due === 'today' || due === 'overdue';
+        else                              dueMatch = due === val;
+        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
+        card.style.display = (dueMatch && pondMatch) ? '' : 'none';
       });
     }
 
@@ -6216,41 +6905,49 @@
       const tab = document.getElementById('tab-trending');
       const allPill = tab.querySelector('[data-tl-type="all"]');
       if (pill.dataset.tlType === 'all') {
-        // All selected — deactivate everything else, activate only All
-        tab.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        tab.querySelectorAll('.filter-pill[data-tl-type]').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
       } else {
-        // Toggle this pill; deactivate All
         allPill.classList.remove('active');
         pill.classList.toggle('active');
-        // If nothing is active, fall back to All
-        const anyActive = tab.querySelectorAll('.filter-pill:not([data-tl-type="all"]).active').length > 0;
+        const anyActive = tab.querySelectorAll('.filter-pill[data-tl-type]:not([data-tl-type="all"]).active').length > 0;
         if (!anyActive) allPill.classList.add('active');
       }
-      // Collect active types
-      const activePills = tab.querySelectorAll('.filter-pill:not([data-tl-type="all"]).active');
+      applyTlFilters();
+    }
+
+    function applyTlFilters() {
+      const tab = document.getElementById('tab-trending');
+      const allPill = tab.querySelector('[data-tl-type="all"]');
+      const activePills = tab.querySelectorAll('.filter-pill[data-tl-type]:not([data-tl-type="all"]).active');
       const showAll = allPill.classList.contains('active');
       const activeTypes = Array.from(activePills).map(p => p.dataset.tlType);
+      const pondOnly = isPondActive(tab);
       tab.querySelectorAll('.lead-card').forEach(card => {
-        card.style.display = (showAll || activeTypes.includes(card.dataset.tlType)) ? '' : 'none';
+        const typeMatch = showAll || activeTypes.includes(card.dataset.tlType);
+        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
+        card.style.display = (typeMatch && pondMatch) ? '' : 'none';
       });
     }
 
     function applyCrFilters() {
-      const activeStatusPill = document.querySelector('#tab-contact-requested .filter-bar [data-cr-status].active');
-      const allTypePill      = document.querySelector('#tab-contact-requested .filter-bar [data-cr-type="all"]');
+      const tab = document.getElementById('tab-contact-requested');
+      const activeStatusPill = tab.querySelector('.filter-bar [data-cr-status].active');
+      const allTypePill      = tab.querySelector('.filter-bar [data-cr-type="all"]');
       const status  = activeStatusPill ? activeStatusPill.dataset.crStatus : 'awaiting';
       const showAll = allTypePill && allTypePill.classList.contains('active');
-      const activeTypes = Array.from(document.querySelectorAll('#tab-contact-requested .filter-bar [data-cr-type]:not([data-cr-type="all"]).active')).map(p => p.dataset.crType);
-      document.querySelectorAll('#tab-contact-requested .lead-card').forEach(card => {
+      const activeTypes = Array.from(tab.querySelectorAll('.filter-bar [data-cr-type]:not([data-cr-type="all"]).active')).map(p => p.dataset.crType);
+      const pondOnly = isPondActive(tab);
+      tab.querySelectorAll('.lead-card').forEach(card => {
         const statusMatch = card.dataset.crStatus === status;
         const typeMatch   = showAll || activeTypes.includes(card.dataset.crType);
-        card.style.display = (statusMatch && typeMatch) ? '' : 'none';
+        const pondMatch   = !pondOnly || card.querySelector('.badge-pond-lead');
+        card.style.display = (statusMatch && typeMatch && pondMatch) ? '' : 'none';
       });
     }
 
     function switchCrStatusFilter(pill) {
-      pill.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.closest('.filter-bar').querySelectorAll('.filter-pill[data-cr-status]').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       applyCrFilters();
     }
@@ -6259,55 +6956,54 @@
       const filterBar = pill.closest('.filter-bar');
       const allPill = filterBar.querySelector('[data-cr-type="all"]');
       if (pill.dataset.crType === 'all') {
-        filterBar.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        filterBar.querySelectorAll('.filter-pill[data-cr-type]').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
       } else {
         allPill.classList.remove('active');
         pill.classList.toggle('active');
-        const anyActive = filterBar.querySelectorAll('.filter-pill:not([data-cr-type="all"]).active').length > 0;
+        const anyActive = filterBar.querySelectorAll('.filter-pill[data-cr-type]:not([data-cr-type="all"]).active').length > 0;
         if (!anyActive) allPill.classList.add('active');
       }
       applyCrFilters();
     }
 
     function applyFollowUpFilters() {
-      const activeDuePill  = document.querySelector('#tab-followup .filter-bar [data-due].active');
-      const activeTypePill = document.querySelector('#tab-followup .filter-bar [data-type].active');
+      const tab = document.getElementById('tab-followup');
+      const activeDuePill  = tab.querySelector('.filter-bar [data-due].active');
+      const activeTypePill = tab.querySelector('.filter-bar [data-type].active');
       const due  = activeDuePill  ? activeDuePill.dataset.due  : 'all';
       const type = activeTypePill ? activeTypePill.dataset.type : 'all';
-      document.querySelectorAll('#tab-followup .lead-card').forEach(card => {
+      const pondOnly = isPondActive(tab);
+      tab.querySelectorAll('.lead-card').forEach(card => {
         const cardDue = card.dataset.due;
         let dueMatch = false;
-        if      (due === 'all')            dueMatch = true;
+        if      (due === 'all')           dueMatch = true;
         else if (due === 'today-overdue') dueMatch = cardDue === 'today' || cardDue === 'overdue';
         else if (due === 'this-week')     dueMatch = cardDue === 'today' || cardDue === 'this-week';
         else                              dueMatch = cardDue === due;
         const typeMatch = type === 'all' || card.dataset.type === type;
-        card.style.display = (dueMatch && typeMatch) ? '' : 'none';
+        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
+        card.style.display = (dueMatch && typeMatch && pondMatch) ? '' : 'none';
       });
     }
 
     function switchDueFilter(pill) {
-      pill.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.closest('.filter-bar').querySelectorAll('.filter-pill[data-due]').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       applyFollowUpFilters();
     }
 
     function switchTypeFilter(pill) {
-      pill.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.closest('.filter-bar').querySelectorAll('.filter-pill[data-type]').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       applyFollowUpFilters();
     }
 
     function switchFilter(pill) {
-      // Update active pill — scoped to Prospecting filter bar only
-      pill.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      // Update active pill — preserve pond pill state, only toggle data-filter pills
+      pill.closest('.filter-bar').querySelectorAll('.filter-pill[data-filter]').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
-      // Show/hide cards — scoped to Prospecting tab only
-      const filter = pill.dataset.filter;
-      document.querySelectorAll('#tab-prospecting .lead-card').forEach(card => {
-        card.style.display = card.dataset.filter === filter ? '' : 'none';
-      });
+      applyProspectingFilter();
       // Reset Actions button
       actionsBtn.disabled = true;
       actionsBtn.nextElementSibling.classList.remove('open');
@@ -6610,6 +7306,141 @@
       if (isMinLike) syncSelectsToActivePills();
     }
 
+    // ─── VIEW DROPDOWN ────────────────────────────────────────
+
+    function isViewFilterActive() {
+      return document.getElementById('reset-view-item').style.display !== 'none';
+    }
+
+    function toggleViewDropdown() {
+      const dropdown = document.getElementById('tab-view-dropdown');
+      const btn = document.getElementById('tab-view-btn');
+      const isOpen = dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', !isOpen);
+      // Only sync active state when no view filter is set
+      if (!isViewFilterActive()) btn.classList.toggle('active', !isOpen);
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('tab-view-dropdown');
+      const btn = document.getElementById('tab-view-btn');
+      if (!dropdown || !btn) return;
+      if (dropdown.contains(e.target) || btn.contains(e.target)) return;
+      dropdown.classList.remove('open');
+      // Only remove active state when no view filter is set
+      if (!isViewFilterActive()) btn.classList.remove('active');
+    });
+
+    function viewAllPondLeads() {
+      document.getElementById('tab-view-dropdown').classList.remove('open');
+      // Show and activate all pond filter pills
+      document.querySelectorAll('.pond-filter-pill').forEach(pill => {
+        pill.style.display = '';
+        pill.classList.add('active');
+      });
+      // Mark button as active (gradient) and update label
+      document.getElementById('tab-view-btn').classList.add('active');
+      document.getElementById('tab-view-label').textContent = 'VIEW: Pond Leads';
+      // Show Reset View option
+      document.getElementById('reset-view-item').style.display = '';
+      // Re-run each tab's filter so pond filter takes effect
+      applyProspectingFilter();
+      applyFollowUpFilters();
+      applyDrFilters();
+      applyCrFilters();
+      applyTlFilters();
+    }
+
+    function resetView() {
+      document.getElementById('tab-view-dropdown').classList.remove('open');
+      // Restore greeting and label
+      document.getElementById('greeting-name').textContent = 'Good morning, Alice.';
+      document.getElementById('tab-view-label').textContent = 'VIEW: Default';
+      // Hide and deactivate all pond filter pills
+      document.querySelectorAll('.pond-filter-pill').forEach(pill => {
+        pill.style.display = 'none';
+        pill.classList.remove('active');
+      });
+      // Reset button state
+      document.getElementById('tab-view-btn').classList.remove('active');
+      // Hide Reset View option
+      document.getElementById('reset-view-item').style.display = 'none';
+      // Re-run all filters to restore normal state
+      applyProspectingFilter();
+      applyFollowUpFilters();
+      applyDrFilters();
+      applyCrFilters();
+      applyTlFilters();
+    }
+
+    function isPondActive(tabEl) {
+      const pill = tabEl ? tabEl.querySelector('.pond-filter-pill') : null;
+      return pill ? pill.classList.contains('active') : false;
+    }
+
+    function togglePondFilter(pill) {
+      pill.classList.toggle('active');
+      // Re-run the appropriate tab's filter
+      const tab = pill.closest('[id^="tab-"]');
+      if (!tab) return;
+      if (tab.id === 'tab-prospecting')       applyProspectingFilter();
+      else if (tab.id === 'tab-followup')      applyFollowUpFilters();
+      else if (tab.id === 'tab-deal-reminders') applyDrFilters();
+      else if (tab.id === 'tab-contact-requested') applyCrFilters();
+      else if (tab.id === 'tab-trending')      applyTlFilters();
+    }
+
+    function applyProspectingFilter() {
+      const tab = document.getElementById('tab-prospecting');
+      const activePill = tab.querySelector('.filter-pill[data-filter].active');
+      const filter = activePill ? activePill.dataset.filter : 'p1';
+      const pondOnly = isPondActive(tab);
+      tab.querySelectorAll('.lead-card').forEach(card => {
+        const filterMatch = card.dataset.filter === filter;
+        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
+        card.style.display = (filterMatch && pondMatch) ? '' : 'none';
+      });
+    }
+
+    // ─── USER PICKER MODAL ────────────────────────────────────
+
+    function openUserPickerModal() {
+      document.getElementById('tab-view-dropdown').classList.remove('open');
+      document.getElementById('tab-view-btn').classList.remove('active');
+      document.getElementById('user-picker-search').value = '';
+      filterUserList('');
+      document.getElementById('user-picker-modal').classList.add('open');
+    }
+
+    function closeUserPickerModal() {
+      document.getElementById('user-picker-modal').classList.remove('open');
+    }
+
+    function filterUserList(query) {
+      const q = query.toLowerCase();
+      document.querySelectorAll('#user-picker-list .user-picker-item').forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+
+    function selectDashboardUser(name) {
+      closeUserPickerModal();
+      // Update greeting
+      const firstName = name.split(' ')[0];
+      document.getElementById('greeting-name').textContent = 'Good morning, ' + firstName + '.';
+      // Set button to active gradient state and update label
+      document.getElementById('tab-view-btn').classList.add('active');
+      document.getElementById('tab-view-label').textContent = 'VIEW: ' + firstName;
+      // Show Reset View option
+      document.getElementById('reset-view-item').style.display = '';
+      showToast('Viewing dashboard: ' + name);
+    }
+
+    document.getElementById('user-picker-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeUserPickerModal();
+    });
+
     function syncSelectsToActivePills() {
       // Prospecting
       const pPill = document.querySelector('#tab-prospecting .filter-pill.active');
@@ -6679,7 +7510,7 @@
 
     // Apply default filters on page load
     document.addEventListener('DOMContentLoaded', function() {
-      // Sync dropdowns to active pills for min view default
+      // Sync dropdowns to active pills for MVP view default
       syncSelectsToActivePills();
 
       // Follow Up: Today & Overdue + All
@@ -6709,7 +7540,7 @@
     <div class="modal">
       <div class="modal-header">
         <div>
-          <h3>Add Contact Note</h3>
+          <h3 id="modal-title">Add Contact Note</h3>
           <div class="modal-lead-name" id="modal-lead-name"></div>
         </div>
         <button class="modal-close" onclick="closeContactNoteModal()">
@@ -6974,6 +7805,35 @@
       <div class="modal-footer">
         <button class="modal-btn-cancel" onclick="closeEditReminderModal()">Cancel</button>
         <button class="modal-btn-save" id="er-save-btn" onclick="saveEditReminder()" disabled>Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── USER PICKER MODAL ───────────────────────────────── -->
+  <div class="modal-overlay" id="user-picker-modal">
+    <div class="modal" style="width:380px;">
+      <div class="modal-header">
+        <div>
+          <h3>View Dashboard of...</h3>
+        </div>
+        <button class="modal-close" onclick="closeUserPickerModal()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input class="user-picker-search" id="user-picker-search" type="text" placeholder="Search agents..." oninput="filterUserList(this.value)">
+        <div class="user-picker-list" id="user-picker-list">
+          <div class="user-picker-item" onclick="selectDashboardUser('Brian Torres')">Brian Torres</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Carmen Diaz')">Carmen Diaz</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('David Kim')">David Kim</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Elena Marsh')">Elena Marsh</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Frank Okafor')">Frank Okafor</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Grace Liu')">Grace Liu</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Henry Patel')">Henry Patel</div>
+        </div>
       </div>
     </div>
   </div>

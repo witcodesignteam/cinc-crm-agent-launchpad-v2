@@ -375,7 +375,127 @@
 
     .greeting-text p {
       font-size: 14px;
-      color: #5a6475;
+      color: #1a1f2e;
+    }
+
+    .daily-welcome {
+      display: none;
+    }
+
+    .body-iter2 .daily-welcome,
+    body:not(.body-min) .daily-welcome {
+      display: inline;
+    }
+
+    .greeting-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #9aa5b4;
+      margin-top: 3px;
+      padding: 0 0 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .greeting-date svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .body-min:not(.body-iter2) .welcome-info-btn {
+      display: none;
+    }
+
+    .welcome-info-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      margin-left: 5px;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9aa5b4;
+      transition: color 180ms ease;
+      position: relative;
+      top: -1px;
+    }
+
+    .welcome-info-btn:hover { color: #0080A3; }
+
+    .welcome-info-btn svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .welcome-popup {
+      position: absolute;
+      background: #ffffff;
+      border: 1px solid #e4e8ed;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      width: 420px;
+      z-index: 500;
+    }
+
+    .welcome-popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid #e4e8ed;
+    }
+
+    .welcome-popup-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1f2e;
+    }
+
+    .welcome-popup-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #9aa5b4;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 2px;
+    }
+
+    .welcome-popup-close:hover { color: #1a1f2e; }
+
+    .welcome-popup-body {
+      padding: 8px 0;
+    }
+
+    .welcome-popup-row {
+      display: flex;
+      gap: 14px;
+      padding: 10px 18px;
+      border-bottom: 1px solid #f0f2f5;
+      align-items: flex-start;
+    }
+
+    .welcome-popup-row:last-child { border-bottom: none; }
+
+    .welcome-popup-day {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0080A3;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 72px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .welcome-popup-text {
+      font-size: 13px;
+      color: #1a1f2e;
+      line-height: 1.5;
     }
 
     .greeting-text .appt-link {
@@ -391,22 +511,22 @@
     .playbook-pill {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       margin-top: 10px;
-      padding: 4px 12px;
+      padding: 5px 12px;
       border-radius: 999px;
       border: none;
-      background: linear-gradient(135deg, #0080A3 40%, #44BF98 100%);
-      color: #ffffff;
+      background: #e8f5fa;
+      color: #0080A3;
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
       text-decoration: none;
-      transition: opacity 180ms ease;
+      transition: background 180ms ease;
     }
 
     .playbook-pill:hover {
-      opacity: 0.88;
+      background: #d0ecf5;
     }
 
     .playbook-pill svg {
@@ -418,12 +538,24 @@
     /* ─── DIALS WIDGET ──────────────────────────────────────── */
 
     .dials-widget {
-      width: 240px;
-      min-width: 240px;
+      width: 280px;
+      min-width: 280px;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 2px 10px rgba(0,0,0,0.12);
       flex-shrink: 0;
+    }
+
+    body:not(.body-min) .dials-widget {
+      box-shadow: none;
+      border: 1px solid #e4e8ed;
+      width: 100%;
+      min-width: 0;
+    }
+
+    /* Hide dials from greeting row in Future Updates — it lives in right column instead */
+    body:not(.body-min) .greeting-row .dials-widget {
+      display: none;
     }
 
     .dials-top {
@@ -521,6 +653,331 @@
     .page-body {
       padding: 0 24px 16px;
       flex: 1;
+    }
+
+    .page-body-inner {
+      display: block;
+    }
+
+    body:not(.body-min) .today-panel {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Outer wrapper for Future Updates — greeting + page body left, right column right */
+    .content-with-sidebar {
+      display: contents;
+    }
+
+    body:not(.body-min) .content-with-sidebar {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .content-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .right-column {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 52px;
+      max-height: calc(100vh - 52px);
+      overflow-y: auto;
+      padding: 16px 24px 16px 16px;
+    }
+
+    body:not(.body-min) .page-body {
+      padding-right: 0;
+    }
+
+    body:not(.body-min) .right-column {
+      display: flex;
+    }
+
+    /* ─── ALEX'S TAKE CARD ──────────────────────────────────── */
+
+    .alexs-take-card {
+      display: none;
+      background: #ffffff;
+      border: 1px solid #e4e8ed;
+      border-radius: 8px;
+      padding: 16px;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    body:not(.body-min) .alexs-take-card {
+      display: flex;
+    }
+
+    .alexs-take-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .alexs-take-header svg {
+      width: 16px;
+      height: 16px;
+      fill: #0080A3;
+      flex-shrink: 0;
+    }
+
+    .alexs-take-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0080A3;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .alexs-take-body {
+      font-size: 13px;
+      color: #1a1f2e;
+      line-height: 1.55;
+    }
+
+    .alexs-take-body strong {
+      font-weight: 700;
+    }
+
+    /* ─── DIALER PANEL ──────────────────────────────────────── */
+
+    .dialer-panel {
+      display: none;
+      background: #ffffff;
+      border: 1px solid #e4e8ed;
+      border-radius: 8px;
+    }
+
+    body:not(.body-min) .dialer-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dialer-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 48px;
+      border-bottom: 1px solid #e4e8ed;
+      flex-shrink: 0;
+    }
+
+    .dialer-panel-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1f2e;
+      letter-spacing: 0.1px;
+    }
+
+    .dialer-add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      background: #0080A3;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 180ms ease;
+      white-space: nowrap;
+    }
+
+    .dialer-add-btn:hover {
+      background: #006d8c;
+    }
+
+    .dialer-add-btn svg {
+      width: 12px;
+      height: 12px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .dialer-panel-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .dialer-empty-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .dialer-empty-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #9aa5b4;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .dialer-empty-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1f2e;
+    }
+
+    .dialer-empty-sub {
+      font-size: 12px;
+      color: #9aa5b4;
+      line-height: 1.5;
+    }
+
+    .dialer-queue {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 0;
+    }
+
+    .dialer-entry {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .dialer-entry:last-child {
+      border-bottom: none;
+    }
+
+    .dialer-entry-number {
+      font-size: 10px;
+      font-weight: 700;
+      color: #9aa5b4;
+      width: 14px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .dialer-entry-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .dialer-entry-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1f2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dialer-entry-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .dialer-entry-meta {
+      font-size: 11.5px;
+      color: #9aa5b4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dialer-panel-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 14px;
+      border-top: 1px solid #e4e8ed;
+    }
+
+    .dialer-start-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background: #0080A3;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 180ms ease;
+    }
+
+    .dialer-start-btn:hover {
+      background: #006d8c;
+    }
+
+    .dialer-start-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .dialer-settings-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5a6475;
+      background: #ffffff;
+      border: 1.5px solid #d0d7e2;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 180ms ease, color 180ms ease;
+    }
+
+    .dialer-settings-btn:hover {
+      border-color: #0080A3;
+      color: #0080A3;
+    }
+
+    .dialer-settings-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     /* ─── TODAY PANEL ───────────────────────────────────────── */
@@ -638,7 +1095,7 @@
       align-items: center;
       gap: 9px;
       padding: 10px 14px;
-      font-size: 13px;
+      font-size: 14px;
       color: #1a1f2e;
       cursor: pointer;
       transition: background 120ms ease;
@@ -650,6 +1107,10 @@
 
     .tab-view-dropdown-item:hover {
       background: #f5f7fa;
+    }
+
+    .body-min:not(.body-iter2) #view-dashboard-item {
+      display: none;
     }
 
     .tab-view-dropdown-item svg {
@@ -730,7 +1191,7 @@
       gap: 7px;
       padding: 0 16px;
       height: 100%;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 500;
       color: #6b7a8d;
       cursor: pointer;
@@ -759,13 +1220,13 @@
       height: 20px;
       padding: 0 5px;
       border-radius: 99px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       line-height: 1;
     }
 
     .tab-badge.prospecting {
-      background: #11A73D;
+      background: #51A883;
       color: #ffffff;
     }
 
@@ -779,8 +1240,13 @@
       color: #5a6475;
     }
 
+    .tab-badge.deal-reminders {
+      background: #11A73D;
+      color: #ffffff;
+    }
+
     .tab-badge.contact-requested {
-      background: #FF4141;
+      background: #4DAAC8;
       color: #ffffff;
     }
 
@@ -807,7 +1273,7 @@
     }
 
     .filter-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       color: #9aa5b4;
       letter-spacing: 0.5px;
@@ -906,7 +1372,7 @@
       padding: 0 28px 0 10px;
       border: 1.5px solid #d0d7e2;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
       color: #1a1f2e;
       background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpolyline points='2 4 6 8 10 4' fill='none' stroke='%239aa5b4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center;
@@ -1024,7 +1490,7 @@
       padding: 6px 14px;
       background: #0080A3;
       color: #ffffff;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       border-radius: 6px;
       cursor: pointer;
@@ -1056,7 +1522,7 @@
       color: #ffffff;
       padding: 2px 8px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
     }
 
@@ -1181,7 +1647,7 @@
       border: 1.5px solid #d0d7e2;
       background: #ffffff;
       color: #5a6475;
-      font-size: 12.5px;
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       transition: all 180ms ease;
@@ -1372,7 +1838,7 @@
       border: 1.5px solid #d0d7e2;
       background: #ffffff;
       color: #5a6475;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       transition: all 180ms ease;
@@ -1391,7 +1857,7 @@
       border: none;
       background: #0080A3;
       color: #ffffff;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       transition: background 180ms ease;
@@ -1484,7 +1950,7 @@
       align-items: center;
       gap: 9px;
       padding: 10px 14px;
-      font-size: 13px;
+      font-size: 14px;
       color: #1a1f2e;
       cursor: pointer;
       transition: background 180ms ease;
@@ -1560,6 +2026,7 @@
     }
 
     .good-contact           { background: #0080A3; }
+    #tab-prospecting .good-contact { background: #51A883; }
     .bad-contact            { background: #E97F04; }
     .tl-pink                { background: #e84393; }
     .tl-yellow              { background: #d4a017; }
@@ -1616,9 +2083,19 @@
     }
 
     .lead-name {
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       color: #1a1f2e;
+      text-decoration: underline;
+      text-decoration-color: #0080A3;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      transition: color 150ms ease;
+    }
+
+    .lead-name:hover {
+      color: #0080A3;
     }
 
     .lead-badge {
@@ -1626,7 +2103,7 @@
       align-items: center;
       padding: 2px 8px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
     }
 
@@ -1675,9 +2152,41 @@
     }
 
     .lead-meta {
+      font-size: 14px;
+      color: #1a1f2e;
+      margin-bottom: 0;
+      padding-top: 2px;
+    }
+
+    /* Lead meta label color matches indicator */
+    .card-identifier.good-contact ~ .lead-info .lead-meta { color: #0080A3; }
+    #tab-prospecting .card-identifier.good-contact ~ .lead-info .lead-meta { color: #51A883; }
+    .card-identifier.bad-contact ~ .lead-info .lead-meta { color: #E97F04; }
+    .card-identifier.reminder-overdue ~ .lead-info .lead-meta { color: #dc2626; }
+    .card-identifier.reminder-call ~ .lead-info .lead-meta,
+    .card-identifier.reminder-email ~ .lead-info .lead-meta,
+    .card-identifier.reminder-other ~ .lead-info .lead-meta { color: #3B8AFD; }
+    .card-identifier.dr-buyer ~ .lead-info .lead-meta { color: #3B8AFD; }
+    .card-identifier.dr-seller ~ .lead-info .lead-meta { color: #10b981; }
+    .card-identifier.cr-blue ~ .lead-info .lead-meta { color: #3B8AFD; }
+    .card-identifier.cr-mint ~ .lead-info .lead-meta { color: #1aab7a; }
+    .card-identifier.cr-purple ~ .lead-info .lead-meta { color: #7c3aed; }
+    .card-identifier.cr-teal ~ .lead-info .lead-meta { color: #0080A3; }
+    .card-identifier.tl-orange ~ .lead-info .lead-meta { color: #E97F04; }
+    .card-identifier.tl-pink ~ .lead-info .lead-meta { color: #e84393; }
+    .card-identifier.tl-green ~ .lead-info .lead-meta { color: #10b981; }
+    .card-identifier.tl-yellow ~ .lead-info .lead-meta { color: #d4a017; }
+    .card-identifier.tl-mint ~ .lead-info .lead-meta { color: #1aab7a; }
+    .card-identifier.tl-purple ~ .lead-info .lead-meta { color: #7c3aed; }
+
+    .lead-meta-time {
       font-size: 12px;
       color: #9aa5b4;
-      margin-bottom: 0;
+    }
+
+    .lead-meta.overdue .lead-meta-time {
+      color: #dc2626;
+      font-size: 12px;
     }
 
     .lead-meta.overdue {
@@ -1704,7 +2213,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 12.5px;
+      font-size: 14px;
       font-weight: 500;
       color: #0080A3;
       cursor: pointer;
@@ -1807,7 +2316,7 @@
       padding: 7px 14px;
       background: #0080A3;
       color: #ffffff;
-      font-size: 12.5px;
+      font-size: 14px;
       font-weight: 600;
       border-radius: 6px;
       border: none;
@@ -1825,7 +2334,7 @@
       padding: 7px 14px;
       background: #0080A3;
       color: #ffffff;
-      font-size: 12.5px;
+      font-size: 14px;
       font-weight: 600;
       border-radius: 6px;
       border: none;
@@ -2058,6 +2567,67 @@
       margin-bottom: 4px;
     }
 
+    /* ─── SAVED SEARCH MATCH ────────────────────────────────── */
+
+    .saved-search-match {
+      display: none;
+      border-top: 1px solid #e4e8ed;
+    }
+
+    .body-iter2 .saved-search-match,
+    body:not(.body-min) .saved-search-match {
+      display: block;
+    }
+
+    .saved-search-match-header {
+      background: #E6E6E6;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #3d4a5a;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .saved-search-match-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      padding: 6px 10px;
+      background: #ffffff;
+    }
+
+    .match-criterion {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 50%;
+      padding: 3px 2px;
+    }
+
+    .match-criterion-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .match-criterion-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: #10b981;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .match-criterion-value {
+      color: #1a1f2e;
+      font-weight: 500;
+      font-size: 11.5px;
+    }
+
     /* ─── SHOWING DETAILS ───────────────────────────────────── */
 
     .showing-details {
@@ -2226,7 +2796,7 @@
       align-items: center;
       margin-top: 10px;
       padding: 6px 14px;
-      font-size: 12.5px;
+      font-size: 14px;
       font-weight: 500;
       color: #0080A3;
       background: #ffffff;
@@ -2308,7 +2878,7 @@
       align-self: flex-start;
       margin-top: 6px;
       padding: 6px 14px;
-      font-size: 12.5px;
+      font-size: 14px;
       font-weight: 500;
       color: #5a6475;
       background: #ffffff;
@@ -2837,6 +3407,217 @@
       font-size: 13px;
       color: #1a1f2e;
     }
+
+    /* ─── TIPS & TRICKS ─────────────────────────────────────── */
+
+    .playbook-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .playbook-row .playbook-pill {
+      margin-top: 0;
+    }
+
+    .tips-toggle-wrap {
+      display: none;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .body-iter2 .tips-toggle-wrap,
+    body:not(.body-min) .tips-toggle-wrap {
+      display: inline-flex;
+    }
+
+    .tips-toggle-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1f2e;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    /* Reuse the existing slider shape but yellow theme */
+    .tips-toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .tips-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .tips-toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #d0d7e2;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 180ms ease;
+    }
+
+    .tips-toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      top: 3px;
+      left: 3px;
+      transition: transform 180ms ease;
+    }
+
+    .tips-toggle input:checked + .tips-toggle-slider {
+      background: #fde68a;
+      outline: 2px solid #d97706;
+      outline-offset: -1px;
+    }
+
+    .tips-toggle input:checked + .tips-toggle-slider::before {
+      transform: translateX(16px);
+    }
+
+    .tips-toggle input:checked + .tips-toggle-slider::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 4px;
+      height: 7px;
+      border-right: 1.5px solid #d97706;
+      border-bottom: 1.5px solid #d97706;
+      margin-top: -1px;
+    }
+
+    .tip-card-text {
+      font-size: 12px;
+      color: #92400e;
+      line-height: 1.5;
+    }
+
+    /* ─── LEAD TIP ───────────────────────────────────────────── */
+
+    .lead-tip {
+      display: none;
+      margin: 12px 0 4px 0;
+      padding: 10px 14px;
+      background: #fffef5;
+      border: 1.5px solid #fde68a;
+      border-radius: 8px;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .body-iter2 .tips-on .lead-tip,
+    body:not(.body-min) .tips-on .lead-tip {
+      display: flex;
+    }
+
+    /* Dialer panel tip — vertical layout, shown only when tips-on */
+    .dialer-panel-tip {
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0 12px 12px;
+      gap: 8px;
+    }
+    .dialer-panel-tip .lead-tip-action {
+      align-self: flex-start;
+      margin-left: 0;
+    }
+    body:not(.body-min) .dialer-panel.tips-on .dialer-panel-tip {
+      display: flex;
+    }
+
+    .lead-tip-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #fef3c7;
+      border: 1.5px solid #fde68a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .lead-tip-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: #92400e;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .lead-tip-body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .lead-tip-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #92400e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .lead-tip-text {
+      font-size: 12.5px;
+      color: #78350f;
+      line-height: 1.5;
+    }
+
+    .lead-tip-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400e;
+      background: #fef3c7;
+      border: 1.5px solid #fde68a;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease;
+      min-height: 32px;
+      white-space: nowrap;
+    }
+
+    .lead-tip-action:hover {
+      background: #fde68a;
+      border-color: #d97706;
+    }
+
+    .lead-tip-action svg {
+      width: 13px;
+      height: 13px;
+      stroke: #92400e;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   </style>
 </head>
 <body class="body-min">
@@ -3034,19 +3815,35 @@
       </div>
     </header>
 
+    <div class="content-with-sidebar">
+    <div class="content-main">
+
     <!-- Greeting + Dials Row -->
     <div class="greeting-row">
       <div class="greeting-text">
         <h1 id="greeting-name">Good morning, Alice.</h1>
-        <p>You have <a href="#" class="appt-link">3 appointments</a> scheduled today.</p>
-        <a href="#" onclick="window.open('cinc-playbook.html','playbookWindow','width=1000,height=750,resizable=yes,scrollbars=yes'); return false;" class="playbook-pill">
-          CINC Mini Playbook
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 3H3C2.44772 3 2 3.44772 2 4V13C2 13.5523 2.44772 14 3 14H12C12.5523 14 13 13.5523 13 13V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M9 2H14V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M14 2L8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+        <p class="greeting-date">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="greeting-date"></span>
+        </p>
+        <p>You have <a href="#" class="appt-link">3 appointments</a> scheduled today. <span id="daily-welcome" class="daily-welcome"></span><button class="welcome-info-btn" onclick="toggleWelcomePopup(event)" title="View all daily messages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></button></p>
+        <div class="playbook-row">
+          <a href="#" onclick="window.open('cinc-playbook.html','playbookWindow','width=1000,height=750,resizable=yes,scrollbars=yes'); return false;" class="playbook-pill">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 3H3C2.44772 3 2 3.44772 2 4V13C2 13.5523 2.44772 14 3 14H12C12.5523 14 13 13.5523 13 13V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 2H14V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2L8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            CINC Mini Playbook
+          </a>
+          <label class="tips-toggle-wrap">
+            <span class="tips-toggle">
+              <input type="checkbox" id="tips-toggle-input" onchange="toggleTipsPanel(this)">
+              <span class="tips-toggle-slider"></span>
+            </span>
+            <span class="tips-toggle-label">Coaching Tips</span>
+          </label>
+        </div>
       </div>
 
       <!-- Weekly Dials Widget -->
@@ -3075,9 +3872,10 @@
 
     <!-- Page Body -->
     <div class="page-body">
+      <div class="page-body-inner">
 
       <!-- Today Panel -->
-      <div class="today-panel">
+      <div class="today-panel" id="today-panel">
 
         <!-- Panel Header -->
 
@@ -3091,7 +3889,10 @@
             Follow Up
             <span class="tab-badge follow-up" id="followup-tab-badge">5</span>
           </a>
-          <a class="primary-tab" href="#" onclick="switchTab('deal-reminders', this); return false;">Deal Reminders</a>
+          <a class="primary-tab" href="#" onclick="switchTab('deal-reminders', this); return false;">
+            Deal Reminders
+            <span class="tab-badge deal-reminders" id="dr-tab-badge">4</span>
+          </a>
           <a class="primary-tab" href="#" onclick="switchTab('contact-requested', this); return false;">
             Contact Requested
             <span class="tab-badge contact-requested" id="cr-tab-badge">6</span>
@@ -3109,7 +3910,7 @@
             </button>
             <div class="tab-view-dropdown" id="tab-view-dropdown">
               <button class="tab-view-dropdown-item" onclick="viewAllPondLeads(event)">View all Pond Leads</button>
-              <button class="tab-view-dropdown-item" onclick="openUserPickerModal()">View Dashboard of...</button>
+              <button class="tab-view-dropdown-item" id="view-dashboard-item" onclick="openUserPickerModal()">View Dashboard of...</button>
               <button class="tab-view-dropdown-item" id="reset-view-item" onclick="resetView()" style="display:none; color:#dc2626;">Reset View</button>
             </div>
           </div>
@@ -3196,7 +3997,7 @@
                   <span class="lead-badge badge-buyer">Buyer</span>
                   <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                 </div>
-                <div class="lead-meta">Registered &middot; 18 minutes ago</div>
+                <div class="lead-meta">Registered <span class="lead-meta-time">&middot; 18 minutes ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-brian')">
                   Registration Responses
@@ -3277,6 +4078,20 @@
                   </div>
                 </div>
               </div>
+              <!-- Lead Tip (Tips & Tricks mode) -->
+              <div class="lead-tip">
+                <div class="lead-tip-icon">
+                  <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                </div>
+                <div class="lead-tip-body">
+                  <span class="lead-tip-label">Tip — First-Time Buyer, Not Pre-Qualified</span>
+                  <span class="lead-tip-text">Brian is a first-time buyer not yet pre-qualified. Call now to introduce yourself and recommend a lender — this keeps you in control of the process and builds trust early.</span>
+                </div>
+                <button class="lead-tip-action" onclick="addToDialer(this)">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Add to Dialer
+                </button>
+              </div>
             </div>
           </div>
 
@@ -3294,7 +4109,7 @@
                   <span class="lead-badge badge-seller">Seller</span>
                   <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                 </div>
-                <div class="lead-meta">Registered &middot; 1 hr &amp; 24 min ago</div>
+                <div class="lead-meta">Registered <span class="lead-meta-time">&middot; 1 hr &amp; 24 min ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-allen')">
                   Registration Responses
@@ -3388,6 +4203,20 @@
                   </a>
                 </div>
               </div>
+              <!-- Lead Tip (Tips & Tricks mode) -->
+              <div class="lead-tip">
+                <div class="lead-tip-icon">
+                  <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                </div>
+                <div class="lead-tip-body">
+                  <span class="lead-tip-label">Tip — New Seller Lead</span>
+                  <span class="lead-tip-text">Allen owns his current home and is 6–12 months out. Ask about his timeline and home condition early — this lets you shape the listing strategy before he shops other agents.</span>
+                </div>
+                <button class="lead-tip-action" onclick="addToDialer(this)">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Add to Dialer
+                </button>
+              </div>
             </div><!-- /.reg-answers -->
           </div>
 
@@ -3406,7 +4235,7 @@
                   <span class="lead-badge badge-pond-lead">Pond Lead</span>
                   <img class="status-icon" src="icons/158_locked.svg" alt="Locked" title="Locked">
                 </div>
-                <div class="lead-meta">Registered &middot; Jun 30, 2026 at 3:52 am</div>
+                <div class="lead-meta">Registered <span class="lead-meta-time">&middot; Jun 30, 2026 at 3:52 am</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-eva')">
                   Registration Responses
@@ -3486,6 +4315,20 @@
                   </div>
                 </div>
               </div>
+              <!-- Lead Tip (Tips & Tricks mode) -->
+              <div class="lead-tip">
+                <div class="lead-tip-icon">
+                  <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                </div>
+                <div class="lead-tip-body">
+                  <span class="lead-tip-label">Tip — Unverified Contact Info</span>
+                  <span class="lead-tip-text">Both Eva's phone and email are unverified. Start with email to confirm the address is valid before burning a call attempt — then use a verified channel to follow up.</span>
+                </div>
+                <button class="lead-tip-action" onclick="addToDialer(this)">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Add to Dialer
+                </button>
+              </div>
             </div>
           </div>
 
@@ -3503,7 +4346,7 @@
                   <span class="lead-badge badge-buyer">Buyer</span>
                   <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                 </div>
-                <div class="lead-meta">Last attempt &middot; 2 days ago</div>
+                <div class="lead-meta">Last attempt <span class="lead-meta-time">&middot; 2 days ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-marcus')">
                   Registration Responses
@@ -3601,7 +4444,7 @@
                   <span class="lead-badge badge-pond-lead">Pond Lead</span>
                   <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                 </div>
-                <div class="lead-meta">Last attempt &middot; 5 days ago</div>
+                <div class="lead-meta">Last attempt <span class="lead-meta-time">&middot; 5 days ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-priya')">
                   Registration Responses
@@ -3698,7 +4541,7 @@
                   <span class="lead-badge badge-buyer">Buyer</span>
                   <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                 </div>
-                <div class="lead-meta">Last login &middot; 1 day ago</div>
+                <div class="lead-meta">Last login <span class="lead-meta-time">&middot; 1 day ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-brian-p3')">
                   Contact Activity
@@ -3787,7 +4630,7 @@
                   <span class="lead-badge badge-buyer">Buyer</span>
                   <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                 </div>
-                <div class="lead-meta">Last login &middot; 3 hours ago</div>
+                <div class="lead-meta">Last login <span class="lead-meta-time">&middot; 3 hours ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-jordan')">
                   Contact Activity
@@ -3859,6 +4702,20 @@
                   </div>
                 </div>
               </div>
+              <!-- Lead Tip (Tips & Tricks mode) -->
+              <div class="lead-tip">
+                <div class="lead-tip-icon">
+                  <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                </div>
+                <div class="lead-tip-body">
+                  <span class="lead-tip-label">Tip — Active Browser, Recently Contacted</span>
+                  <span class="lead-tip-text">Jordan has viewed 7 properties and logged in 3 hours ago. She's actively searching — call now to ask which listings stood out and offer to schedule showings while her interest is high.</span>
+                </div>
+                <button class="lead-tip-action" onclick="addToDialer(this)">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Add to Dialer
+                </button>
+              </div>
             </div>
           </div>
 
@@ -3876,7 +4733,7 @@
                   <span class="lead-badge badge-buyer">Buyer</span>
                   <img class="status-icon" src="icons/158_locked.svg" alt="Locked" title="Locked">
                 </div>
-                <div class="lead-meta">Last login &middot; 6 hours ago</div>
+                <div class="lead-meta">Last login <span class="lead-meta-time">&middot; 6 hours ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-simone')">
                   Contact Activity
@@ -3965,7 +4822,7 @@
                   <span class="lead-badge badge-seller">Seller</span>
                   <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                 </div>
-                <div class="lead-meta">Last login &middot; 2 days ago</div>
+                <div class="lead-meta">Last login <span class="lead-meta-time">&middot; 2 days ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-derek')">
                   Contact Activity
@@ -4054,7 +4911,7 @@
                   <span class="lead-badge badge-buyer">Buyer</span>
                   <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                 </div>
-                <div class="lead-meta">Last login &middot; 45 minutes ago</div>
+                <div class="lead-meta">Last login <span class="lead-meta-time">&middot; 45 minutes ago</span></div>
                 </div><!-- /.lead-info-top -->
                 <button class="reg-toggle" onclick="toggleReg(this, 'reg-lisa')">
                   Contact Activity
@@ -4221,7 +5078,7 @@
                     </div>
                     <div class="lead-meta overdue">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                      Overdue &middot; Jul 14 at 11:00 am
+                      Overdue <span class="lead-meta-time">&middot; Jul 14 at 11:00 am</span>
                     </div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-priya')">
@@ -4256,6 +5113,20 @@
                   <span class="reminder-detail-label">Notes</span>
                   <span class="reminder-detail-value">Priya has been active on the site but hasn't responded to calls. Send a personalized intro email with 3–4 property matches based on her saved search. Include a link to her search results and a soft CTA to schedule a call.</span>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Overdue Email Reminder</span>
+                    <span class="lead-tip-text">Overdue emails lose impact fast. Use a fresh, specific subject line — mention a property she's viewed or her target city — to stand out in her inbox and prompt a reply.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Send an Email
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -4276,7 +5147,7 @@
                     </div>
                     <div class="lead-meta overdue">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                      Overdue &middot; Jul 15 at 9:00 am
+                      Overdue <span class="lead-meta-time">&middot; Jul 15 at 9:00 am</span>
                     </div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-marcus')">
@@ -4311,6 +5182,20 @@
                   <span class="reminder-detail-label">Notes</span>
                   <span class="reminder-detail-value">Two call attempts with no answer. Marcus registered 2 days ago and has been active on the site. Try a different time of day — he tends to view properties in the evening. Consider leaving a voicemail on the next attempt.</span>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Overdue Call, 2 Attempts</span>
+                    <span class="lead-tip-text">Two unanswered calls suggests a timing mismatch. Try calling in the evening when he's most active on the site, and leave a voicemail with a specific hook — mention a new listing that matches his saved search.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -4328,7 +5213,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Today at 10:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Today at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-jordan')">
                     Follow up after showing — Lincoln Park
@@ -4371,6 +5256,20 @@
                   <span class="reminder-detail-label">Notes</span>
                   <span class="reminder-detail-value">Jordan attended a showing at 1842 Dearborn St this morning. She seemed interested but had concerns about the kitchen size. Call to gauge her interest and discuss potential offer strategy.</span>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Post-Showing Follow-Up</span>
+                    <span class="lead-tip-text">Call within 2 hours of a showing while the property is still vivid. Lead with "What was your gut reaction?" before getting into logistics — honest first impressions drive faster decisions than feature discussions.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -4388,7 +5287,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Today at 2:00 pm</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Today at 2:00 pm</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-derek')">
                     Send HomePulse report summary
@@ -4448,7 +5347,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Today at 4:30 pm</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Today at 4:30 pm</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-lisa')">
                     Schedule second showing — 2 properties
@@ -4491,6 +5390,20 @@
                   <span class="reminder-detail-label">Notes</span>
                   <span class="reminder-detail-value">Lisa shortlisted 2209 N Clark St and 1704 N Wells St after her viewing session this morning. Coordinate with both listing agents to schedule second showings for this weekend. Lisa is available Saturday after noon.</span>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Scheduling Second Showings</span>
+                    <span class="lead-tip-text">Before locking in second showing times, confirm Lisa's priorities haven't shifted since her first visit. A quick "Are these still your top two?" saves a wasted trip and shows you're paying attention.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -4509,7 +5422,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due &middot; Jul 21 at 9:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 21 at 9:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-brian-nw')">
                     First touch call after registration
@@ -4560,7 +5473,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due &middot; Jul 23 at 2:00 pm</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 23 at 2:00 pm</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-eva-nw')">
                     Send neighborhood market report
@@ -4611,7 +5524,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Aug 5 at 10:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Aug 5 at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-simone-nm')">
                     Check in — re-evaluate search criteria
@@ -4662,7 +5575,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due &middot; Aug 12 at 11:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Aug 12 at 11:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-allen-nm')">
                     Follow up on HomePulse listing intent
@@ -4772,7 +5685,7 @@
                     </div>
                     <div class="lead-meta overdue">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                      Overdue &middot; Jul 17 at 9:00 am
+                      Overdue <span class="lead-meta-time">&middot; Jul 17 at 9:00 am</span>
                     </div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-lisa')">
@@ -4826,7 +5739,7 @@
                     </div>
                     <div class="lead-meta overdue">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                      Overdue &middot; Jul 18 at 10:00 am
+                      Overdue <span class="lead-meta-time">&middot; Jul 18 at 10:00 am</span>
                     </div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-allen')">
@@ -4878,7 +5791,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Today at 11:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Today at 11:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-jordan')">
                     Review home inspection report
@@ -4929,7 +5842,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Today at 2:00 pm</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Today at 2:00 pm</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-simone')">
                     Send counter-offer response to seller
@@ -4980,7 +5893,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Jul 22 at 10:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 22 at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-derek')">
                     Pre-listing walkthrough at 742 Elm St
@@ -5031,7 +5944,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due &middot; Jul 24 at 9:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 24 at 9:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-marcus')">
                     Confirm mortgage pre-approval received
@@ -5082,7 +5995,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due &middot; Jul 28 at 10:00 am</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 28 at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-brian')">
                     Walk through closing day checklist
@@ -5133,7 +6046,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due &middot; Jul 29 at 1:00 pm</div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 29 at 1:00 pm</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-priya')">
                     Follow up on title search results
@@ -5258,7 +6171,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Property Inquiry &middot; 12 min ago</div>
+                    <div class="lead-meta">Property Inquiry <span class="lead-meta-time">&middot; 12 min ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'cr-natalie')">
                     View Details
@@ -5300,6 +6213,27 @@
                             <a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                           </div>
                         </div>
+                        <div class="saved-search-match">
+                          <div class="saved-search-match-header">Saved Search Match</div>
+                          <div class="saved-search-match-body">
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">$380K–$450K</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">3 bd</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">2 ba</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">Denver, CO</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -5312,6 +6246,20 @@
                       <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
                     </div>
                   </div>
+                </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Property Inquiry</span>
+                    <span class="lead-tip-text">Leads who inquire about a specific property expect a fast response. Aim to reply within 15 minutes — even a brief "I'm pulling the details now" text keeps her engaged while you prepare the full answer.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Send a Text
+                  </button>
                 </div>
               </div>
             </div>
@@ -5330,7 +6278,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Showing Request &middot; 34 min ago</div>
+                    <div class="lead-meta">Showing Request <span class="lead-meta-time">&middot; 34 min ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'cr-tyler')">
                     View Details
@@ -5372,6 +6320,31 @@
                             <a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                           </div>
                         </div>
+                        <div class="saved-search-match">
+                          <div class="saved-search-match-header">Saved Search Match</div>
+                          <div class="saved-search-match-body">
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">$480K–$550K</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">3 bd</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">2 ba</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">Denver, CO</span>
+                            </div>
+                            <div class="match-criterion">
+                              <div class="match-criterion-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                              <span class="match-criterion-value">Private garage</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="showing-details">
                         <div class="showing-detail-col">
@@ -5405,6 +6378,20 @@
                     </div>
                   </div>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Showing Request</span>
+                    <span class="lead-tip-text">After confirming a showing time, send a quick text recap — date, time, address. It reduces no-shows and gives the lead an easy way to confirm or reschedule without a second call.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -5422,7 +6409,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">HomePulse Inquiry &middot; 1 hr ago</div>
+                    <div class="lead-meta">HomePulse Inquiry <span class="lead-meta-time">&middot; 1 hr ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'cr-raymond')">
                     View Details
@@ -5491,7 +6478,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Cash Offer Inquiry &middot; 2 hrs ago</div>
+                    <div class="lead-meta">Cash Offer Inquiry <span class="lead-meta-time">&middot; 2 hrs ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'cr-sandra')">
                     View Details
@@ -5560,7 +6547,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Etta Message &middot; 3 hrs ago</div>
+                    <div class="lead-meta">Etta Message <span class="lead-meta-time">&middot; 3 hrs ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'cr-carlos')">
                     View Conversation
@@ -5603,9 +6590,7 @@
 
                         <!-- Message 2: Etta -->
                         <div class="chat-message ai">
-                          <div class="chat-avatar ai-avatar">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                          </div>
+                          <div class="chat-avatar" style="background:#0080A3; font-size:10px; font-weight:700;">JC</div>
                           <div class="chat-bubble">
                             Great question! That area has a walk score of 82 and is near several top-rated schools. Would you like me to connect you with an agent who knows the neighborhood well?
                             <span class="chat-timestamp">Jul 20 at 7:15 am</span>
@@ -5618,6 +6603,15 @@
                           <div class="chat-bubble">
                             Yes, that would be great. I'm also curious about parking — is it street only?
                             <span class="chat-timestamp">Jul 20 at 7:18 am</span>
+                          </div>
+                        </div>
+
+                        <!-- Message 4: Agent -->
+                        <div class="chat-message ai">
+                          <div class="chat-avatar" style="background:#0080A3; font-size:10px; font-weight:700;">JC</div>
+                          <div class="chat-bubble">
+                            Great question — there's a private garage included with that unit. Want me to send you the full details?
+                            <span class="chat-timestamp">Pending reply</span>
                           </div>
                         </div>
 
@@ -5637,6 +6631,20 @@
                     </div>
                   </div>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — Etta Conversation</span>
+                    <span class="lead-tip-text">Carlos is mid-conversation with Etta and asked about parking. Pick up where Etta left off — reference his question to show continuity and build trust.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Reply to Message
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -5654,7 +6662,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">AI Ready &middot; Just now</div>
+                    <div class="lead-meta">AI Ready <span class="lead-meta-time">&middot; Just now</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'cr-danielle')">
                     View Details
@@ -5751,6 +6759,20 @@
                     </div>
                   </div>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — What Does "AI Ready" Mean?</span>
+                    <span class="lead-tip-text">AI Ready means the AI has analyzed Danielle's behavior — her search activity, engagement patterns, and conversation history — and flagged her as ready for an agent to reach out now. Don't wait.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -5839,7 +6861,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">High Property Views &middot; 14 views this week</div>
+                    <div class="lead-meta">High Property Views <span class="lead-meta-time">&middot; 14 views this week</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-jordan')">
                     Recent Activity
@@ -5883,6 +6905,20 @@
                     </div>
                   </div>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — High Property Views</span>
+                    <span class="lead-tip-text">14 views this week signals active search mode. A quick check-in call or text — "Saw you've been browsing — anything catch your eye?" — feels timely rather than pushy, and gives her an easy opening to engage.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -5900,7 +6936,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">High Favorites &middot; 8 saved this week</div>
+                    <div class="lead-meta">High Favorites <span class="lead-meta-time">&middot; 8 saved this week</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-lisa')">
                     Recent Activity
@@ -5947,6 +6983,20 @@
                     </div>
                   </div>
                 </div>
+                <!-- Lead Tip (Tips & Tricks mode) -->
+                <div class="lead-tip">
+                  <div class="lead-tip-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+                  </div>
+                  <div class="lead-tip-body">
+                    <span class="lead-tip-label">Tip — High Favorites</span>
+                    <span class="lead-tip-text">8 saves this week means Lisa is narrowing in on what she wants. Ask "What's drawing you to these — is it the neighborhood, the price range, or something specific about the layout?" Her answer will tell you exactly what to show next.</span>
+                  </div>
+                  <button class="lead-tip-action" onclick="addToDialer(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Add to Dialer
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -5964,7 +7014,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Updated Saved Search &middot; 2 hours ago</div>
+                    <div class="lead-meta">Updated Saved Search <span class="lead-meta-time">&middot; 2 hours ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-derek')">
                     View Search
@@ -6020,7 +7070,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Frequent Visitor &middot; 9 sessions this week</div>
+                    <div class="lead-meta">Frequent Visitor <span class="lead-meta-time">&middot; 9 sessions this week</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-simone')">
                     Recent Activity
@@ -6080,7 +7130,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Claimed HomePulse &middot; 4 hours ago</div>
+                    <div class="lead-meta">Claimed HomePulse <span class="lead-meta-time">&middot; 4 hours ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-allen')">
                     View Details
@@ -6137,7 +7187,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Shared Listings &middot; 3 shared today</div>
+                    <div class="lead-meta">Shared Listings <span class="lead-meta-time">&middot; 3 shared today</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-marcus')">
                     Recent Activity
@@ -6196,7 +7246,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Updated Contact Info &middot; 1 hour ago</div>
+                    <div class="lead-meta">Updated Contact Info <span class="lead-meta-time">&middot; 1 hour ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-brian')">
                     View Details
@@ -6283,7 +7333,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">AI Conversation &middot; 30 min ago</div>
+                    <div class="lead-meta">AI Conversation <span class="lead-meta-time">&middot; 30 min ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-eva')">
                     View Conversation
@@ -6388,7 +7438,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/158_locked.svg" alt="Locked" title="Locked">
                     </div>
-                    <div class="lead-meta">Calculated Mortgage &middot; 45 min ago</div>
+                    <div class="lead-meta">Calculated Mortgage <span class="lead-meta-time">&middot; 45 min ago</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-priya')">
                     Recent Activity
@@ -6451,7 +7501,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Verified Account &middot; Just now</div>
+                    <div class="lead-meta">Verified Account <span class="lead-meta-time">&middot; Just now</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'tl-simone-v')">
                     View Details
@@ -6491,7 +7541,70 @@
         </div><!-- /#tab-trending -->
 
       </div><!-- /.today-panel -->
+
+      </div><!-- /.page-body-inner -->
     </div><!-- /.page-body -->
+
+    </div><!-- /.content-main -->
+
+      <!-- Right Column (Future Updates only) -->
+      <div class="right-column">
+
+        <!-- Weekly Dials (Future Updates) -->
+        <div class="dials-widget">
+          <div class="dials-top">
+            <div class="dials-count">
+              <span class="dials-count-num">28</span>
+              <span class="dials-count-goal">/75</span>
+            </div>
+            <div class="dials-add-btn" title="Update dials" onclick="openDialsModal()">
+              <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <line x1="7" y1="1" x2="7" y2="13"/>
+                <line x1="1" y1="7" x2="13" y2="7"/>
+              </svg>
+            </div>
+          </div>
+          <div class="dials-bottom">
+            <div class="dials-label">Weekly Dials</div>
+            <div class="dials-sublabel">47 to go &mdash; you got this &#128170;</div>
+            <div class="dials-progress-track">
+              <div class="dials-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alex's Take Card -->
+        <div class="alexs-take-card">
+          <div class="alexs-take-header">
+            <svg viewBox="0 0 48 48"><path d="M26.1,32.2c-0.6,0.6-1.4,1-2.2,1c-0.8,0.1-1.6-0.3-2.2-0.9c-0.6-0.6-1.5-0.6-2.1,0s-0.6,1.5,0,2.1c1.1,1.1,2.7,1.8,4.3,1.8c0,0,0.1,0,0.1,0c1.6,0,3.2-0.7,4.3-1.9c0.6-0.6,0.5-1.5-0.1-2.1C27.6,31.5,26.7,31.6,26.1,32.2z M42.1,21.6v-1c0-4.7-3.9-8.6-8.6-8.6h-8V6c0-0.8-0.7-1.5-1.5-1.5S22.5,5.2,22.5,6v6h-8.1c-4.7,0-8.6,3.9-8.6,8.6v1c-3.1,0.3-5.5,3-5.5,6.2c0,3.2,2.4,5.8,5.5,6.2v4.1c0,3,2.4,5.4,5.4,5.4h25.5c3,0,5.4-2.4,5.4-5.4V34c3.1-0.3,5.6-3,5.6-6.2C47.7,24.6,45.2,21.9,42.1,21.6z M5.6,30.9c-1.3-0.4-2.3-1.6-2.3-3.1s1-2.7,2.3-3.1V30.9z M39.1,38.1c0,1.3-1.1,2.4-2.4,2.4H11.2c-1.3,0-2.4-1.1-2.4-2.4V20.6c0-3.1,2.5-5.6,5.6-5.6h19.1c3.1,0,5.6,2.5,5.6,5.6V38.1z M42.4,30.9v-6.1c1.3,0.4,2.3,1.6,2.3,3.1S43.7,30.5,42.4,30.9z M33.1,23.5c-2.4,0-4.3,1.9-4.3,4.3s1.9,4.3,4.3,4.3s4.3-1.9,4.3-4.3S35.5,23.5,33.1,23.5z M33.1,29.1c-0.7,0-1.3-0.6-1.3-1.3s0.6-1.3,1.3-1.3s1.3,0.6,1.3,1.3S33.8,29.1,33.1,29.1z M14.9,23.5c-2.4,0-4.3,1.9-4.3,4.3s1.9,4.3,4.3,4.3s4.3-1.9,4.3-4.3S17.3,23.5,14.9,23.5z M14.9,29.1c-0.7,0-1.3-0.6-1.3-1.3s0.6-1.3,1.3-1.3s1.3,0.6,1.3,1.3S15.6,29.1,14.9,29.1z"/></svg>
+            <span class="alexs-take-label">Alex's Take</span>
+          </div>
+          <div class="alexs-take-body">
+            <strong>86% of homebuyers</strong> work with the first agent they speak to. You have 4 contact requests — <strong>empty them before noon</strong>. After each call: Update Pipeline, Add Note, Set Reminder.
+          </div>
+        </div>
+
+        <!-- Dialer Panel -->
+        <div class="dialer-panel">
+          <div class="dialer-panel-header">
+            <span class="dialer-panel-title">CINC Dialer</span>
+            <button class="dialer-add-btn">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Lead
+            </button>
+          </div>
+          <div class="dialer-panel-body">
+            <div class="dialer-empty-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <span class="dialer-empty-title">No leads in queue</span>
+            <span class="dialer-empty-sub">Add leads from your cards to start a dialer session.</span>
+          </div>
+        </div>
+
+      </div><!-- /.right-column -->
+
+    </div><!-- /.content-with-sidebar -->
 
   </div><!-- /.main-content -->
 
@@ -6566,20 +7679,99 @@
     }
 
     function addToDialer() {
+      const isFuture = document.getElementById('view-mode-select').value === 'future';
       document.querySelectorAll('.lead-checkbox:checked').forEach(function(cb) {
         const card = cb.closest('.lead-card');
         const leadId = card.dataset.leadId;
         if (leadId) {
-          // Add badge to all cards sharing this lead ID across filters
           document.querySelectorAll(`.lead-card[data-lead-id="${leadId}"]`).forEach(addDialerBadge);
         } else {
           addDialerBadge(card);
         }
+        if (isFuture) addToDialerPanel(card);
         cb.checked = false;
       });
       actionsBtn.disabled = true;
       actionsBtn.nextElementSibling.classList.remove('open');
       actionsBtn.classList.remove('open');
+    }
+
+    function addToDialerPanel(card) {
+      const panel = document.querySelector('.dialer-panel');
+      if (!panel) return;
+
+      // Extract lead data from card
+      const name = card.querySelector('.lead-name')?.textContent.trim() || '';
+
+      // Collect status + type badges (exclude In Dialer badge)
+      const badgeEls = card.querySelectorAll('.lead-badge:not(.badge-in-dialer)');
+      const badgesHTML = Array.from(badgeEls).map(b => b.outerHTML).join('');
+
+      const meta = card.querySelector('.lead-meta')?.textContent.trim() || '';
+
+      // Avoid duplicates
+      const existing = panel.querySelectorAll('.dialer-entry-name');
+      for (const el of existing) {
+        if (el.textContent.trim() === name) return;
+      }
+
+      // Hide empty state if showing
+      const emptyBody = panel.querySelector('.dialer-panel-body');
+      if (emptyBody) emptyBody.remove();
+
+      // Get or create queue list
+      let queue = panel.querySelector('.dialer-queue');
+      if (!queue) {
+        queue = document.createElement('div');
+        queue.className = 'dialer-queue';
+        panel.appendChild(queue);
+
+        // Create footer with action buttons (once)
+        const footer = document.createElement('div');
+        footer.className = 'dialer-panel-footer';
+        footer.innerHTML = `
+          <button class="dialer-start-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Start Dialing
+          </button>
+          <button class="dialer-settings-btn">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Dialer Settings
+          </button>
+        `;
+        panel.appendChild(footer);
+
+        // Dialer tip card
+        const tip = document.createElement('div');
+        tip.className = 'lead-tip dialer-panel-tip';
+        tip.innerHTML = `
+          <div class="lead-tip-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+          </div>
+          <div class="lead-tip-body">
+            <span class="lead-tip-label">Tip — Before You Dial</span>
+            <span class="lead-tip-text">Review call scripts and objection handlers in the CINC Playbook before starting your session.</span>
+          </div>
+          <button class="lead-tip-action" onclick="window.open('cinc-playbook.html','playbookWindow','width=1000,height=750,resizable=yes,scrollbars=yes')">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Open Playbook
+          </button>
+        `;
+        panel.appendChild(tip);
+      }
+
+      const num = queue.children.length + 1;
+      const entry = document.createElement('div');
+      entry.className = 'dialer-entry';
+      entry.innerHTML = `
+        <span class="dialer-entry-number">${num}</span>
+        <div class="dialer-entry-info">
+          <span class="dialer-entry-name">${name}</span>
+          <div class="dialer-entry-badges">${badgesHTML}</div>
+          <span class="dialer-entry-meta">${meta}</span>
+        </div>
+      `;
+      queue.appendChild(entry);
     }
 
     function decrementBadge(badge) {
@@ -6890,6 +8082,7 @@
       const activePill = tab.querySelector('.filter-pill[data-dr-due].active');
       const val = activePill ? activePill.dataset.drDue : 'all';
       const pondOnly = isPondActive(tab);
+      let visible = 0;
       tab.querySelectorAll('.lead-card').forEach(card => {
         const due = card.dataset.drDue;
         let dueMatch;
@@ -6897,8 +8090,12 @@
         else if (val === 'today-overdue') dueMatch = due === 'today' || due === 'overdue';
         else                              dueMatch = due === val;
         const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
-        card.style.display = (dueMatch && pondMatch) ? '' : 'none';
+        const show = dueMatch && pondMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
       });
+      const badge = document.getElementById('dr-tab-badge');
+      if (badge) badge.textContent = visible;
     }
 
     function switchTlTypeFilter(pill) {
@@ -7176,10 +8373,12 @@
         if (metaEl) {
           if (dueCategory === 'overdue') {
             metaEl.classList.add('overdue');
-            metaEl.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + dueLabel;
+            const dueParts = dueLabel.split(' · ');
+            metaEl.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + dueParts[0] + (dueParts[1] ? ' <span class="lead-meta-time">&middot; ' + dueParts[1] + '</span>' : '');
           } else {
             metaEl.classList.remove('overdue');
-            metaEl.textContent = dueLabel;
+            const parts = dueLabel.split(' · ');
+            metaEl.innerHTML = parts[0] + (parts[1] ? ' <span class="lead-meta-time">&middot; ' + parts[1] + '</span>' : '');
           }
         }
 
@@ -7303,7 +8502,21 @@
     function setViewMode(value) {
       const isMinLike = (value === 'mvp' || value === 'iter2');
       document.body.classList.toggle('body-min', isMinLike);
+      document.body.classList.toggle('body-iter2', value === 'iter2');
       if (isMinLike) syncSelectsToActivePills();
+      // Reset tips when switching to MVP
+      if (value === 'mvp') {
+        document.getElementById('tips-toggle-input').checked = false;
+        document.getElementById('today-panel').classList.remove('tips-on');
+        const dp = document.querySelector('.dialer-panel');
+        if (dp) dp.classList.remove('tips-on');
+      }
+    }
+
+    function toggleTipsPanel(input) {
+      document.getElementById('today-panel').classList.toggle('tips-on', input.checked);
+      const dialerPanel = document.querySelector('.dialer-panel');
+      if (dialerPanel) dialerPanel.classList.toggle('tips-on', input.checked);
     }
 
     // ─── VIEW DROPDOWN ────────────────────────────────────────
@@ -7532,8 +8745,48 @@
       // Trending Leads: All
       const tlPill = document.querySelector('#tab-trending .filter-bar [data-tl-type="all"]');
       if (tlPill) switchTlTypeFilter(tlPill);
+
     });
+
   </script>
+
+  <!-- ─── DAILY WELCOME POPUP ─────────────────────────────── -->
+  <div class="welcome-popup" id="welcome-popup" style="display:none;">
+    <div class="welcome-popup-header">
+      <span class="welcome-popup-title">Daily Welcome Lines</span>
+      <button class="welcome-popup-close" onclick="closeWelcomePopup()">&times;</button>
+    </div>
+    <div class="welcome-popup-body">
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Sunday</span>
+        <span class="welcome-popup-text">It's Sunday — a great day to review your pipeline, update searches, and prep your Monday game plan.</span>
+      </div>
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Monday</span>
+        <span class="welcome-popup-text">It's Monday — your Daily Money Plays are loaded. Empty Contact Requests before noon, then knock down P1 and P2.</span>
+      </div>
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Tuesday</span>
+        <span class="welcome-popup-text">It's Tuesday — dial through your Attempted P2s and follow up on yesterday's conversations.</span>
+      </div>
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Wednesday</span>
+        <span class="welcome-popup-text">Midweek momentum — check your Trending Leads and set follow-up reminders for anyone you've contacted.</span>
+      </div>
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Thursday</span>
+        <span class="welcome-popup-text">It's Thursday — push to hit your dial goal before the week winds down. P1s and P2s need your attention.</span>
+      </div>
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Friday</span>
+        <span class="welcome-popup-text">End the week strong — close out your Contact Requests, add pinned notes, and set reminders so Monday has a running start.</span>
+      </div>
+      <div class="welcome-popup-row">
+        <span class="welcome-popup-day">Saturday</span>
+        <span class="welcome-popup-text">Weekend warrior — even a short session on Trending Leads can keep your pipeline warm.</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ─── CONTACT NOTE MODAL ──────────────────────────────── -->
   <div class="modal-overlay" id="contact-note-modal">
@@ -7861,5 +9114,51 @@
     </div>
   </div>
 
+  <script>
+    function toggleWelcomePopup(e) {
+      e.stopPropagation();
+      const popup = document.getElementById('welcome-popup');
+      if (popup.style.display === 'none') {
+        // Position near the button
+        const btn = e.currentTarget;
+        const rect = btn.getBoundingClientRect();
+        popup.style.display = 'block';
+        popup.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+        popup.style.left = Math.min(rect.left + window.scrollX, window.innerWidth - 440) + 'px';
+        // Highlight today's row
+        const today = new Date().getDay();
+        popup.querySelectorAll('.welcome-popup-row').forEach((row, i) => {
+          row.style.background = i === today ? '#f0f8fb' : '';
+          row.querySelector('.welcome-popup-day').style.color = i === today ? '#0080A3' : '#0080A3';
+          row.querySelector('.welcome-popup-text').style.fontWeight = i === today ? '600' : '';
+        });
+        document.addEventListener('click', closeWelcomePopup, { once: true });
+      } else {
+        closeWelcomePopup();
+      }
+    }
+
+    function closeWelcomePopup() {
+      const popup = document.getElementById('welcome-popup');
+      if (popup) popup.style.display = 'none';
+    }
+
+    (function() {
+      const welcomeLines = [
+        "It's Sunday — a great day to review your pipeline, update searches, and prep your Monday game plan.",
+        "It's Monday — your Daily Money Plays are loaded. Empty Contact Requests before noon, then knock down P1 and P2.",
+        "It's Tuesday — dial through your Attempted P2s and follow up on yesterday's conversations.",
+        "Midweek momentum — check your Trending Leads and set follow-up reminders for anyone you've contacted.",
+        "It's Thursday — push to hit your dial goal before the week winds down. P1s and P2s need your attention.",
+        "End the week strong — close out your Contact Requests, add pinned notes, and set reminders so Monday has a running start.",
+        "Weekend warrior — even a short session on Trending Leads can keep your pipeline warm."
+      ];
+      const now = new Date();
+      const welcomeEl = document.getElementById('daily-welcome');
+      if (welcomeEl) welcomeEl.textContent = welcomeLines[now.getDay()];
+      const dateEl = document.getElementById('greeting-date');
+      if (dateEl) dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    })();
+  </script>
 </body>
 </html>

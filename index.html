@@ -2034,6 +2034,7 @@
     .tl-green               { background: #10b981; }
     .tl-orange              { background: #E97F04; }
     .tl-purple              { background: #7c3aed; }
+    .tl-sky                 { background: #87DCF3; }
     .cr-teal                { background: #0080A3; }
     .cr-blue                { background: #3B8AFD; }
     .cr-mint                { background: #008767; }
@@ -2178,6 +2179,7 @@
     .card-identifier.tl-yellow ~ .lead-info .lead-meta { color: #d4a017; }
     .card-identifier.tl-mint ~ .lead-info .lead-meta { color: #1aab7a; }
     .card-identifier.tl-purple ~ .lead-info .lead-meta { color: #7c3aed; }
+    .card-identifier.tl-sky ~ .lead-info .lead-meta { color: #87DCF3; }
 
     .lead-meta-time {
       font-size: 12px;
@@ -3082,11 +3084,27 @@
       padding-bottom: 6px;
     }
 
+    .reg-cards-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .reg-qa-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
       flex: 1;
+    }
+
+    #reg-brian-p3 .user-highlights-card,
+    #reg-jordan .user-highlights-card,
+    #reg-simone .user-highlights-card,
+    #reg-derek .user-highlights-card,
+    #reg-lisa .user-highlights-card {
+      margin-left: auto;
     }
 
     /* Inline info cards inside expanded activity section */
@@ -3095,6 +3113,7 @@
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 12px;
+      align-items: flex-start;
     }
 
     .inline-info-card {
@@ -3171,7 +3190,56 @@
 
     .inline-info-card.comm-card.user-highlights-card .comm-card-bottom {
       border-top: 1px solid #e4e8ed;
+    }
+
+    .comm-card-property {
+      border-top: 1px solid #e4e8ed;
       border-radius: 0 0 4px 4px;
+      background: #ffffff;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comm-card-property-image {
+      width: 56px;
+      min-width: 56px;
+      height: 56px;
+      background: #d8dce3;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .comm-card-property-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comm-card-property-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: #9aa5b4;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comm-card-property-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0080A3;
+    }
+
+    .comm-card-property-address {
+      font-size: 11px;
+      font-weight: 600;
+      color: #1a1f2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .inline-info-card.comm-card.user-highlights-card .comm-card-stat-value {
       font-size: 11px;
@@ -3245,6 +3313,7 @@
 
     .homepulse-card {
       width: 320px;
+      height: 100px;
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid #e4e8ed;
@@ -3296,13 +3365,50 @@
       background: #ffffff;
       padding: 8px 10px;
       display: flex;
+      flex-direction: row;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .homepulse-card-left {
+      display: flex;
       flex-direction: column;
       gap: 6px;
       flex: 1;
     }
 
+    .homepulse-card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2px;
+      padding-left: 10px;
+      border-left: 1px solid #e4e8ed;
+    }
+
+    .homepulse-est-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: #9aa5b4;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .homepulse-est-value {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #008767;
+      white-space: nowrap;
+      text-align: center;
+    }
+
     .homepulse-address {
-      font-size: 12.5px;
+      font-size: 14px;
       color: #1a1f2e;
       line-height: 1.4;
     }
@@ -3942,6 +4048,13 @@
               <option value="p3">Recent Login - P3</option>
             </select>
           </div>
+          <div class="filter-select-group" id="p3-sort-group" style="display:none;">
+            <span class="filter-label">Sort</span>
+            <select class="filter-select" id="p3-sort-select" onchange="applyProspectingFilter()" style="display:inline-block;">
+              <option value="last-call-least-recent">Last Call: Least Recent</option>
+              <option value="most-recent-activity">Most Recent Activity</option>
+            </select>
+          </div>
           <div class="filter-bar-spacer"></div>
           <div class="filter-bar-actions">
             <div class="icon-btn-sm" title="Refresh">
@@ -4037,23 +4150,25 @@
             </div>
             <!-- Registration Responses (expanded) -->
             <div class="reg-answers hidden" id="reg-brian"><div class="reg-answers-divider"></div>
-              <div class="reg-qa">
-                <span class="reg-question">Do you own a home?</span>
-                <span class="reg-answer">Rent/Other</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Is this your first time buying a home?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Within how many months do you plan to buy a home?</span>
-                <span class="reg-answer">3-6 months</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Have you been prequalified for a mortgage?</span>
-                <span class="reg-answer">No</span>
-              </div>
-              <div class="inline-info-cards">
+              <div class="reg-answers-content-row">
+                <div class="reg-qa-list">
+                  <div class="reg-qa">
+                    <span class="reg-question">Do you own a home?</span>
+                    <span class="reg-answer">Rent/Other</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Is this your first time buying a home?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Within how many months do you plan to buy a home?</span>
+                    <span class="reg-answer">3-6 months</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Have you been prequalified for a mortgage?</span>
+                    <span class="reg-answer">No</span>
+                  </div>
+                </div>
                 <div class="inline-info-card comm-card user-highlights-card">
                   <div class="inline-info-card-header">User Highlights</div>
                   <div class="comm-card-top">
@@ -4074,6 +4189,15 @@
                     <div class="comm-card-stat">
                       <span class="comm-card-stat-value">0</span>
                       <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-property">
+                    <div class="comm-card-property-image"></div>
+                    <div class="comm-card-property-info">
+                      <span class="comm-card-property-label">First Viewed</span>
+                      <span class="comm-card-property-price">$389,000</span>
+                      <span class="comm-card-property-address">512 Barton Springs Rd, Austin, TX</span>
+                      <a href="#" class="property-preview-link">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                     </div>
                   </div>
                 </div>
@@ -4148,23 +4272,47 @@
               <input type="checkbox" class="lead-checkbox" />
             </div>
             <div class="reg-answers hidden" id="reg-allen"><div class="reg-answers-divider"></div>
-              <div class="reg-qa">
-                <span class="reg-question">Do you own a home?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Is this your first time buying a home?</span>
-                <span class="reg-answer">No</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Within how many months do you plan to buy a home?</span>
-                <span class="reg-answer">6-12 months</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Have you been prequalified for a mortgage?</span>
-                <span class="reg-answer">No</span>
-              </div>
-              <div class="inline-info-cards">
+              <div class="reg-answers-content-row">
+                <div class="reg-qa-list">
+                  <div class="reg-qa">
+                    <span class="reg-question">Do you own a home?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Is this your first time buying a home?</span>
+                    <span class="reg-answer">No</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Within how many months do you plan to buy a home?</span>
+                    <span class="reg-answer">6-12 months</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Have you been prequalified for a mortgage?</span>
+                    <span class="reg-answer">No</span>
+                  </div>
+                  <div class="homepulse-card">
+                    <div class="homepulse-card-header">HomePulse Report</div>
+                    <div class="homepulse-card-body">
+                      <div class="homepulse-card-left">
+                        <span class="homepulse-address">123 Maple Street<br>Austin, TX 78701</span>
+                      </div>
+                      <div class="homepulse-card-right">
+                        <div>
+                          <span class="homepulse-est-value">$485,000</span>
+                          <span class="homepulse-est-label">Estimated Value</span>
+                        </div>
+                        <a href="#" class="homepulse-link">
+                          View Report
+                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="inline-info-card comm-card user-highlights-card">
                   <div class="inline-info-card-header">User Highlights</div>
                   <div class="comm-card-top">
@@ -4187,20 +4335,15 @@
                       <span class="comm-card-stat-label">Call Count</span>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="homepulse-card" style="margin-top: 6px;">
-                <div class="homepulse-card-header">HomePulse Report</div>
-                <div class="homepulse-card-body">
-                  <span class="homepulse-address">123 Maple Street<br>Austin, TX 78701</span>
-                  <a href="#" class="homepulse-link">
-                    View Report
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15 3 21 3 21 9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                  </a>
+                  <div class="comm-card-property">
+                    <div class="comm-card-property-image"></div>
+                    <div class="comm-card-property-info">
+                      <span class="comm-card-property-label">First Viewed</span>
+                      <span class="comm-card-property-price">$574,000</span>
+                      <span class="comm-card-property-address">318 Westwood Dr, Nashville, TN</span>
+                      <a href="#" class="property-preview-link">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                    </div>
+                  </div>
                 </div>
               </div>
               <!-- Lead Tip (Tips & Tricks mode) -->
@@ -4274,23 +4417,25 @@
               <input type="checkbox" class="lead-checkbox" />
             </div>
             <div class="reg-answers hidden" id="reg-eva"><div class="reg-answers-divider"></div>
-              <div class="reg-qa">
-                <span class="reg-question">Do you own a home?</span>
-                <span class="reg-answer">No</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Is this your first time buying a home?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Within how many months do you plan to buy a home?</span>
-                <span class="reg-answer">0-3 months</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Have you been prequalified for a mortgage?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="inline-info-cards">
+              <div class="reg-answers-content-row">
+                <div class="reg-qa-list">
+                  <div class="reg-qa">
+                    <span class="reg-question">Do you own a home?</span>
+                    <span class="reg-answer">No</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Is this your first time buying a home?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Within how many months do you plan to buy a home?</span>
+                    <span class="reg-answer">0-3 months</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Have you been prequalified for a mortgage?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                </div>
                 <div class="inline-info-card comm-card user-highlights-card">
                   <div class="inline-info-card-header">User Highlights</div>
                   <div class="comm-card-top">
@@ -4311,6 +4456,15 @@
                     <div class="comm-card-stat">
                       <span class="comm-card-stat-value">0</span>
                       <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-property">
+                    <div class="comm-card-property-image"></div>
+                    <div class="comm-card-property-info">
+                      <span class="comm-card-property-label">First Viewed</span>
+                      <span class="comm-card-property-price">$412,500</span>
+                      <span class="comm-card-property-address">2218 Vine St, Denver, CO</span>
+                      <a href="#" class="property-preview-link">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                     </div>
                   </div>
                 </div>
@@ -4385,23 +4539,25 @@
               <input type="checkbox" class="lead-checkbox" />
             </div>
             <div class="reg-answers hidden" id="reg-marcus"><div class="reg-answers-divider"></div>
-              <div class="reg-qa">
-                <span class="reg-question">Do you own a home?</span>
-                <span class="reg-answer">Rent/Other</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Is this your first time buying a home?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Within how many months do you plan to buy a home?</span>
-                <span class="reg-answer">3-6 months</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Have you been prequalified for a mortgage?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="inline-info-cards">
+              <div class="reg-answers-content-row">
+                <div class="reg-qa-list">
+                  <div class="reg-qa">
+                    <span class="reg-question">Do you own a home?</span>
+                    <span class="reg-answer">Rent/Other</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Is this your first time buying a home?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Within how many months do you plan to buy a home?</span>
+                    <span class="reg-answer">3-6 months</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Have you been prequalified for a mortgage?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                </div>
                 <div class="inline-info-card comm-card user-highlights-card">
                   <div class="inline-info-card-header">User Highlights</div>
                   <div class="comm-card-top">
@@ -4422,6 +4578,15 @@
                     <div class="comm-card-stat">
                       <span class="comm-card-stat-value">3</span>
                       <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-property">
+                    <div class="comm-card-property-image"></div>
+                    <div class="comm-card-property-info">
+                      <span class="comm-card-property-label">First Viewed</span>
+                      <span class="comm-card-property-price">$448,000</span>
+                      <span class="comm-card-property-address">4821 N 7th Ave, Phoenix, AZ</span>
+                      <a href="#" class="property-preview-link">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                     </div>
                   </div>
                 </div>
@@ -4483,23 +4648,25 @@
               <input type="checkbox" class="lead-checkbox" />
             </div>
             <div class="reg-answers hidden" id="reg-priya"><div class="reg-answers-divider"></div>
-              <div class="reg-qa">
-                <span class="reg-question">Do you own a home?</span>
-                <span class="reg-answer">Rent/Other</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Is this your first time buying a home?</span>
-                <span class="reg-answer">Yes</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Within how many months do you plan to buy a home?</span>
-                <span class="reg-answer">6-12 months</span>
-              </div>
-              <div class="reg-qa">
-                <span class="reg-question">Have you been prequalified for a mortgage?</span>
-                <span class="reg-answer">No</span>
-              </div>
-              <div class="inline-info-cards">
+              <div class="reg-answers-content-row">
+                <div class="reg-qa-list">
+                  <div class="reg-qa">
+                    <span class="reg-question">Do you own a home?</span>
+                    <span class="reg-answer">Rent/Other</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Is this your first time buying a home?</span>
+                    <span class="reg-answer">Yes</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Within how many months do you plan to buy a home?</span>
+                    <span class="reg-answer">6-12 months</span>
+                  </div>
+                  <div class="reg-qa">
+                    <span class="reg-question">Have you been prequalified for a mortgage?</span>
+                    <span class="reg-answer">No</span>
+                  </div>
+                </div>
                 <div class="inline-info-card comm-card user-highlights-card">
                   <div class="inline-info-card-header">User Highlights</div>
                   <div class="comm-card-top">
@@ -4522,13 +4689,22 @@
                       <span class="comm-card-stat-label">Call Count</span>
                     </div>
                   </div>
+                  <div class="comm-card-property">
+                    <div class="comm-card-property-image"></div>
+                    <div class="comm-card-property-info">
+                      <span class="comm-card-property-label">First Viewed</span>
+                      <span class="comm-card-property-price">$529,000</span>
+                      <span class="comm-card-property-address">1103 NW 58th St, Seattle, WA</span>
+                      <a href="#" class="property-preview-link">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Card 6: Brian Turner (P3 — crossover from P1) -->
-          <div class="lead-card" data-filter="p3" data-lead-id="brian-turner" style="display:none;">
+          <div class="lead-card" data-filter="p3" data-lead-id="brian-turner" data-login-ts="2026-07-28T09:00" data-last-call-ts="2026-07-18T14:30" style="display:none;">
             <div class="lead-card-main">
               <div class="card-identifier good-contact">
                 <img src="icons/001_activity.svg" alt="">
@@ -4612,12 +4788,35 @@
                     </div>
                   </div>
                 </div>
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Today at 9:04 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Austin, TX</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 18 at 2:30 pm</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">3</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Card 7: Jordan Hayes (P3 — Contacted) -->
-          <div class="lead-card" data-filter="p3" style="display:none;">
+          <div class="lead-card" data-filter="p3" data-login-ts="2026-07-29T06:00" data-last-call-ts="2026-07-17T11:00" style="display:none;">
             <div class="lead-card-main">
               <div class="card-identifier good-contact">
                 <img src="icons/001_activity.svg" alt="">
@@ -4701,6 +4900,29 @@
                     </div>
                   </div>
                 </div>
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jul 14 at 10:22 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Chicago, IL</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 17 at 11:00 am</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">2</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- Lead Tip (Tips & Tricks mode) -->
               <div class="lead-tip">
@@ -4720,7 +4942,7 @@
           </div>
 
           <!-- Card 8: Simone Carter (P3 — Contacted) -->
-          <div class="lead-card" data-filter="p3" style="display:none;">
+          <div class="lead-card" data-filter="p3" data-login-ts="2026-07-29T03:00" data-last-call-ts="2026-07-19T15:15" style="display:none;">
             <div class="lead-card-main">
               <div class="card-identifier bad-contact">
                 <img src="icons/001_activity.svg" alt="">
@@ -4804,12 +5026,35 @@
                     </div>
                   </div>
                 </div>
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jul 12 at 2:45 pm</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Atlanta, GA</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 19 at 3:15 pm</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">4</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Card 9: Derek Olson (P3 — Contacted) -->
-          <div class="lead-card" data-filter="p3" style="display:none;">
+          <div class="lead-card" data-filter="p3" data-login-ts="2026-07-27T09:00" data-last-call-ts="2026-07-18T09:00" style="display:none;">
             <div class="lead-card-main">
               <div class="card-identifier good-contact">
                 <img src="icons/001_activity.svg" alt="">
@@ -4893,12 +5138,35 @@
                     </div>
                   </div>
                 </div>
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jun 28 at 8:15 am</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Portland, OR</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 18 at 9:00 am</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">1</span>
+                      <span class="comm-card-stat-label">Call Count</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Card 10: Lisa Monroe (P3 — Active Client) -->
-          <div class="lead-card" data-filter="p3" style="display:none;">
+          <div class="lead-card" data-filter="p3" data-login-ts="2026-07-29T08:15" data-last-call-ts="2026-07-20T10:45" style="display:none;">
             <div class="lead-card-main">
               <div class="card-identifier good-contact">
                 <img src="icons/001_activity.svg" alt="">
@@ -4979,6 +5247,29 @@
                     <div class="comm-card-stat">
                       <span class="comm-card-stat-value">3</span>
                       <span class="comm-card-stat-label">Emails</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="inline-info-card comm-card user-highlights-card">
+                  <div class="inline-info-card-header">User Highlights</div>
+                  <div class="comm-card-top">
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Jul 17 at 6:12 pm</span>
+                      <span class="comm-card-top-label">Registered</span>
+                    </div>
+                    <div class="comm-card-top-col">
+                      <span class="comm-card-top-value">Miami, FL</span>
+                      <span class="comm-card-top-label">Favorite City</span>
+                    </div>
+                  </div>
+                  <div class="comm-card-bottom">
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">Jul 20 at 10:45 am</span>
+                      <span class="comm-card-stat-label">Last Call</span>
+                    </div>
+                    <div class="comm-card-stat">
+                      <span class="comm-card-stat-value">5</span>
+                      <span class="comm-card-stat-label">Call Count</span>
                     </div>
                   </div>
                 </div>
@@ -5200,7 +5491,7 @@
             </div>
 
             <!-- Reminder 3: Call — Jordan Hayes (Today 10am) -->
-            <div class="lead-card" data-due="today" data-type="call" data-assignee="JC" data-sort-date="2026-07-17T10:00">
+            <div class="lead-card" data-due="today" data-type="call" data-assignee="JC" data-sort-date="2026-07-16T10:00">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-call">
                   <img src="icons/220_phone.svg" alt="">
@@ -5274,7 +5565,7 @@
             </div>
 
             <!-- Reminder 2: Email — Derek Olson -->
-            <div class="lead-card" data-due="today" data-type="email" data-assignee="JC" data-sort-date="2026-07-17T14:00">
+            <div class="lead-card" data-due="today" data-type="email" data-assignee="JC" data-sort-date="2026-07-16T14:00">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-email">
                   <img src="icons/016_communication.svg" alt="">
@@ -5334,7 +5625,7 @@
             </div>
 
             <!-- Reminder 3: Other — Lisa Monroe -->
-            <div class="lead-card" data-due="today" data-type="other" data-assignee="JC" data-sort-date="2026-07-17T16:30">
+            <div class="lead-card" data-due="today" data-type="other" data-assignee="JC" data-sort-date="2026-07-16T16:30">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-other">
                   <img src="icons/362_reminder_2.svg" alt="">
@@ -5408,8 +5699,98 @@
             </div>
 
 
+            <!-- Reminder: Call — Jordan Hayes (This Week Jul 17) -->
+            <div class="lead-card" data-due="this-week" data-type="call" data-assignee="JC" data-sort-date="2026-07-17T11:00" style="display:none;">
+              <div class="lead-card-main">
+                <div class="card-identifier reminder-call">
+                  <img src="icons/220_phone.svg" alt="">
+                </div>
+                <div class="lead-info">
+                  <div class="lead-info-top">
+                    <div class="lead-name-row">
+                      <span class="lead-name">Jordan Hayes</span>
+                      <span class="lead-badge badge-contacted">Contacted</span>
+                      <span class="lead-badge badge-buyer">Buyer</span>
+                      <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
+                    </div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 17 at 11:00 am</span></div>
+                  </div>
+                  <button class="reg-toggle" onclick="toggleReg(this, 'reminder-jordan-tw')">
+                    Follow up on offer strategy discussion
+                    <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 7 9 12 4"/></svg>
+                  </button>
+                </div>
+                <div class="contact-info-box">
+                  <div class="contact-info-header">Contact Info</div>
+                  <div class="contact-info-body">
+                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>(666) 666-6666</div>
+                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>jordan@email.com</div>
+                  </div>
+                </div>
+                <div class="lead-card-actions">
+                  <button class="btn-update-reminder" onclick="openUpdateReminderModal(this)">Update Reminder</button>
+                  <button class="btn-notify-later" onclick="dismissCard(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Notify Later
+                  </button>
+                </div>
+                <input type="checkbox" class="lead-checkbox" />
+              </div>
+              <div class="reg-answers hidden" id="reminder-jordan-tw"><div class="reg-answers-divider"></div>
+                <div class="reminder-detail">
+                  <span class="reminder-detail-label">Notes</span>
+                  <span class="reminder-detail-value">Jordan is weighing two properties from last week's showings. Call to revisit her priorities, address any hesitations, and walk through an offer strategy if she's ready to move forward on either one.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reminder: Email — Derek Olson (This Week Jul 18) -->
+            <div class="lead-card" data-due="this-week" data-type="email" data-assignee="JC" data-sort-date="2026-07-18T14:00" style="display:none;">
+              <div class="lead-card-main">
+                <div class="card-identifier reminder-email">
+                  <img src="icons/016_communication.svg" alt="">
+                </div>
+                <div class="lead-info">
+                  <div class="lead-info-top">
+                    <div class="lead-name-row">
+                      <span class="lead-name">Derek Olson</span>
+                      <span class="lead-badge badge-contacted">Contacted</span>
+                      <span class="lead-badge badge-seller">Seller</span>
+                      <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
+                    </div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 18 at 2:00 pm</span></div>
+                  </div>
+                  <button class="reg-toggle" onclick="toggleReg(this, 'reminder-derek-tw')">
+                    Send comparable sales for listing prep
+                    <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 7 9 12 4"/></svg>
+                  </button>
+                </div>
+                <div class="contact-info-box">
+                  <div class="contact-info-header">Contact Info</div>
+                  <div class="contact-info-body">
+                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>(888) 888-8888</div>
+                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>derek@email.com</div>
+                  </div>
+                </div>
+                <div class="lead-card-actions">
+                  <button class="btn-update-reminder" onclick="openUpdateReminderModal(this)">Update Reminder</button>
+                  <button class="btn-notify-later" onclick="dismissCard(this)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Notify Later
+                  </button>
+                </div>
+                <input type="checkbox" class="lead-checkbox" />
+              </div>
+              <div class="reg-answers hidden" id="reminder-derek-tw"><div class="reg-answers-divider"></div>
+                <div class="reminder-detail">
+                  <span class="reminder-detail-label">Notes</span>
+                  <span class="reminder-detail-value">Derek is getting ready to list and wants to see recent comparable sales before setting a price. Send 3–4 comps from the past 90 days with a brief summary of how they position his home in the current market.</span>
+                </div>
+              </div>
+            </div>
+
             <!-- Reminder: Call — Brian Turner (Next Week Jul 21) -->
-            <div class="lead-card" data-due="next-week" data-type="call" data-assignee="JC" data-sort-date="2026-07-21T09:00">
+            <div class="lead-card" data-due="next-week" data-type="call" data-assignee="JC" data-sort-date="2026-07-21T09:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-call">
                   <img src="icons/220_phone.svg" alt="">
@@ -5460,7 +5841,7 @@
             </div>
 
             <!-- Reminder: Email — Eva Wallace (Next Week Jul 23) -->
-            <div class="lead-card" data-due="next-week" data-type="email" data-assignee="JC" data-sort-date="2026-07-23T14:00">
+            <div class="lead-card" data-due="next-week" data-type="email" data-assignee="JC" data-sort-date="2026-07-23T14:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-email">
                   <img src="icons/016_communication.svg" alt="">
@@ -5510,8 +5891,8 @@
               </div>
             </div>
 
-            <!-- Reminder: Other — Simone Carter (Next Month Aug 5) -->
-            <div class="lead-card" data-due="next-month" data-type="other" data-assignee="JC" data-sort-date="2026-08-05T10:00">
+            <!-- Reminder: Other — Simone Carter (Next Week Jul 24) -->
+            <div class="lead-card" data-due="next-week" data-type="other" data-assignee="JC" data-sort-date="2026-07-24T10:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-other">
                   <img src="icons/362_reminder_2.svg" alt="">
@@ -5524,7 +5905,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Aug 5 at 10:00 am</span></div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 24 at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-simone-nm')">
                     Check in — re-evaluate search criteria
@@ -5561,8 +5942,8 @@
               </div>
             </div>
 
-            <!-- Reminder: Call — Allen Mack (Next Month Aug 12) -->
-            <div class="lead-card" data-due="next-month" data-type="call" data-assignee="JC" data-sort-date="2026-08-12T11:00">
+            <!-- Reminder: Call — Allen Mack (Next Week Jul 25) -->
+            <div class="lead-card" data-due="next-week" data-type="call" data-assignee="JC" data-sort-date="2026-07-25T11:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-call">
                   <img src="icons/220_phone.svg" alt="">
@@ -5575,7 +5956,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Aug 12 at 11:00 am</span></div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 25 at 11:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'reminder-allen-nm')">
                     Follow up on HomePulse listing intent
@@ -5670,7 +6051,7 @@
           <div class="lead-cards">
 
             <!-- DR 1: Overdue — Lisa Monroe — Review offer terms -->
-            <div class="lead-card" data-dr-due="overdue" data-type="call" data-assignee="JC" data-sort-date="2026-07-17T09:00">
+            <div class="lead-card" data-dr-due="overdue" data-type="call" data-assignee="JC" data-sort-date="2026-07-14T09:00">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-overdue">
                   <img src="icons/148_shopping.svg" alt="">
@@ -5685,7 +6066,7 @@
                     </div>
                     <div class="lead-meta overdue">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                      Overdue <span class="lead-meta-time">&middot; Jul 17 at 9:00 am</span>
+                      Overdue <span class="lead-meta-time">&middot; Jul 14 at 9:00 am</span>
                     </div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-lisa')">
@@ -5724,7 +6105,7 @@
             </div>
 
             <!-- DR 2: Overdue — Allen Mack — Listing price discussion -->
-            <div class="lead-card" data-dr-due="overdue" data-type="call" data-assignee="JC" data-sort-date="2026-07-18T10:00">
+            <div class="lead-card" data-dr-due="overdue" data-type="call" data-assignee="JC" data-sort-date="2026-07-15T10:00">
               <div class="lead-card-main">
                 <div class="card-identifier reminder-overdue">
                   <img src="icons/168_open_house.svg" alt="">
@@ -5739,7 +6120,7 @@
                     </div>
                     <div class="lead-meta overdue">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                      Overdue <span class="lead-meta-time">&middot; Jul 18 at 10:00 am</span>
+                      Overdue <span class="lead-meta-time">&middot; Jul 15 at 10:00 am</span>
                     </div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-allen')">
@@ -5778,7 +6159,7 @@
             </div>
 
             <!-- DR 3: Today — Jordan Hayes — Inspection results -->
-            <div class="lead-card" data-dr-due="today" data-type="call" data-assignee="JC" data-sort-date="2026-07-20T11:00">
+            <div class="lead-card" data-dr-due="today" data-type="call" data-assignee="JC" data-sort-date="2026-07-16T11:00">
               <div class="lead-card-main">
                 <div class="card-identifier dr-buyer">
                   <img src="icons/148_shopping.svg" alt="">
@@ -5829,7 +6210,7 @@
             </div>
 
             <!-- DR 4: Today — Simone Carter — Send counter-offer -->
-            <div class="lead-card" data-dr-due="today" data-type="email" data-assignee="JC" data-sort-date="2026-07-20T14:00">
+            <div class="lead-card" data-dr-due="today" data-type="email" data-assignee="JC" data-sort-date="2026-07-16T14:00">
               <div class="lead-card-main">
                 <div class="card-identifier dr-buyer">
                   <img src="icons/148_shopping.svg" alt="">
@@ -5880,7 +6261,7 @@
             </div>
 
             <!-- DR 5: This Week — Derek Olson — Pre-listing walkthrough -->
-            <div class="lead-card" data-dr-due="this-week" data-type="other" data-assignee="JC" data-sort-date="2026-07-22T10:00">
+            <div class="lead-card" data-dr-due="this-week" data-type="other" data-assignee="JC" data-sort-date="2026-07-17T10:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier dr-seller">
                   <img src="icons/168_open_house.svg" alt="">
@@ -5893,7 +6274,7 @@
                       <span class="lead-badge badge-seller">Seller</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 22 at 10:00 am</span></div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 17 at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-derek')">
                     Pre-listing walkthrough at 742 Elm St
@@ -5931,7 +6312,7 @@
             </div>
 
             <!-- DR 6: This Week — Marcus Webb — Mortgage pre-approval follow-up -->
-            <div class="lead-card" data-dr-due="this-week" data-type="email" data-assignee="JC" data-sort-date="2026-07-24T09:00">
+            <div class="lead-card" data-dr-due="this-week" data-type="email" data-assignee="JC" data-sort-date="2026-07-18T09:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier dr-buyer">
                   <img src="icons/148_shopping.svg" alt="">
@@ -5944,7 +6325,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 24 at 9:00 am</span></div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 18 at 9:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-marcus')">
                     Confirm mortgage pre-approval received
@@ -5982,7 +6363,7 @@
             </div>
 
             <!-- DR 7: Next Week — Brian Turner — Closing day checklist -->
-            <div class="lead-card" data-dr-due="next-week" data-type="call" data-assignee="JC" data-sort-date="2026-07-28T10:00">
+            <div class="lead-card" data-dr-due="next-week" data-type="call" data-assignee="JC" data-sort-date="2026-07-21T10:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier dr-buyer">
                   <img src="icons/148_shopping.svg" alt="">
@@ -5995,7 +6376,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
-                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 28 at 10:00 am</span></div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 21 at 10:00 am</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-brian')">
                     Walk through closing day checklist
@@ -6033,7 +6414,7 @@
             </div>
 
             <!-- DR 8: Next Week — Priya Nair — Title search update -->
-            <div class="lead-card" data-dr-due="next-week" data-type="other" data-assignee="JC" data-sort-date="2026-07-29T13:00">
+            <div class="lead-card" data-dr-due="next-week" data-type="other" data-assignee="JC" data-sort-date="2026-07-23T13:00" style="display:none;">
               <div class="lead-card-main">
                 <div class="card-identifier dr-buyer">
                   <img src="icons/148_shopping.svg" alt="">
@@ -6046,7 +6427,7 @@
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
                     </div>
-                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 29 at 1:00 pm</span></div>
+                    <div class="lead-meta">Due <span class="lead-meta-time">&middot; Jul 23 at 1:00 pm</span></div>
                   </div>
                   <button class="reg-toggle" onclick="toggleReg(this, 'dr-priya')">
                     Follow up on title search results
@@ -6442,11 +6823,19 @@
                       <div class="homepulse-card" style="margin-top:6px;">
                         <div class="homepulse-card-header">HomePulse Report</div>
                         <div class="homepulse-card-body">
-                          <span class="homepulse-address">1147 Birch Ln<br>Aurora, CO 80012</span>
-                          <a href="#" class="homepulse-link">
-                            View Report
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                          </a>
+                          <div class="homepulse-card-left">
+                            <span class="homepulse-address">1147 Birch Ln<br>Aurora, CO 80012</span>
+                          </div>
+                          <div class="homepulse-card-right">
+                            <div>
+                              <span class="homepulse-est-value">$362,000</span>
+                              <span class="homepulse-est-label">Estimated Value</span>
+                            </div>
+                            <a href="#" class="homepulse-link">
+                              View Report
+                              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -6511,11 +6900,19 @@
                       <div class="homepulse-card" style="margin-top:6px;">
                         <div class="homepulse-card-header">HomePulse Report</div>
                         <div class="homepulse-card-body">
-                          <span class="homepulse-address">3302 Spruce Ave<br>Lakewood, CO 80215</span>
-                          <a href="#" class="homepulse-link">
-                            View Report
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                          </a>
+                          <div class="homepulse-card-left">
+                            <span class="homepulse-address">3302 Spruce Ave<br>Lakewood, CO 80215</span>
+                          </div>
+                          <div class="homepulse-card-right">
+                            <div>
+                              <span class="homepulse-est-value">$541,000</span>
+                              <span class="homepulse-est-label">Estimated Value</span>
+                            </div>
+                            <a href="#" class="homepulse-link">
+                              View Report
+                              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -6850,8 +7247,8 @@
             <!-- Card 1: High Property Views — Jordan Hayes -->
             <div class="lead-card" data-tl-type="high-property-views">
               <div class="lead-card-main">
-                <div class="card-identifier tl-orange">
-                  <img src="icons/127_hot_lead.svg" alt="">
+                <div class="card-identifier tl-sky">
+                  <img src="icons/055_view.svg" alt="">
                 </div>
                 <div class="lead-info">
                   <div class="lead-info-top">
@@ -6899,6 +7296,36 @@
                           <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$588,000</span><span class="property-preview-address"><span class="property-preview-street">955 W Wrightwood Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                           <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$627,000</span><span class="property-preview-address"><span class="property-preview-street">414 W Dickens Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                           <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$603,000</span><span class="property-preview-address"><span class="property-preview-street">1631 N Wells St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                        </div>
+                        <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Favorited 3 properties</span>
+                      <span class="activity-sub">This week</span>
+                      <div class="property-carousel">
+                        <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
+                        <div class="property-carousel-track">
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$635,000</span><span class="property-preview-address"><span class="property-preview-street">2118 N Halsted St</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$598,000</span><span class="property-preview-address"><span class="property-preview-street">744 W Fullerton Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$619,000</span><span class="property-preview-address"><span class="property-preview-street">1530 N Cleveland Ave</span><span class="property-preview-city">Chicago, IL 60610</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                        </div>
+                        <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Shared 1 listing</span>
+                      <span class="activity-sub">Today</span>
+                      <div class="property-carousel">
+                        <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
+                        <div class="property-carousel-track">
+                          <div class="property-preview"><div class="property-preview-header">Last Shared</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$574,000</span><span class="property-preview-address"><span class="property-preview-street">2442 N Greenview Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                         </div>
                         <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
                       </div>
@@ -7095,10 +7522,12 @@
               </div>
               <div class="reg-answers hidden" id="tl-simone"><div class="reg-answers-divider"></div>
                 <div class="activity-list">
+
+                  <!-- 1: Viewed 7 properties -->
                   <div class="activity-item">
                     <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
                     <div class="activity-detail">
-                      <span class="activity-label">Viewed 4 properties</span>
+                      <span class="activity-label">Viewed 7 properties</span>
                       <span class="activity-sub">Today · 3rd session this week</span>
                       <div class="property-carousel">
                         <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
@@ -7107,11 +7536,149 @@
                           <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$479,000</span><span class="property-preview-address"><span class="property-preview-street">2817 N Southport Ave</span><span class="property-preview-city">Chicago, IL 60657</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                           <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$491,000</span><span class="property-preview-address"><span class="property-preview-street">1733 W Diversey Pkwy</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                           <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$462,000</span><span class="property-preview-address"><span class="property-preview-street">2540 N Racine Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$508,000</span><span class="property-preview-address"><span class="property-preview-street">1418 W Wrightwood Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$473,000</span><span class="property-preview-address"><span class="property-preview-street">3301 N Clark St</span><span class="property-preview-city">Chicago, IL 60657</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$487,000</span><span class="property-preview-address"><span class="property-preview-street">2209 N Seminary Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
                         </div>
                         <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
                       </div>
                     </div>
                   </div>
+
+                  <!-- 2: Favorited 2 properties -->
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Favorited 2 properties</span>
+                      <span class="activity-sub">Today</span>
+                      <div class="property-carousel">
+                        <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
+                        <div class="property-carousel-track">
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$462,000</span><span class="property-preview-address"><span class="property-preview-street">2540 N Racine Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">Saved Property</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$491,000</span><span class="property-preview-address"><span class="property-preview-street">1733 W Diversey Pkwy</span><span class="property-preview-city">Chicago, IL 60614</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                        </div>
+                        <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3: Updated saved search -->
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Updated saved search</span>
+                      <span class="activity-sub">This morning</span>
+                      <div class="search-params">
+                        <span class="search-param-pill">2 bed</span>
+                        <span class="search-param-pill">Chicago, IL</span>
+                        <span class="search-param-pill">Max price ↑ $525K</span>
+                        <span class="search-param-pill">In-unit laundry</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 4: Shared 2 properties -->
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Shared 2 listings</span>
+                      <span class="activity-sub">Today</span>
+                      <div class="property-carousel">
+                        <button class="carousel-arrow carousel-arrow-prev"><svg viewBox="0 0 14 14"><polyline points="9 2 4 7 9 12"/></svg></button>
+                        <div class="property-carousel-track">
+                          <div class="property-preview"><div class="property-preview-header">Last Shared</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$455,000</span><span class="property-preview-address"><span class="property-preview-street">3142 N Halsted St</span><span class="property-preview-city">Chicago, IL 60657</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                          <div class="property-preview"><div class="property-preview-header">&nbsp;</div><div class="property-preview-body"><div class="property-preview-image"></div><div class="property-preview-info"><div class="property-preview-info-top"><span class="property-preview-price">$479,000</span><span class="property-preview-address"><span class="property-preview-street">2817 N Southport Ave</span><span class="property-preview-city">Chicago, IL 60657</span></span></div><a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div></div>
+                        </div>
+                        <button class="carousel-arrow carousel-arrow-next"><svg viewBox="0 0 14 14"><polyline points="5 2 10 7 5 12"/></svg></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 5: AI conversation — first time home buying -->
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    <div class="activity-detail" style="flex:1; min-width:0;">
+                      <span class="activity-label">AI Conversation</span>
+                      <span class="activity-sub">1 hour ago</span>
+                      <div class="reg-info-card" style="margin-top:8px; width:100%; max-width:600px;">
+                        <div class="reg-info-card-header">Conversation Highlights</div>
+                        <div class="reg-info-card-body">
+                          <ul style="margin:0; padding-left:14px; line-height:1.8;">
+                            <li>First time home buyer</li>
+                            <li>Asking about the buying process and down payment options</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="chat-thread">
+                        <div class="chat-message lead">
+                          <div class="chat-avatar">SC</div>
+                          <div class="chat-bubble">Hi, I'm a first time buyer and not sure where to start. What does the buying process look like?<span class="chat-timestamp">Today at 8:14 am</span></div>
+                        </div>
+                        <div class="chat-message ai">
+                          <div class="chat-avatar ai-avatar"><img src="icons/277_bot.svg" width="16" height="16"></div>
+                          <div class="chat-bubble">Great question, Simone! The process typically starts with getting pre-approved for a mortgage, then working with an agent to find homes that fit your budget and goals. Are you thinking about a condo or a single family home?<span class="chat-timestamp">Today at 8:14 am</span></div>
+                        </div>
+                        <div class="chat-message lead">
+                          <div class="chat-avatar">SC</div>
+                          <div class="chat-bubble">Probably a condo. I also heard I need 20% down — is that true?<span class="chat-timestamp">Today at 8:16 am</span></div>
+                        </div>
+                        <div class="chat-message ai">
+                          <div class="chat-avatar ai-avatar"><img src="icons/277_bot.svg" width="16" height="16"></div>
+                          <div class="chat-bubble">Not necessarily! First time buyers often qualify for programs with as little as 3–5% down. An agent can walk you through what options might work for your situation. Want me to connect you with someone?<span class="chat-timestamp">Today at 8:17 am</span></div>
+                        </div>
+                      </div>
+                      <div style="max-width:600px; display:flex; justify-content:center;">
+                        <button class="chat-view-full">View Full Conversation</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 6: Calculated mortgage on 1 property -->
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Used mortgage calculator</span>
+                      <span class="activity-sub">2 hours ago</span>
+                      <div class="property-preview" style="margin-top:6px; width:320px;">
+                        <div class="property-preview-header">Last Viewed</div>
+                        <div class="property-preview-body">
+                          <div class="property-preview-image"></div>
+                          <div class="property-preview-info">
+                            <div class="property-preview-info-top">
+                              <span class="property-preview-price">$462,000</span>
+                              <span class="property-preview-address"><span class="property-preview-street">2540 N Racine Ave</span><span class="property-preview-city">Chicago, IL 60614</span></span>
+                            </div>
+                            <a href="#" class="property-preview-link" target="_blank">View Property <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 7: Claimed HomePulse -->
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Claimed a HomePulse report</span>
+                      <span class="activity-sub">3 hours ago</span>
+                      <div class="homepulse-card" style="margin-top:6px; width:320px;">
+                        <div class="homepulse-card-header">HomePulse Report</div>
+                        <div class="homepulse-card-body">
+                          <div class="homepulse-card-left">
+                            <span class="homepulse-address">812 Peachtree St NE<br>Atlanta, GA 30308</span>
+                          </div>
+                          <div class="homepulse-card-right">
+                            <div>
+                              <span class="homepulse-est-value">$394,000</span>
+                              <span class="homepulse-est-label">Estimated Value</span>
+                            </div>
+                            <a href="#" class="homepulse-link">View Report <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -7163,8 +7730,16 @@
                       <div class="homepulse-card" style="margin-top:6px;width:320px;">
                         <div class="homepulse-card-header">HomePulse Report</div>
                         <div class="homepulse-card-body">
-                          <span class="homepulse-address">524 Maple Ave<br>Evanston, IL 60201</span>
-                          <a href="#" class="homepulse-link">View Report <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                          <div class="homepulse-card-left">
+                            <span class="homepulse-address">524 Maple Ave<br>Evanston, IL 60201</span>
+                          </div>
+                          <div class="homepulse-card-right">
+                            <div>
+                              <span class="homepulse-est-value">$728,000</span>
+                              <span class="homepulse-est-label">Estimated Value</span>
+                            </div>
+                            <a href="#" class="homepulse-link">View Report <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -7176,7 +7751,7 @@
             <!-- Card 6: Shared Listings — Marcus Webb -->
             <div class="lead-card" data-tl-type="shared-listings">
               <div class="lead-card-main">
-                <div class="card-identifier cr-blue">
+                <div class="card-identifier tl-sky">
                   <img src="icons/133_share.svg" alt="">
                 </div>
                 <div class="lead-info">
@@ -7487,7 +8062,7 @@
               </div>
             </div>
 
-            <!-- Card 10: Verified Account — Jordan Hayes (2nd instance) -->
+            <!-- Card 10: Verified Account — Rachel Kim -->
             <div class="lead-card" data-tl-type="verified-account">
               <div class="lead-card-main">
                 <div class="card-identifier cr-teal">
@@ -7496,14 +8071,14 @@
                 <div class="lead-info">
                   <div class="lead-info-top">
                     <div class="lead-name-row">
-                      <span class="lead-name">Simone Carter</span>
-                      <span class="lead-badge badge-contacted">Contacted</span>
+                      <span class="lead-name">Rachel Kim</span>
+                      <span class="lead-badge badge-new-lead">New Lead</span>
                       <span class="lead-badge badge-buyer">Buyer</span>
                       <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
                     </div>
                     <div class="lead-meta">Verified Account <span class="lead-meta-time">&middot; Just now</span></div>
                   </div>
-                  <button class="reg-toggle" onclick="toggleReg(this, 'tl-simone-v')">
+                  <button class="reg-toggle" onclick="toggleReg(this, 'tl-rachel')">
                     View Details
                     <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 7 9 12 4"/></svg>
                   </button>
@@ -7511,8 +8086,8 @@
                 <div class="contact-info-box">
                   <div class="contact-info-header">Contact Info</div>
                   <div class="contact-info-body">
-                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>(777) 777-7777</div>
-                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>simone@email.com</div>
+                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>(312) 555-0187</div>
+                    <div class="contact-row"><span class="contact-icon ok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg></span>rachel@email.com</div>
                   </div>
                 </div>
                 <div class="lead-card-actions">
@@ -7524,7 +8099,7 @@
                 </div>
                 <input type="checkbox" class="lead-checkbox" />
               </div>
-              <div class="reg-answers hidden" id="tl-simone-v"><div class="reg-answers-divider"></div>
+              <div class="reg-answers hidden" id="tl-rachel"><div class="reg-answers-divider"></div>
                 <div class="activity-list">
                   <div class="activity-item">
                     <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
@@ -7782,10 +8357,13 @@
       badge.textContent = newVal;
     }
 
-    function updateFollowUpTabBadge() {
+    function updateFollowUpTabBadge(excludeCard) {
       const badge = document.getElementById('followup-tab-badge');
       if (!badge) return;
-      const count = document.querySelectorAll('#tab-followup .lead-card[data-due="today"], #tab-followup .lead-card[data-due="overdue"]').length;
+      let count = 0;
+      document.querySelectorAll('#tab-followup .lead-card[data-due="today"], #tab-followup .lead-card[data-due="overdue"]').forEach(function(c) {
+        if (c !== excludeCard) count++;
+      });
       badge.textContent = count;
     }
 
@@ -7796,17 +8374,19 @@
       badge.textContent = count;
     }
 
-    function updateCountsOnDismiss() {
-      // Decrement active filter pill badge
-      const activeFilterPill = document.querySelector('.filter-pill.active .pill-badge');
-      decrementBadge(activeFilterPill);
-      // Recount Follow Up tab badge (always today + overdue)
-      if (document.getElementById('tab-followup')) {
-        updateFollowUpTabBadge();
-      } else {
-        const activeTabBadge = document.querySelector('.primary-tab.active .tab-badge');
-        decrementBadge(activeTabBadge);
+    function updateCountsOnDismiss(card) {
+      const tab = card ? card.closest('[id^="tab-"]') : null;
+      if (tab) {
+        // Decrement the active filter pill badge inside this tab
+        const activeFilterPill = tab.querySelector('.filter-pill[data-filter].active .pill-badge, .filter-pill[data-tl-type].active .pill-badge, .filter-pill[data-due].active .pill-badge, .filter-pill[data-dr-due].active .pill-badge');
+        decrementBadge(activeFilterPill);
+        // Decrement the primary tab badge
+        const tabName = tab.id.replace('tab-', '');
+        const primaryTabBadge = document.querySelector(`.primary-tab[onclick*="${tabName}"] .tab-badge`);
+        decrementBadge(primaryTabBadge);
       }
+      // Recount Follow Up tab badge (always today + overdue), excluding the card being dismissed
+      updateFollowUpTabBadge(card);
       // Recount Contact Requested tab badge (always awaiting)
       updateCrTabBadge();
     }
@@ -7829,8 +8409,8 @@
       }
       card.classList.add('dismissing');
       card.addEventListener('animationend', function() {
+        updateCountsOnDismiss(card);
         card.remove();
-        updateCountsOnDismiss();
         const anyChecked = document.querySelectorAll('.lead-checkbox:checked').length > 0;
         actionsBtn.disabled = !anyChecked;
       }, { once: true });
@@ -7847,8 +8427,8 @@
         }
         card.classList.add('dismissing');
         card.addEventListener('animationend', function() {
+          updateCountsOnDismiss(card);
           card.remove();
-          updateCountsOnDismiss();
         }, { once: true });
       });
       actionsBtn.disabled = true;
@@ -7991,8 +8571,8 @@
             document.querySelectorAll(`.lead-card[data-lead-id="${leadId}"]`).forEach(function(card) {
               card.classList.add('dismissing');
               card.addEventListener('animationend', function() {
+                updateCountsOnDismiss(card);
                 card.remove();
-                updateCountsOnDismiss();
               }, { once: true });
             });
           } else {
@@ -8273,8 +8853,8 @@
       const card = updateReminderSourceBtn.closest('.lead-card');
       card.classList.add('dismissing');
       card.addEventListener('animationend', function() {
+        updateCountsOnDismiss(card);
         card.remove();
-        updateCountsOnDismiss();
       }, { once: true });
       updateReminderSourceBtn = null;
     }
@@ -8345,7 +8925,7 @@
 
       // Update due date display and data-due, then re-sort
       if (newDate) {
-        const today = new Date(); today.setHours(0,0,0,0);
+        const today = new Date('2026-07-16T00:00:00');
         const chosen = new Date(newDate + 'T00:00:00');
         const diffDays = Math.round((chosen - today) / 86400000);
         let dueCategory, dueLabel;
@@ -8609,11 +9189,32 @@
       const activePill = tab.querySelector('.filter-pill[data-filter].active');
       const filter = activePill ? activePill.dataset.filter : 'p1';
       const pondOnly = isPondActive(tab);
+      const sortGroup = document.getElementById('p3-sort-group');
+      const sortSelect = document.getElementById('p3-sort-select');
+      const sort = sortSelect ? sortSelect.value : 'last-call-least-recent';
+
+      // Show/hide P3 sort group
+      if (sortGroup) sortGroup.style.display = filter === 'p3' ? 'inline-flex' : 'none';
+
+      const cardList = tab.querySelector('.lead-cards');
       tab.querySelectorAll('.lead-card').forEach(card => {
         const filterMatch = card.dataset.filter === filter;
         const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
         card.style.display = (filterMatch && pondMatch) ? '' : 'none';
       });
+
+      // Sort P3 cards in the DOM
+      if (filter === 'p3') {
+        const p3Cards = Array.from(cardList.querySelectorAll('.lead-card[data-filter="p3"]'));
+        p3Cards.sort((a, b) => {
+          if (sort === 'most-recent-activity') {
+            return new Date(b.dataset.loginTs) - new Date(a.dataset.loginTs);
+          } else {
+            return new Date(a.dataset.lastCallTs) - new Date(b.dataset.lastCallTs);
+          }
+        });
+        p3Cards.forEach(card => cardList.appendChild(card));
+      }
     }
 
     // ─── USER PICKER MODAL ────────────────────────────────────
@@ -9126,7 +9727,7 @@
         popup.style.top = (rect.bottom + window.scrollY + 6) + 'px';
         popup.style.left = Math.min(rect.left + window.scrollX, window.innerWidth - 440) + 'px';
         // Highlight today's row
-        const today = new Date().getDay();
+        const today = 3; // Wednesday July 16, 2026
         popup.querySelectorAll('.welcome-popup-row').forEach((row, i) => {
           row.style.background = i === today ? '#f0f8fb' : '';
           row.querySelector('.welcome-popup-day').style.color = i === today ? '#0080A3' : '#0080A3';
@@ -9144,20 +9745,10 @@
     }
 
     (function() {
-      const welcomeLines = [
-        "It's Sunday — a great day to review your pipeline, update searches, and prep your Monday game plan.",
-        "It's Monday — your Daily Money Plays are loaded. Empty Contact Requests before noon, then knock down P1 and P2.",
-        "It's Tuesday — dial through your Attempted P2s and follow up on yesterday's conversations.",
-        "Midweek momentum — check your Trending Leads and set follow-up reminders for anyone you've contacted.",
-        "It's Thursday — push to hit your dial goal before the week winds down. P1s and P2s need your attention.",
-        "End the week strong — close out your Contact Requests, add pinned notes, and set reminders so Monday has a running start.",
-        "Weekend warrior — even a short session on Trending Leads can keep your pipeline warm."
-      ];
-      const now = new Date();
       const welcomeEl = document.getElementById('daily-welcome');
-      if (welcomeEl) welcomeEl.textContent = welcomeLines[now.getDay()];
+      if (welcomeEl) welcomeEl.textContent = "Midweek momentum — check your Trending Leads and set follow-up reminders for anyone you've contacted.";
       const dateEl = document.getElementById('greeting-date');
-      if (dateEl) dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      if (dateEl) dateEl.textContent = 'Wednesday, July 16, 2026';
     })();
   </script>
 </body>

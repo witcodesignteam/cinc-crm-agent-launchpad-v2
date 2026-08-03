@@ -2566,7 +2566,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 4px;
       flex-shrink: 0;
       align-items: flex-start;
       align-self: flex-start;
@@ -2593,6 +2593,22 @@
 
     .btn-contact-note:hover {
       background: #006d8c;
+    }
+
+    #tab-contact-requested .btn-contact-note {
+      font-size: 0;
+      gap: 0;
+    }
+
+    #tab-contact-requested .btn-contact-note svg {
+      font-size: 14px;
+    }
+
+    #tab-contact-requested .btn-contact-note::after {
+      content: "Acted On";
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 6px;
     }
 
     .btn-contact-note svg {
@@ -2805,8 +2821,56 @@
       display: none;
     }
 
+    #tab-followup .lead-card-actions,
+    #tab-deal-reminders .lead-card-actions,
+    #tab-contact-requested .lead-card-actions,
+    #tab-trending .lead-card-actions {
+      width: 128px;
+    }
+
+    #tab-followup .btn-contact-note,
+    #tab-followup .btn-update-reminder,
+    #tab-deal-reminders .btn-contact-note,
+    #tab-deal-reminders .btn-update-reminder,
+    #tab-contact-requested .btn-contact-note,
+    #tab-trending .btn-contact-note {
+      width: 100%;
+    }
+
     #tab-prospecting .btn-add-dialer {
       flex: 1;
+    }
+
+    #tab-followup .btn-add-dialer,
+    #tab-deal-reminders .btn-add-dialer,
+    #tab-contact-requested .btn-add-dialer,
+    #tab-trending .btn-add-dialer {
+      flex: 1;
+      font-size: 0;
+    }
+
+    #tab-followup .btn-add-dialer,
+    #tab-deal-reminders .btn-add-dialer,
+    #tab-contact-requested .btn-add-dialer,
+    #tab-trending .btn-add-dialer {
+      flex: none;
+      width: 88px;
+    }
+
+    #tab-followup .btn-add-dialer svg,
+    #tab-deal-reminders .btn-add-dialer svg,
+    #tab-contact-requested .btn-add-dialer svg,
+    #tab-trending .btn-add-dialer svg {
+      font-size: 14px;
+    }
+
+    #tab-followup .btn-add-dialer::after,
+    #tab-deal-reminders .btn-add-dialer::after,
+    #tab-contact-requested .btn-add-dialer::after,
+    #tab-trending .btn-add-dialer::after {
+      content: "+Dialer";
+      font-size: 12.5px;
+      font-weight: 500;
     }
 
     .btn-add-dialer {
@@ -7557,7 +7621,7 @@
             <div class="filter-pills">
               <span class="filter-label cr-main-label">Status</span>
               <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
-              <button class="filter-pill active" data-cr-status="awaiting" onclick="switchCrStatusFilter(this)">Awaiting Response</button>
+              <button class="filter-pill active" data-cr-status="awaiting" onclick="switchCrStatusFilter(this)">Call Today</button>
               <button class="filter-pill" data-cr-status="acted-on" onclick="switchCrStatusFilter(this)">Acted On</button>
               <button class="filter-pill" data-cr-status="dismissed" onclick="switchCrStatusFilter(this)">Dismissed</button>
               <button class="filter-pill" data-cr-status="older-30" onclick="switchCrStatusFilter(this)">Older than 30 Days</button>
@@ -7565,7 +7629,7 @@
             <div class="filter-select-group">
               <span class="filter-label">Status</span>
               <select class="filter-select" id="cr-status-select" onchange="switchCrStatusSelect(this)">
-                <option value="awaiting">Awaiting Response</option>
+                <option value="awaiting">Call Today</option>
                 <option value="acted-on">Acted On</option>
                 <option value="dismissed">Dismissed</option>
                 <option value="older-30">Older than 30 Days</option>

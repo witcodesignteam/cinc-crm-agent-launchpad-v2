@@ -482,6 +482,103 @@
       line-height: 1.5;
     }
 
+    /* ─── P1/P2/P3 info popup ─────────────────────────────── */
+    .p-info-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9aa5b4;
+      transition: color 180ms ease;
+      flex-shrink: 0;
+    }
+
+    .p-info-btn:hover { color: #0080A3; }
+
+    .p-info-btn img {
+      width: 13px;
+      height: 13px;
+      filter: brightness(0) saturate(100%) invert(69%) sepia(10%) saturate(400%) hue-rotate(182deg) brightness(95%) contrast(85%);
+    }
+
+    .p-info-btn:hover img {
+      filter: brightness(0) saturate(100%) invert(36%) sepia(80%) saturate(500%) hue-rotate(162deg) brightness(90%);
+    }
+
+    .p-info-popup {
+      position: absolute;
+      background: #ffffff;
+      border: 1px solid #e4e8ed;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      width: 340px;
+      z-index: 500;
+    }
+
+    .p-info-popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid #e4e8ed;
+    }
+
+    .p-info-popup-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1f2e;
+    }
+
+    .p-info-popup-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #9aa5b4;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 2px;
+    }
+
+    .p-info-popup-close:hover { color: #1a1f2e; }
+
+    .p-info-popup-body {
+      padding: 8px 0;
+    }
+
+    .p-info-popup-row {
+      display: flex;
+      gap: 12px;
+      padding: 10px 18px;
+      border-bottom: 1px solid #f0f2f5;
+      align-items: flex-start;
+    }
+
+    .p-info-popup-row:last-child { border-bottom: none; }
+
+    .p-info-popup-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0080A3;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 28px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .p-info-popup-text {
+      font-size: 13px;
+      color: #1a1f2e;
+      line-height: 1.5;
+    }
+
+    .p-info-popup-text strong {
+      font-weight: 600;
+    }
+
     .greeting-text .appt-link {
       color: #0080A3;
       font-weight: 600;
@@ -2704,6 +2801,14 @@
       width: 34px;
     }
 
+    #tab-prospecting .btn-notify-later {
+      display: none;
+    }
+
+    #tab-prospecting .btn-add-dialer {
+      flex: 1;
+    }
+
     .btn-add-dialer {
       gap: 5px;
       padding: 0 10px;
@@ -4349,7 +4454,11 @@
         <!-- Primary Tabs -->
         <div class="primary-tabs">
           <div class="primary-tabs-scroll">
-          <a class="primary-tab active" href="#" onclick="switchTab('prospecting', this); return false;">
+          <a class="primary-tab active" href="#" onclick="switchTab('contact-requested', this); return false;">
+            Contact Requested
+            <span class="tab-badge contact-requested" id="cr-tab-badge">6</span>
+          </a>
+          <a class="primary-tab" href="#" onclick="switchTab('prospecting', this); return false;">
             Prospecting
             <span class="tab-badge prospecting">10</span>
           </a>
@@ -4360,10 +4469,6 @@
           <a class="primary-tab" href="#" onclick="switchTab('deal-reminders', this); return false;">
             Deal Reminders
             <span class="tab-badge deal-reminders" id="dr-tab-badge">4</span>
-          </a>
-          <a class="primary-tab" href="#" onclick="switchTab('contact-requested', this); return false;">
-            Contact Requested
-            <span class="tab-badge contact-requested" id="cr-tab-badge">6</span>
           </a>
           <a class="primary-tab" href="#" onclick="switchTab('trending', this); return false;">
             Trending Leads
@@ -4386,7 +4491,7 @@
         </div>
 
         <!-- ─── PROSPECTING TAB PANEL ─── -->
-        <div id="tab-prospecting">
+        <div id="tab-prospecting" style="display:none;">
 
         <!-- Filter Bar -->
         <div class="filter-bar">
@@ -4441,6 +4546,9 @@
               <option value="p3">Recent Login - P3</option>
             </select>
           </div>
+          <button class="p-info-btn" onclick="togglePInfoPopup(event)" title="What are P1, P2, and P3?">
+            <img src="icons/210_information.svg" alt="">
+          </button>
           <div class="filter-bar-spacer"></div>
           <div class="filter-right">
             <div class="filter-select-group" id="p3-sort-group" style="display:none;">
@@ -7416,7 +7524,7 @@
         </div><!-- /#tab-deal-reminders -->
 
         <!-- ─── CONTACT REQUESTED TAB PANEL ─── -->
-        <div id="tab-contact-requested" style="display:none;">
+        <div id="tab-contact-requested">
           <div class="filter-bar filter-bar-row1">
             <div class="filter-left">
               <button class="select-all-btn" onclick="toggleSelectAll(this)" data-tab="tab-contact-requested" title="Select All">
@@ -7452,6 +7560,7 @@
               <button class="filter-pill active" data-cr-status="awaiting" onclick="switchCrStatusFilter(this)">Awaiting Response</button>
               <button class="filter-pill" data-cr-status="acted-on" onclick="switchCrStatusFilter(this)">Acted On</button>
               <button class="filter-pill" data-cr-status="dismissed" onclick="switchCrStatusFilter(this)">Dismissed</button>
+              <button class="filter-pill" data-cr-status="older-30" onclick="switchCrStatusFilter(this)">Older than 30 Days</button>
             </div>
             <div class="filter-select-group">
               <span class="filter-label">Status</span>
@@ -7459,6 +7568,7 @@
                 <option value="awaiting">Awaiting Response</option>
                 <option value="acted-on">Acted On</option>
                 <option value="dismissed">Dismissed</option>
+                <option value="older-30">Older than 30 Days</option>
               </select>
             </div>
             <div class="filter-select-group">
@@ -8291,6 +8401,168 @@
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                     Add to Dialer
                   </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 7: Older than 30 Days — Marcus Webb -->
+            <div class="lead-card" data-cr-status="older-30" data-cr-type="property-inquiry">
+              <div class="lead-card-main">
+                <div class="card-identifier cr-blue">
+                  <img src="icons/353_contact_requested.svg" alt="">
+                </div>
+                <div class="lead-info">
+                  <div class="lead-info-top">
+                    <div class="lead-name-row">
+                      <span class="lead-name">Marcus Webb</span>
+                      <span class="lead-badge badge-attempted-contact">Attempted Contact</span>
+                      <span class="lead-badge badge-buyer">Buyer</span>
+                      <img class="status-icon" src="icons/unprompted_status.svg" alt="Unverified" title="Unverified">
+                    </div>
+                    <div class="lead-meta">Property Inquiry <span class="lead-meta-time">&middot; Jun 1 at 10:22 am</span></div>
+                  </div>
+                  <div class="contact-info-box">
+                    <div class="contact-info-header">Contact Info</div>
+                    <div class="contact-info-body">
+                      <div class="contact-row"><span class="contact-icon warn"><img src="icons/205_invalid.svg" alt=""></span>(602) 555-0174</div>
+                      <div class="contact-row"><span class="contact-icon ok"><img src="icons/013_check.svg" alt=""></span>marcus.webb@email.com</div>
+                    </div>
+                  </div>
+                  <div class="inline-info-card comm-card user-highlights-card">
+                    <div class="inline-info-card-header">User Highlights</div>
+                    <div class="comm-card-top">
+                      <div class="comm-card-top-col">
+                        <span class="comm-card-top-value">May 30 at 3:14 pm</span>
+                        <span class="comm-card-top-label">Registered</span>
+                      </div>
+                      <div class="comm-card-top-col">
+                        <span class="comm-card-top-value">Phoenix, AZ</span>
+                        <span class="comm-card-top-label">Favorite City</span>
+                      </div>
+                    </div>
+                    <div class="comm-card-bottom">
+                      <div class="comm-card-stat">
+                        <span class="comm-card-stat-value">Jun 3 at 9:00 am</span>
+                        <span class="comm-card-stat-label">Last Call</span>
+                      </div>
+                      <div class="comm-card-stat">
+                        <span class="comm-card-stat-value">2</span>
+                        <span class="comm-card-stat-label">Call Count</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="reg-toggle" onclick="toggleReg(this, 'cr-marcus')">
+                    View Details
+                    <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 7 9 12 4"/></svg>
+                  </button>
+                </div>
+                <div class="lead-card-actions">
+                  <button class="btn-contact-note" onclick="openConnectedModal(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Connected
+                  </button>
+                  <button class="btn-add-dialer" onclick="addToDialer(this)" title="Add to Dialer">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    +Dialer
+                  </button>
+                  <button class="btn-notify-later" onclick="dismissCard(this)" title="Notify Later">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </button>
+                </div>
+                <input type="checkbox" class="lead-checkbox" />
+              </div>
+              <div class="reg-answers hidden" id="cr-marcus"><div class="reg-answers-divider"></div>
+                <div class="activity-list">
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Last Pinned Note</span>
+                      <span class="activity-sub">Jun 3 at 9:05 am &middot; Call</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Left voicemail — Marcus inquired about a 3-bed in Scottsdale. Will try again later this week."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 8: Older than 30 Days — Priya Nair -->
+            <div class="lead-card" data-cr-status="older-30" data-cr-type="homepulse">
+              <div class="lead-card-main">
+                <div class="card-identifier cr-teal">
+                  <img src="icons/336_homepulse.svg" alt="">
+                </div>
+                <div class="lead-info">
+                  <div class="lead-info-top">
+                    <div class="lead-name-row">
+                      <span class="lead-name">Priya Nair</span>
+                      <span class="lead-badge badge-contacted">Contacted</span>
+                      <span class="lead-badge badge-seller">Seller</span>
+                      <img class="status-icon" src="icons/verified_status.svg" alt="Verified Account" title="Verified Account">
+                    </div>
+                    <div class="lead-meta">HomePulse Inquiry <span class="lead-meta-time">&middot; Jun 4 at 2:15 pm</span></div>
+                  </div>
+                  <div class="contact-info-box">
+                    <div class="contact-info-header">Contact Info</div>
+                    <div class="contact-info-body">
+                      <div class="contact-row"><span class="contact-icon ok"><img src="icons/013_check.svg" alt=""></span>(512) 555-0392</div>
+                      <div class="contact-row"><span class="contact-icon ok"><img src="icons/013_check.svg" alt=""></span>priya.nair@email.com</div>
+                    </div>
+                  </div>
+                  <div class="inline-info-card comm-card user-highlights-card">
+                    <div class="inline-info-card-header">User Highlights</div>
+                    <div class="comm-card-top">
+                      <div class="comm-card-top-col">
+                        <span class="comm-card-top-value">Jun 2 at 11:48 am</span>
+                        <span class="comm-card-top-label">Registered</span>
+                      </div>
+                      <div class="comm-card-top-col">
+                        <span class="comm-card-top-value">Austin, TX</span>
+                        <span class="comm-card-top-label">Favorite City</span>
+                      </div>
+                    </div>
+                    <div class="comm-card-bottom">
+                      <div class="comm-card-stat">
+                        <span class="comm-card-stat-value">Jun 6 at 1:30 pm</span>
+                        <span class="comm-card-stat-label">Last Call</span>
+                      </div>
+                      <div class="comm-card-stat">
+                        <span class="comm-card-stat-value">3</span>
+                        <span class="comm-card-stat-label">Call Count</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="reg-toggle" onclick="toggleReg(this, 'cr-priya')">
+                    View Details
+                    <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 7 9 12 4"/></svg>
+                  </button>
+                </div>
+                <div class="lead-card-actions">
+                  <button class="btn-contact-note" onclick="openConnectedModal(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Connected
+                  </button>
+                  <button class="btn-add-dialer" onclick="addToDialer(this)" title="Add to Dialer">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    +Dialer
+                  </button>
+                  <button class="btn-notify-later" onclick="dismissCard(this)" title="Notify Later">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </button>
+                </div>
+                <input type="checkbox" class="lead-checkbox" />
+              </div>
+              <div class="reg-answers hidden" id="cr-priya"><div class="reg-answers-divider"></div>
+                <div class="activity-list">
+                  <div class="activity-item">
+                    <div class="activity-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <div class="activity-detail">
+                      <span class="activity-label">Most Recent Note</span>
+                      <span class="activity-sub">Jun 6 at 1:35 pm &middot; Call</span>
+                      <span class="activity-sub" style="color:#1a1f2e; margin-top:3px; font-size:12px;">"Spoke with Priya — she's considering listing her Austin home in Q4. Sent HomePulse report. Following up in 60 days."</span>
+                      <button class="note-edit-btn" onclick="openEditNoteModal(this)">Edit Note</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -10330,7 +10602,8 @@
       const activeTypes = Array.from(tab.querySelectorAll('.filter-bar [data-cr-type]:not([data-cr-type="all"]).active')).map(p => p.dataset.crType);
       const pondOnly = isPondActive(tab);
       tab.querySelectorAll('.lead-card').forEach(card => {
-        const statusMatch = card.dataset.crStatus === status;
+        const isOlder30 = card.dataset.crStatus === 'older-30';
+        const statusMatch = isOlder30 ? status === 'older-30' : card.dataset.crStatus === status;
         const typeMatch   = showAll || activeTypes.includes(card.dataset.crType);
         const pondMatch   = !pondOnly || card.querySelector('.badge-pond-lead');
         card.style.display = (statusMatch && typeMatch && pondMatch) ? '' : 'none';
@@ -10949,6 +11222,10 @@
 
     // Apply default filters on page load
     document.addEventListener('DOMContentLoaded', function() {
+      // Default to Contact Requested tab
+      const crTab = document.querySelector('.primary-tab[onclick*="contact-requested"]');
+      if (crTab) switchTab('contact-requested', crTab);
+
       // Sync dropdowns to active pills for MVP view default
       syncSelectsToActivePills();
 
@@ -10977,6 +11254,27 @@
   </script>
 
   <!-- ─── DAILY WELCOME POPUP ─────────────────────────────── -->
+  <div class="p-info-popup" id="p-info-popup" style="display:none;">
+    <div class="p-info-popup-header">
+      <span class="p-info-popup-title">Prospecting Priority Levels</span>
+      <button class="p-info-popup-close" onclick="closePInfoPopup()">&times;</button>
+    </div>
+    <div class="p-info-popup-body">
+      <div class="p-info-popup-row">
+        <span class="p-info-popup-label">P1</span>
+        <span class="p-info-popup-text"><strong>New Lead</strong> — Leads who registered recently and have never been contacted. These are your highest priority — reach out within 5 minutes to maximize connection rates.</span>
+      </div>
+      <div class="p-info-popup-row">
+        <span class="p-info-popup-label">P2</span>
+        <span class="p-info-popup-text"><strong>Attempted Contact</strong> — Leads you've tried to reach but haven't yet connected with. Keep dialing — most contacts are made on the 3rd to 5th attempt.</span>
+      </div>
+      <div class="p-info-popup-row">
+        <span class="p-info-popup-label">P3</span>
+        <span class="p-info-popup-text"><strong>Recent Login</strong> — Leads who have logged back in recently, signaling renewed interest. A timely follow-up can re-engage leads who went quiet.</span>
+      </div>
+    </div>
+  </div>
+
   <div class="welcome-popup" id="welcome-popup" style="display:none;">
     <div class="welcome-popup-header">
       <span class="welcome-popup-title">Daily Welcome Lines</span>
@@ -11393,6 +11691,26 @@
 
     function closeWelcomePopup() {
       const popup = document.getElementById('welcome-popup');
+      if (popup) popup.style.display = 'none';
+    }
+
+    function togglePInfoPopup(e) {
+      e.stopPropagation();
+      const popup = document.getElementById('p-info-popup');
+      if (popup.style.display === 'none') {
+        const btn = e.currentTarget;
+        const rect = btn.getBoundingClientRect();
+        popup.style.display = 'block';
+        popup.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+        popup.style.left = Math.min(rect.left + window.scrollX - 160, window.innerWidth - 360) + 'px';
+        document.addEventListener('click', closePInfoPopup, { once: true });
+      } else {
+        closePInfoPopup();
+      }
+    }
+
+    function closePInfoPopup() {
+      const popup = document.getElementById('p-info-popup');
       if (popup) popup.style.display = 'none';
     }
 

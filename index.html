@@ -4560,6 +4560,43 @@
       margin-top: 0;
     }
 
+    .greeting-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pond-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1.5px solid #BEC3C8;
+      background: #ffffff;
+      cursor: pointer;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .pond-btn img {
+      width: 16px;
+      height: 16px;
+      filter: brightness(0) saturate(100%) invert(29%) sepia(76%) saturate(507%) hue-rotate(161deg) brightness(95%) contrast(101%);
+    }
+
+    .pond-btn:hover {
+      background: #f5f7fa;
+    }
+
+    .pond-btn.active {
+      background: #0080A3;
+      border-color: #0080A3;
+    }
+
+    .pond-btn.active img {
+      filter: brightness(0) invert(1);
+    }
+
     .tips-toggle-wrap {
       display: none;
       align-items: center;
@@ -5285,6 +5322,9 @@
             </span>
             <span class="tips-toggle-label">Coaching Tips</span>
           </label>
+          <button class="pond-btn" title="Pond Leads" onclick="togglePondView(this)">
+            <img src="icons/LucideLabPond.svg" alt="Pond Leads">
+          </button>
         </div>
       </div>
 
@@ -7361,12 +7401,13 @@
                         <span class="cr-highlights-value">Jul 16</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">14</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$748,000</span><span class="cr-highlights-property-address">1901 Brickell Ave, Miami, FL</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7426,12 +7467,13 @@
                         <span class="cr-highlights-value">Jul 11</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">2</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$574,000</span><span class="cr-highlights-property-address">318 Westwood Dr, Nashville, TN</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7491,12 +7533,13 @@
                         <span class="cr-highlights-value">Jul 15</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">8</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$472,000</span><span class="cr-highlights-property-address">1842 W Diversey Ave, Chicago, IL</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7556,12 +7599,13 @@
                         <span class="cr-highlights-value">Jul 8</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">4</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$338,000</span><span class="cr-highlights-property-address">715 Peachtree St NE, Atlanta, GA</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7621,12 +7665,13 @@
                         <span class="cr-highlights-value">Jul 12</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">5</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$615,000</span><span class="cr-highlights-property-address">2204 NW Hoyt St, Portland, OR</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7686,12 +7731,13 @@
                         <span class="cr-highlights-value">Jul 14</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">2</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$448,000</span><span class="cr-highlights-property-address">4821 N 7th Ave, Phoenix, AZ</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7751,12 +7797,13 @@
                         <span class="cr-highlights-value">&#8212;</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">0</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$389,000</span><span class="cr-highlights-property-address">512 Barton Springs Rd, Austin, TX</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -7816,12 +7863,13 @@
                         <span class="cr-highlights-value">Jul 10</span>
                       </div>
                     </div>
-                    <div class="cr-highlights-col" style="border-right:none;">
+                    <div class="cr-highlights-col">
                       <div class="cr-highlights-col-body">
                         <span class="cr-highlights-label">Call Count</span>
                         <span class="cr-highlights-value">3</span>
                       </div>
                     </div>
+                    <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Property Info</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$529,000</span><span class="cr-highlights-property-address">1103 NW 58th St, Seattle, WA</span></div></div></div></div>
                   </div>
                 </div>
               </div>
@@ -11451,6 +11499,20 @@
       else if (tab.id === 'tab-deal-reminders') applyDrFilters();
       else if (tab.id === 'tab-contact-requested') applyCrFilters();
       else if (tab.id === 'tab-trending')      applyTlFilters();
+    }
+
+    function togglePondView(btn) {
+      const activating = !btn.classList.contains('active');
+      btn.classList.toggle('active');
+      document.querySelectorAll('.pond-filter-pill').forEach(pill => {
+        pill.style.display = activating ? '' : 'none';
+        pill.classList.toggle('active', activating);
+      });
+      applyProspectingFilter();
+      applyFollowUpFilters();
+      applyDrFilters();
+      applyCrFilters();
+      applyTlFilters();
     }
 
     function applyProspectingFilter() {

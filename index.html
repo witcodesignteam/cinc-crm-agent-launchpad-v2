@@ -354,6 +354,142 @@
       stroke-linejoin: round;
     }
 
+    /* ─── DIALER ACTIVE TOGGLE ───────────────────────────────── */
+
+    .dialer-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dialer-toggle-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7a8d;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      user-select: none;
+      transition: color 180ms ease;
+    }
+
+    .dialer-toggle-wrap.is-active .dialer-toggle-label {
+      color: #0080A3;
+    }
+
+    .dialer-toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .dialer-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .dialer-toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      background: #d0d7e2;
+      cursor: pointer;
+      transition: background 180ms ease;
+    }
+
+    .dialer-toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      top: 3px;
+      left: 3px;
+      transition: transform 180ms ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+    }
+
+    .dialer-toggle input:checked + .dialer-toggle-track {
+      background: #0080A3;
+    }
+
+    .dialer-toggle input:checked + .dialer-toggle-track::after {
+      transform: translateX(16px);
+    }
+
+    /* ─── DIALER OFF — disabled state ───────────────────────── */
+
+    /* Disabled appearance */
+    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"],
+    body.dialer-off .btn-action-label[onclick*="addToDialer"],
+    body.dialer-off .lead-tip-action[onclick*="addToDialer"],
+    body.dialer-off .actions-dropdown-item[onclick*="addToDialer"] {
+      background: #E6E6E6;
+      color: #959AA1;
+      border-color: transparent;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"] img,
+    body.dialer-off .btn-action-label[onclick*="addToDialer"] img {
+      filter: brightness(0) saturate(100%) invert(63%) sepia(5%) saturate(300%) hue-rotate(180deg) brightness(95%);
+    }
+
+    body.dialer-off .lead-tip-action[onclick*="addToDialer"] svg {
+      stroke: #959AA1;
+    }
+
+    /* Re-enable pointer-events so tooltip is hoverable */
+    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"],
+    body.dialer-off .btn-action-label[onclick*="addToDialer"],
+    body.dialer-off .lead-tip-action[onclick*="addToDialer"] {
+      pointer-events: auto;
+      position: relative;
+    }
+
+    /* Override tooltip content with broker message */
+    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"]::after,
+    body.dialer-off .btn-action-label[onclick*="addToDialer"]::after,
+    body.dialer-off .lead-tip-action[onclick*="addToDialer"]::after {
+      content: "Reach out to your broker to activate this feature.";
+      white-space: nowrap;
+    }
+
+    /* btn-action-label and lead-tip-action need the full tooltip styles (no existing ::after) */
+    body.dialer-off .btn-action-label[onclick*="addToDialer"]::after,
+    body.dialer-off .lead-tip-action[onclick*="addToDialer"]::after {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1f2e;
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 400;
+      padding: 5px 9px;
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 150ms ease;
+      z-index: 9999;
+    }
+
+    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"]:hover::after,
+    body.dialer-off .btn-action-label[onclick*="addToDialer"]:hover::after,
+    body.dialer-off .lead-tip-action[onclick*="addToDialer"]:hover::after {
+      opacity: 1;
+    }
+
+    /* Suppress hover styles on disabled dropdown items */
+    body.dialer-off .actions-dropdown-item[onclick*="addToDialer"]:hover {
+      background: inherit;
+      color: inherit;
+    }
+
     /* ─── GREETING + DIALS ROW ──────────────────────────────── */
 
     .greeting-row {
@@ -363,6 +499,8 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 24px;
+      position: relative;
+      z-index: 10;
     }
 
     .greeting-text h1 {
@@ -1322,18 +1460,37 @@
 
     /* ─── USER PICKER MODAL ──────────────────────────────────── */
 
+    .user-picker-search-wrap {
+      position: relative;
+    }
+
+    .user-picker-search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: #9aa5b4;
+      pointer-events: none;
+    }
+
     .user-picker-list {
       max-height: 260px;
       overflow-y: auto;
-      margin-top: 4px;
+      margin-top: 0;
+      border: 1px solid #BEC3C8;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 4px;
     }
 
     .user-picker-search {
       width: 100%;
-      padding: 9px 12px;
+      padding: 9px 12px 9px 32px;
       font-size: 13px;
       border: 1px solid #BEC3C8;
-      border-radius: 6px;
+      border-radius: 6px 6px 0 0;
       outline: none;
       color: #1a1f2e;
       box-sizing: border-box;
@@ -1342,6 +1499,7 @@
     .user-picker-search:focus {
       border-color: #0080A3;
     }
+
 
     .user-picker-item {
       display: flex;
@@ -1550,7 +1708,7 @@
     }
 
     .filter-bar-spacer {
-      flex: 1;
+      display: none;
     }
 
     .filter-select-group {
@@ -1590,10 +1748,6 @@
       justify-content: center;
     }
 
-    body:not(.body-min) .filter-bar-spacer {
-      display: none;
-    }
-
     body:not(.body-min) .filter-left {
       position: absolute;
       left: 16px;
@@ -1627,6 +1781,7 @@
       display: flex;
       align-items: center;
     }
+
 
     /* MVP/Iter2: dissolve wrappers so children flow normally in the flex bar */
     .body-min .filter-left,
@@ -1689,9 +1844,9 @@
     .select-all-wrap {
       display: inline-flex;
       align-items: center;
-      height: 34px;
+      height: 30px;
       border: 1.5px solid #BEC3C8;
-      border-radius: 10px;
+      border-radius: 6px;
       background: #ffffff;
       gap: 0;
     }
@@ -2309,7 +2464,7 @@
     /* ─── LEAD CARDS ────────────────────────────────────────── */
 
     .lead-cards {
-      padding: 8px 16px;
+      padding: 0 16px 8px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -2318,7 +2473,6 @@
     .lead-card {
       border: 2px solid #BEC3C8;
       border-radius: 8px;
-      overflow: hidden;
     }
 
     .lead-card[data-due="overdue"],
@@ -2420,7 +2574,12 @@
     #tab-prospecting .lead-card-main,
     #tab-followup .lead-card-main,
     #tab-deal-reminders .lead-card-main,
-    #tab-trending .lead-card-main {
+    #tab-trending .lead-card-main,
+    #atab-contact-requested .lead-card-main,
+    #atab-prospecting .lead-card-main,
+    #atab-followup .lead-card-main,
+    #atab-deal-reminders .lead-card-main,
+    #atab-trending .lead-card-main {
       flex-direction: column;
       gap: 0;
       padding: 16px 16px 0 12px;
@@ -2431,7 +2590,12 @@
     #tab-prospecting .lead-info-top,
     #tab-followup .lead-info-top,
     #tab-deal-reminders .lead-info-top,
-    #tab-trending .lead-info-top {
+    #tab-trending .lead-info-top,
+    #atab-contact-requested .lead-info-top,
+    #atab-prospecting .lead-info-top,
+    #atab-followup .lead-info-top,
+    #atab-deal-reminders .lead-info-top,
+    #atab-trending .lead-info-top {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -2445,7 +2609,12 @@
     #tab-prospecting .lead-info-top-left,
     #tab-followup .lead-info-top-left,
     #tab-deal-reminders .lead-info-top-left,
-    #tab-trending .lead-info-top-left {
+    #tab-trending .lead-info-top-left,
+    #atab-contact-requested .lead-info-top-left,
+    #atab-prospecting .lead-info-top-left,
+    #atab-followup .lead-info-top-left,
+    #atab-deal-reminders .lead-info-top-left,
+    #atab-trending .lead-info-top-left {
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -2457,7 +2626,12 @@
     #tab-prospecting .lead-card-actions,
     #tab-followup .lead-card-actions,
     #tab-deal-reminders .lead-card-actions,
-    #tab-trending .lead-card-actions {
+    #tab-trending .lead-card-actions,
+    #atab-contact-requested .lead-card-actions,
+    #atab-prospecting .lead-card-actions,
+    #atab-followup .lead-card-actions,
+    #atab-deal-reminders .lead-card-actions,
+    #atab-trending .lead-card-actions {
       flex-shrink: 0;
       align-self: flex-start;
     }
@@ -2466,11 +2640,17 @@
     #tab-prospecting .lead-info,
     #tab-followup .lead-info,
     #tab-deal-reminders .lead-info,
-    #tab-trending .lead-info {
+    #tab-trending .lead-info,
+    #atab-contact-requested .lead-info,
+    #atab-prospecting .lead-info,
+    #atab-followup .lead-info,
+    #atab-deal-reminders .lead-info,
+    #atab-trending .lead-info {
       width: 100%;
     }
 
-    #tab-contact-requested .card-identifier {
+    #tab-contact-requested .card-identifier,
+    #atab-contact-requested .card-identifier {
       display: none;
     }
 
@@ -2478,14 +2658,21 @@
     #tab-prospecting .lead-checkbox,
     #tab-followup .lead-checkbox,
     #tab-deal-reminders .lead-checkbox,
-    #tab-trending .lead-checkbox {
+    #tab-trending .lead-checkbox,
+    #atab-contact-requested .lead-checkbox,
+    #atab-prospecting .lead-checkbox,
+    #atab-followup .lead-checkbox,
+    #atab-deal-reminders .lead-checkbox,
+    #atab-trending .lead-checkbox {
       flex-shrink: 0;
       align-self: flex-start;
       margin-top: 2px;
     }
 
     #tab-followup .lead-card-main,
-    #tab-deal-reminders .lead-card-main {
+    #tab-deal-reminders .lead-card-main,
+    #atab-followup .lead-card-main,
+    #atab-deal-reminders .lead-card-main {
       padding-bottom: 16px;
     }
 
@@ -2768,6 +2955,8 @@
     }
 
     /* Touch Points table (P3 expanded section) — reuses cr-highlights-* classes */
+    #tab-prospecting .lead-card[data-filter="p3"] .tp-highlights { display: none; }
+
     .tp-highlights {
       display: flex;
       flex-direction: column;
@@ -3260,6 +3449,13 @@
 
     .btn-acted-on img {
       filter: brightness(0) invert(1);
+    }
+
+    .btn-action-label-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      stroke: currentColor;
     }
 
     .btn-acted-on:hover {
@@ -4565,37 +4761,92 @@
       min-width: 0;
     }
 
-    .pond-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1.5px solid #BEC3C8;
-      background: #ffffff;
-      cursor: pointer;
+    /* ─── AGENT DASHBOARD ──────────────────────────────────── */
+
+    .tab-empty-state {
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #9aa5b4;
+    }
+
+    /* ─── VIEW BUTTON ───────────────────────────────────────── */
+
+    #view-wrap {
+      position: relative;
       margin-left: auto;
       flex-shrink: 0;
     }
 
-    .pond-btn img {
-      width: 16px;
-      height: 16px;
-      filter: brightness(0) saturate(100%) invert(29%) sepia(76%) saturate(507%) hue-rotate(161deg) brightness(95%) contrast(101%);
+    #view-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1.5px solid #0080A3;
+      background: #ffffff;
+      cursor: pointer;
+      color: #0080A3;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      box-sizing: border-box;
     }
 
-    .pond-btn:hover {
-      background: #f5f7fa;
-    }
+    #view-toggle:hover { background: #f0f8fb; }
 
-    .pond-btn.active {
+    #view-toggle.vt-active {
       background: #0080A3;
-      border-color: #0080A3;
+      color: #ffffff;
     }
 
-    .pond-btn.active img {
-      filter: brightness(0) invert(1);
+    #view-toggle.vt-active svg { stroke: #ffffff; }
+
+    #view-toggle svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      stroke: #0080A3;
+      fill: none;
     }
+
+    #view-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 190px;
+      background: #ffffff;
+      border: 1.5px solid #BEC3C8;
+      border-radius: 6px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      z-index: 9999;
+    }
+
+    #view-menu.vm-open { display: block; }
+
+    .vm-item {
+      display: block;
+      width: 100%;
+      padding: 11px 16px;
+      text-align: left;
+      background: none;
+      border: none;
+      border-top: 1px solid #e4e8ed;
+      font-size: 14px;
+      color: #1a1f2e;
+      cursor: pointer;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .vm-item:first-child { border-top: none; }
+    .vm-item:hover { background: #f0f8fb; color: #0080A3; }
+    .vm-item.vm-active { color: #0080A3; font-weight: 700; }
+
+    .body-min:not(.body-iter2) #vm-dashboard { display: none; }
 
     .tips-toggle-wrap {
       display: none;
@@ -5281,6 +5532,13 @@
         </select>
       </span>
       <div class="topbar-right">
+        <div class="dialer-toggle-wrap" id="dialer-toggle-wrap">
+          <span class="dialer-toggle-label">DIALER ACTIVE</span>
+          <label class="dialer-toggle">
+            <input type="checkbox" id="dialer-active-toggle" onchange="toggleDialerActive(this)" checked>
+            <span class="dialer-toggle-track"></span>
+          </label>
+        </div>
         <a href="#" class="topbar-help">HELP</a>
         <div class="topbar-user">
           JC
@@ -5322,9 +5580,17 @@
             </span>
             <span class="tips-toggle-label">Coaching Tips</span>
           </label>
-          <button class="pond-btn" title="Pond Leads" onclick="togglePondView(this)">
-            <img src="icons/LucideLabPond.svg" alt="Pond Leads">
-          </button>
+          <div id="view-wrap">
+            <button id="view-toggle" type="button" onclick="document.getElementById('view-menu').classList.toggle('vm-open')">
+              <span id="view-label">VIEW: Default</span>
+              <svg viewBox="0 0 16 16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+            </button>
+            <div id="view-menu">
+              <button class="vm-item vm-active" id="vm-default" onclick="vmSetView('default')">Default</button>
+              <button class="vm-item" id="vm-pond" onclick="vmSetView('pond')">Pond Leads</button>
+              <button class="vm-item" id="vm-dashboard" onclick="vmSetView('dashboard'); openUserPickerModal()">Launchpad of...</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -5356,6 +5622,8 @@
     <div class="page-body">
       <div class="page-body-inner">
 
+      <!-- Main Dashboard -->
+      <div id="main-dashboard">
       <!-- Today Panel -->
       <div class="today-panel" id="today-panel">
 
@@ -5366,7 +5634,6 @@
           <div class="primary-tabs-scroll">
           <a class="primary-tab active" href="#" onclick="switchTab('contact-requested', this); return false;">
             Contact Requested
-            <span class="tab-badge contact-requested" id="cr-tab-badge">6</span>
           </a>
           <a class="primary-tab" href="#" onclick="switchTab('prospecting', this); return false;">
             Prospecting
@@ -5408,6 +5675,12 @@
                     </svg>
                     Add to Dialer
                   </button>
+                  <button class="actions-dropdown-item" onclick="">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
+                    </svg>
+                    Send Mass Email
+                  </button>
                 </div>
               </div>
             </div>
@@ -5425,7 +5698,7 @@
               Recent Login - P3
               <span class="pill-badge">5</span>
             </button>
-            <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
+            <button class="filter-pill pond-filter-pill" data-pond="true" style="display:none;">Pond Leads</button>
           </div>
           <div class="filter-select-group">
             <span class="filter-label">Filter</span>
@@ -5447,7 +5720,7 @@
                 <option value="most-recent-activity">Most Recent Activity</option>
               </select>
             </div>
-            <div class="icon-btn-sm" title="Refresh">
+            <div class="icon-btn-sm" title="Refresh" style="margin-left: auto;">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline points="23 4 23 10 17 10"/>
                 <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -5477,9 +5750,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openUpdatePipelineModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Update Pipeline</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -5588,9 +5860,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openUpdatePipelineModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Update Pipeline</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -5713,9 +5984,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openUpdatePipelineModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Update Pipeline</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -5823,9 +6093,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openUpdatePipelineModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Update Pipeline</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -5920,9 +6189,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openUpdatePipelineModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Update Pipeline</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -6016,9 +6284,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openAddNoteModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Add Note</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -6146,9 +6413,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openAddNoteModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Add Note</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -6290,9 +6556,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openAddNoteModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Add Note</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -6420,9 +6685,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openAddNoteModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Add Note</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -6550,9 +6814,8 @@
                   <div class="lead-card-actions">
                     <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                     <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                    <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
-                    <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                                        <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                    <button class="btn-action-label btn-acted-on" onclick="openAddNoteModal(this)"><svg class="btn-action-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Add Note</button>
                   </div>
                 </div>
                 <div class="cr-highlights">
@@ -6684,11 +6947,11 @@
                       </svg>
                       Add to Dialer
                     </button>
-                    <button class="actions-dropdown-item" onclick="dismissAll('tab-followup')">
+                    <button class="actions-dropdown-item" onclick="">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
                       </svg>
-                      Dismiss All
+                      Send Mass Email
                     </button>
                   </div>
                 </div>
@@ -6696,7 +6959,7 @@
             </div>
             <div class="filter-pills">
               <span class="filter-label fu-main-label">Due</span>
-              <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
+              <button class="filter-pill pond-filter-pill" data-pond="true" style="display:none;">Pond Leads</button>
               <button class="filter-pill active" data-due="today-overdue" onclick="switchDueFilter(this)">Today &amp; Overdue</button>
               <button class="filter-pill" data-due="today" onclick="switchDueFilter(this)">Today</button>
               <button class="filter-pill" data-due="this-week" onclick="switchDueFilter(this)">This Week</button>
@@ -6704,6 +6967,7 @@
               <button class="filter-pill" data-due="overdue" onclick="switchDueFilter(this)">Overdue</button>
               <button class="filter-pill" data-due="all" onclick="switchDueFilter(this)">Anytime</button>
             </div>
+            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Due</span>
               <select class="filter-select" id="fu-due-select" onchange="switchDueSelect(this)">
@@ -6754,8 +7018,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -6815,8 +7078,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -6875,8 +7137,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -6935,8 +7196,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -6981,8 +7241,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7042,8 +7301,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7088,8 +7346,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7134,8 +7391,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7180,8 +7436,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7226,8 +7481,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7272,8 +7526,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -7322,18 +7575,18 @@
                       </svg>
                       Add to Dialer
                     </button>
-                    <button class="actions-dropdown-item" onclick="dismissAll('tab-deal-reminders')">
+                    <button class="actions-dropdown-item" onclick="">
                       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
                       </svg>
-                      Dismiss All
+                      Send Mass Email
                     </button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="filter-pills">
-              <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
+              <button class="filter-pill pond-filter-pill" data-pond="true" style="display:none;">Pond Leads</button>
               <button class="filter-pill active" data-dr-due="today-overdue" onclick="switchDrDueFilter(this)">Today &amp; Overdue</button>
               <button class="filter-pill" data-dr-due="today" onclick="switchDrDueFilter(this)">Today</button>
               <button class="filter-pill" data-dr-due="this-week" onclick="switchDrDueFilter(this)">This Week</button>
@@ -7341,6 +7594,7 @@
               <button class="filter-pill" data-dr-due="overdue" onclick="switchDrDueFilter(this)">Overdue</button>
               <button class="filter-pill" data-dr-due="all" onclick="switchDrDueFilter(this)">Anytime</button>
             </div>
+            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Due</span>
               <select class="filter-select" id="dr-due-select" onchange="switchDrDueSelect(this)">
@@ -7373,8 +7627,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7439,8 +7692,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7505,8 +7757,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7571,8 +7822,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7637,8 +7887,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7703,8 +7952,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7769,8 +8017,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7835,8 +8082,7 @@
               <div class="lead-card-actions">
                   <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                   <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                  <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                  <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                    <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                   <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                 </div>
                   </div>
@@ -7911,18 +8157,25 @@
                       </svg>
                       Dismiss All
                     </button>
+                    <button class="actions-dropdown-item" onclick="">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
+                      </svg>
+                      Send Mass Email
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="filter-pills">
               <span class="filter-label cr-main-label">Status</span>
-              <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
+              <button class="filter-pill pond-filter-pill" data-pond="true" style="display:none;">Pond Leads</button>
               <button class="filter-pill active" data-cr-status="awaiting" onclick="switchCrStatusFilter(this)">Call Today</button>
               <button class="filter-pill" data-cr-status="acted-on" onclick="switchCrStatusFilter(this)">Acted On</button>
               <button class="filter-pill" data-cr-status="dismissed" onclick="switchCrStatusFilter(this)">Dismissed</button>
               <button class="filter-pill" data-cr-status="older-30" onclick="switchCrStatusFilter(this)">Older than 30 Days</button>
             </div>
+            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Status</span>
               <select class="filter-select" id="cr-status-select" onchange="switchCrStatusSelect(this)">
@@ -7975,8 +8228,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8079,8 +8331,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8248,8 +8499,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8359,8 +8609,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8470,8 +8719,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8623,8 +8871,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8782,8 +9029,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8875,8 +9121,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -8972,12 +9217,18 @@
                       </svg>
                       Add to Dialer
                     </button>
+                    <button class="actions-dropdown-item" onclick="">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
+                      </svg>
+                      Send Mass Email
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="filter-pills">
-              <button class="filter-pill pond-filter-pill" data-pond="true" onclick="togglePondFilter(this)" style="display:none;">Pond Leads</button>
+              <button class="filter-pill pond-filter-pill" data-pond="true" style="display:none;">Pond Leads</button>
               <button class="filter-pill active" data-tl-type="all" onclick="switchTlTypeFilter(this)">All</button>
               <button class="filter-pill" data-tl-type="ai-conversation" onclick="switchTlTypeFilter(this)">AI Conversation</button>
               <button class="filter-pill" data-tl-type="claimed-homepulse" onclick="switchTlTypeFilter(this)">Claimed HomePulse</button>
@@ -8985,6 +9236,7 @@
               <button class="filter-pill" data-tl-type="high-favorites" onclick="switchTlTypeFilter(this)">High Favorites</button>
               <button class="filter-pill" data-tl-type="high-property-views" onclick="switchTlTypeFilter(this)">High Property Views</button>
             </div>
+            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Type</span>
               <select class="filter-select" id="tl-type-select" onchange="switchTlTypeSelect(this)">
@@ -9030,8 +9282,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9187,8 +9438,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9307,8 +9557,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9408,8 +9657,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9585,8 +9833,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9691,8 +9938,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9792,8 +10038,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -9933,8 +10178,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -10081,8 +10325,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -10186,8 +10429,7 @@
                     <div class="lead-card-actions">
                       <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
                       <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
-                      <button class="btn-action-icon" data-tooltip="Call Lead"><img src="icons/220_phone.svg" alt=""></button>
-                      <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                                            <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
                       <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
                     </div>
                   </div>
@@ -10309,6 +10551,436 @@
         </div><!-- /#tab-trending -->
 
       </div><!-- /.today-panel -->
+      </div><!-- /#main-dashboard -->
+
+      <!-- Agent Dashboard (shown when viewing another agent) -->
+      <div id="agent-dashboard" style="display:none;">
+        <div class="today-panel">
+
+          <!-- Primary Tabs -->
+          <div class="primary-tabs">
+            <div class="primary-tabs-scroll">
+              <a class="primary-tab active" href="#" onclick="switchAgentTab('contact-requested', this); return false;">Contact Requested <span class="tab-badge contact-requested">1</span></a>
+              <a class="primary-tab" href="#" onclick="switchAgentTab('prospecting', this); return false;">Prospecting <span class="tab-badge">0</span></a>
+              <a class="primary-tab" href="#" onclick="switchAgentTab('followup', this); return false;">Follow Up <span class="tab-badge">0</span></a>
+              <a class="primary-tab" href="#" onclick="switchAgentTab('deal-reminders', this); return false;">Deal Reminders <span class="tab-badge">0</span></a>
+              <a class="primary-tab" href="#" onclick="switchAgentTab('trending', this); return false;">Trending Leads <span class="tab-badge">4</span></a>
+            </div>
+          </div>
+
+          <!-- Contact Requested -->
+          <div id="atab-contact-requested">
+            <div class="filter-bar filter-bar-row1">
+              <div class="filter-left">
+                <div class="select-all-wrap">
+                  <label class="select-all-checkbox">
+                    <input type="checkbox" tabindex="-1" onclick="toggleSelectAll(this, 'atab-contact-requested')">
+                  </label>
+                  <div class="actions-dropdown-wrapper">
+                    <button class="select-all-chevron chevron-disabled" onclick="toggleActionsDropdown(this)" title="Lead Card Actions">
+                      <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+                    </button>
+                    <div class="actions-dropdown">
+                      <button class="actions-dropdown-item" onclick="addToDialer()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Add to Dialer
+                      </button>
+                      <button class="actions-dropdown-item" onclick="">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
+                        Send Mass Email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-pills">
+                <span class="filter-label cr-main-label">Status</span>
+                <button class="filter-pill active" data-cr-status="awaiting" onclick="switchCrStatusFilter(this)">Call Today</button>
+                <button class="filter-pill" data-cr-status="acted-on" onclick="switchCrStatusFilter(this)">Acted On</button>
+                <button class="filter-pill" data-cr-status="dismissed" onclick="switchCrStatusFilter(this)">Dismissed</button>
+                <button class="filter-pill" data-cr-status="older-30" onclick="switchCrStatusFilter(this)">Older than 30 Days</button>
+              </div>
+            </div>
+            <div class="filter-bar cr-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
+              <span class="filter-label">Type</span>
+              <button class="filter-pill active" data-cr-type="all" onclick="switchCrTypeFilter(this)">All</button>
+              <button class="filter-pill" data-cr-type="ai-ready" onclick="switchCrTypeFilter(this)">AI Ready</button>
+              <button class="filter-pill" data-cr-type="cash-offer" onclick="switchCrTypeFilter(this)">Cash Offer Inquiry</button>
+              <button class="filter-pill" data-cr-type="etta-message" onclick="switchCrTypeFilter(this)">Etta Message</button>
+              <button class="filter-pill" data-cr-type="homepulse" onclick="switchCrTypeFilter(this)">HomePulse Inquiry</button>
+              <button class="filter-pill" data-cr-type="property-inquiry" onclick="switchCrTypeFilter(this)">Property Inquiry</button>
+              <button class="filter-pill" data-cr-type="showing-request" onclick="switchCrTypeFilter(this)">Showing Request</button>
+            </div>
+            <div class="lead-cards">
+
+              <!-- CR Card: Megan Ford -->
+              <div class="lead-card" data-cr-status="awaiting" data-cr-type="property-inquiry">
+                <div class="lead-card-main">
+                  <div class="lead-info">
+                    <div class="lead-info-top">
+                      <input type="checkbox" class="lead-checkbox" />
+                      <div class="lead-info-top-left">
+                        <div class="lead-name-row">
+                          <span class="lead-name">Megan Ford</span>
+                          <span class="lead-badge badge-new-lead">New Lead</span>
+                          <span class="lead-badge badge-buyer">Buyer</span>
+                        </div>
+                        <div class="lead-meta">Property Inquiry <span class="lead-meta-time">&middot; 2 hours ago</span></div>
+                      </div>
+                      <div class="lead-card-actions">
+                        <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
+                        <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
+                                                <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                        <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                      </div>
+                    </div>
+                    <div class="cr-quote">Is this property still available? I'm looking to move in within 60 days.</div>
+                    <div class="cr-highlights">
+                      <div class="cr-highlights-inner">
+                        <div class="cr-highlights-heading">User Highlights</div>
+                        <div class="cr-highlights-row">
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Registered</span><span class="cr-highlights-value">Jul 28 at 9:12 am</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Fav City</span><span class="cr-highlights-value">Denver</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Last Call</span><span class="cr-highlights-value">—</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Call Count</span><span class="cr-highlights-value">0</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Inquired About</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$465,000</span><span class="cr-highlights-property-address">3418 Larimer St, Denver, CO</span></div></div></div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cr-card-footer">
+                      <button class="cr-details-toggle" onclick="toggleReg(this, 'agent-cr-megan')">Additional Details <svg viewBox="0 0 14 14"><polyline points="2 4 7 9 12 4"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="reg-answers hidden" id="agent-cr-megan"><div class="reg-answers-divider"></div>
+                  <div class="activity-item"><span class="activity-label">Last Edited Note</span><p style="font-size:14px;margin:4px 0 0;">Lead came in through CINC listing page. No prior contact history.</p></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Prospecting — empty -->
+          <div id="atab-prospecting" style="display:none;">
+            <div class="filter-bar">
+              <div class="filter-left">
+                <div class="select-all-wrap">
+                  <label class="select-all-checkbox">
+                    <input type="checkbox" tabindex="-1" onclick="toggleSelectAll(this, 'atab-prospecting')">
+                  </label>
+                  <div class="actions-dropdown-wrapper">
+                    <button class="select-all-chevron chevron-disabled" onclick="toggleActionsDropdown(this)" title="Lead Card Actions">
+                      <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+                    </button>
+                    <div class="actions-dropdown">
+                      <button class="actions-dropdown-item" onclick="addToDialer()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Add to Dialer
+                      </button>
+                      <button class="actions-dropdown-item" onclick="">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
+                        Send Mass Email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-filter="p1">New Lead - P1</button>
+                <button class="filter-pill" data-filter="p2">Attempted Contact - P2</button>
+                <button class="filter-pill" data-filter="p3">Recent Login - P3</button>
+              </div>
+            </div>
+            <div class="tab-empty-state">No leads to show</div>
+          </div>
+
+          <!-- Follow Up — empty -->
+          <div id="atab-followup" style="display:none;">
+            <div class="filter-bar filter-bar-row1">
+              <div class="filter-left">
+                <div class="select-all-wrap">
+                  <label class="select-all-checkbox">
+                    <input type="checkbox" tabindex="-1" onclick="toggleSelectAll(this, 'atab-followup')">
+                  </label>
+                  <div class="actions-dropdown-wrapper">
+                    <button class="select-all-chevron chevron-disabled" onclick="toggleActionsDropdown(this)" title="Lead Card Actions">
+                      <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+                    </button>
+                    <div class="actions-dropdown">
+                      <button class="actions-dropdown-item" onclick="addToDialer()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Add to Dialer
+                      </button>
+                      <button class="actions-dropdown-item" onclick="">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
+                        Send Mass Email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-pills">
+                <span class="filter-label fu-main-label">Due</span>
+                <button class="filter-pill active" data-due="today-overdue">Today &amp; Overdue</button>
+                <button class="filter-pill" data-due="today">Today</button>
+                <button class="filter-pill" data-due="this-week">This Week</button>
+                <button class="filter-pill" data-due="next-week">Next Week</button>
+                <button class="filter-pill" data-due="overdue">Overdue</button>
+                <button class="filter-pill" data-due="all">Anytime</button>
+              </div>
+            </div>
+            <div class="filter-bar fu-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
+              <span class="filter-label">Type</span>
+              <button class="filter-pill active" data-type="all">All</button>
+              <button class="filter-pill" data-type="call">Call</button>
+              <button class="filter-pill" data-type="email">Email</button>
+              <button class="filter-pill" data-type="other">Other</button>
+            </div>
+            <div class="tab-empty-state">No leads to show</div>
+          </div>
+
+          <!-- Deal Reminders — empty -->
+          <div id="atab-deal-reminders" style="display:none;">
+            <div class="filter-bar">
+              <div class="filter-left">
+                <div class="select-all-wrap">
+                  <label class="select-all-checkbox">
+                    <input type="checkbox" tabindex="-1" onclick="toggleSelectAll(this, 'atab-deal-reminders')">
+                  </label>
+                  <div class="actions-dropdown-wrapper">
+                    <button class="select-all-chevron chevron-disabled" onclick="toggleActionsDropdown(this)" title="Lead Card Actions">
+                      <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+                    </button>
+                    <div class="actions-dropdown">
+                      <button class="actions-dropdown-item" onclick="addToDialer()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Add to Dialer
+                      </button>
+                      <button class="actions-dropdown-item" onclick="">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
+                        Send Mass Email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-dr-due="today-overdue">Today &amp; Overdue</button>
+                <button class="filter-pill" data-dr-due="today">Today</button>
+                <button class="filter-pill" data-dr-due="this-week">This Week</button>
+                <button class="filter-pill" data-dr-due="next-week">Next Week</button>
+                <button class="filter-pill" data-dr-due="overdue">Overdue</button>
+                <button class="filter-pill" data-dr-due="all">Anytime</button>
+              </div>
+            </div>
+            <div class="tab-empty-state">No leads to show</div>
+          </div>
+
+          <!-- Trending Leads -->
+          <div id="atab-trending" style="display:none;">
+            <div class="filter-bar filter-bar-row1">
+              <div class="filter-left">
+                <div class="select-all-wrap">
+                  <label class="select-all-checkbox">
+                    <input type="checkbox" tabindex="-1" onclick="toggleSelectAll(this, 'atab-trending')">
+                  </label>
+                  <div class="actions-dropdown-wrapper">
+                    <button class="select-all-chevron chevron-disabled" onclick="toggleActionsDropdown(this)" title="Lead Card Actions">
+                      <svg viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><polyline points="1 1 5 5 9 1"/></svg>
+                    </button>
+                    <div class="actions-dropdown">
+                      <button class="actions-dropdown-item" onclick="addToDialer()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Add to Dialer
+                      </button>
+                      <button class="actions-dropdown-item" onclick="">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
+                        Send Mass Email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-tl-type="all">All</button>
+                <button class="filter-pill" data-tl-type="ai-conversation">AI Conversation</button>
+                <button class="filter-pill" data-tl-type="claimed-homepulse">Claimed HomePulse</button>
+                <button class="filter-pill" data-tl-type="frequent-visitor">Frequent Visitor</button>
+                <button class="filter-pill" data-tl-type="high-favorites">High Favorites</button>
+                <button class="filter-pill" data-tl-type="high-property-views">High Property Views</button>
+              </div>
+            </div>
+            <div class="filter-bar tl-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
+              <span class="filter-label" style="visibility: hidden;">Type</span>
+              <button class="filter-pill" data-tl-type="shared-listings">Shared Listings</button>
+              <button class="filter-pill" data-tl-type="updated-contact-info">Updated Contact Info</button>
+              <button class="filter-pill" data-tl-type="updated-saved-search">Updated Saved Search</button>
+              <button class="filter-pill" data-tl-type="calculated-mortgage">Calculated Mortgage</button>
+              <button class="filter-pill" data-tl-type="verified-account">Verified Account</button>
+            </div>
+            <div class="lead-cards">
+
+              <!-- TL Card 1: High Property Views — Kayla Chen -->
+              <div class="lead-card" data-tl-type="high-property-views">
+                <div class="lead-card-main">
+                  <div class="lead-info">
+                    <div class="lead-info-top">
+                      <input type="checkbox" class="lead-checkbox" />
+                      <div class="lead-info-top-left">
+                        <div class="lead-name-row"><span class="lead-name">Kayla Chen</span><span class="lead-badge badge-contacted">Contacted</span><span class="lead-badge badge-buyer">Buyer</span></div>
+                        <div class="lead-meta">High Property Views <span class="lead-meta-time">&middot; 11 views this week</span></div>
+                      </div>
+                      <div class="lead-card-actions">
+                        <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
+                        <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
+                                                <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                        <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                      </div>
+                    </div>
+                    <div class="cr-highlights">
+                      <div class="cr-highlights-inner">
+                        <div class="cr-highlights-heading">User Highlights</div>
+                        <div class="cr-highlights-row">
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Registered</span><span class="cr-highlights-value">Jun 4 at 2:30 pm</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Favorite City</span><span class="cr-highlights-value">Scottsdale</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Last Call</span><span class="cr-highlights-value">Jul 22</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Call Count</span><span class="cr-highlights-value">5</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Last Viewed</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$725,000</span><span class="cr-highlights-property-address">8820 E Camelback Rd, Scottsdale, AZ</span></div></div></div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cr-card-footer">
+                      <button class="cr-details-toggle" onclick="toggleReg(this, 'agent-tl-kayla')">Recent Activity <svg viewBox="0 0 14 14"><polyline points="2 4 7 9 12 4"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="reg-answers hidden" id="agent-tl-kayla"><div class="reg-answers-divider"></div>
+                  <div class="activity-item"><span class="activity-label">Recent Activity</span><p style="font-size:14px;margin:4px 0 0;">Viewed 11 properties this week, 3 in the same neighborhood. Favorited 2 listings.</p></div>
+                </div>
+              </div>
+
+              <!-- TL Card 2: Frequent Visitor — Omar Reyes -->
+              <div class="lead-card" data-tl-type="frequent-visitor">
+                <div class="lead-card-main">
+                  <div class="lead-info">
+                    <div class="lead-info-top">
+                      <input type="checkbox" class="lead-checkbox" />
+                      <div class="lead-info-top-left">
+                        <div class="lead-name-row"><span class="lead-name">Omar Reyes</span><span class="lead-badge badge-attempted">Attempted Contact</span><span class="lead-badge badge-buyer">Buyer</span></div>
+                        <div class="lead-meta">Frequent Visitor <span class="lead-meta-time">&middot; 6 sessions this week</span></div>
+                      </div>
+                      <div class="lead-card-actions">
+                        <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
+                        <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
+                                                <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                        <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                      </div>
+                    </div>
+                    <div class="cr-highlights">
+                      <div class="cr-highlights-inner">
+                        <div class="cr-highlights-heading">User Highlights</div>
+                        <div class="cr-highlights-row">
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Registered</span><span class="cr-highlights-value">May 12 at 10:05 am</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Favorite City</span><span class="cr-highlights-value">Austin</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Last Call</span><span class="cr-highlights-value">Jul 18</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Call Count</span><span class="cr-highlights-value">3</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Last Viewed</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$398,000</span><span class="cr-highlights-property-address">2104 Barton Hills Dr, Austin, TX</span></div></div></div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cr-card-footer">
+                      <button class="cr-details-toggle" onclick="toggleReg(this, 'agent-tl-omar')">Recent Activity <svg viewBox="0 0 14 14"><polyline points="2 4 7 9 12 4"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="reg-answers hidden" id="agent-tl-omar"><div class="reg-answers-divider"></div>
+                  <div class="activity-item"><span class="activity-label">Recent Activity</span><p style="font-size:14px;margin:4px 0 0;">Returned to site 6 times this week, spending avg 12 min per session. Browsing South Austin listings consistently.</p></div>
+                </div>
+              </div>
+
+              <!-- TL Card 3: Updated Saved Search — Tanya Novak -->
+              <div class="lead-card" data-tl-type="updated-saved-search">
+                <div class="lead-card-main">
+                  <div class="lead-info">
+                    <div class="lead-info-top">
+                      <input type="checkbox" class="lead-checkbox" />
+                      <div class="lead-info-top-left">
+                        <div class="lead-name-row"><span class="lead-name">Tanya Novak</span><span class="lead-badge badge-contacted">Contacted</span><span class="lead-badge badge-buyer">Buyer</span></div>
+                        <div class="lead-meta">Updated Saved Search <span class="lead-meta-time">&middot; today</span></div>
+                      </div>
+                      <div class="lead-card-actions">
+                        <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
+                        <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
+                                                <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                        <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                      </div>
+                    </div>
+                    <div class="cr-highlights">
+                      <div class="cr-highlights-inner">
+                        <div class="cr-highlights-heading">User Highlights</div>
+                        <div class="cr-highlights-row">
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Registered</span><span class="cr-highlights-value">Apr 17 at 4:50 pm</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Favorite City</span><span class="cr-highlights-value">Nashville</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Last Call</span><span class="cr-highlights-value">Jul 25</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Call Count</span><span class="cr-highlights-value">7</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Last Viewed</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$512,000</span><span class="cr-highlights-property-address">1204 Wedgewood Ave, Nashville, TN</span></div></div></div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cr-card-footer">
+                      <button class="cr-details-toggle" onclick="toggleReg(this, 'agent-tl-tanya')">Recent Activity <svg viewBox="0 0 14 14"><polyline points="2 4 7 9 12 4"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="reg-answers hidden" id="agent-tl-tanya"><div class="reg-answers-divider"></div>
+                  <div class="activity-item"><span class="activity-label">Recent Activity</span><p style="font-size:14px;margin:4px 0 0;">Updated saved search to expand max price from $475K to $525K and added 3bd minimum.</p></div>
+                </div>
+              </div>
+
+              <!-- TL Card 4: AI Conversation — Marcus Bell -->
+              <div class="lead-card" data-tl-type="ai-conversation">
+                <div class="lead-card-main">
+                  <div class="lead-info">
+                    <div class="lead-info-top">
+                      <input type="checkbox" class="lead-checkbox" />
+                      <div class="lead-info-top-left">
+                        <div class="lead-name-row"><span class="lead-name">Marcus Bell</span><span class="lead-badge badge-new-lead">New Lead</span><span class="lead-badge badge-buyer">Buyer</span></div>
+                        <div class="lead-meta">AI Conversation <span class="lead-meta-time">&middot; 1 hour ago</span></div>
+                      </div>
+                      <div class="lead-card-actions">
+                        <button class="btn-action-icon" data-tooltip="Send Email"><img src="icons/016_communication.svg" alt=""></button>
+                        <button class="btn-action-icon" data-tooltip="Send Text Message"><img src="icons/046_sms.svg" alt=""></button>
+                                                <button class="btn-action-label" onclick="addToDialer(this)"><img src="icons/312_dial.svg" alt="">Add to Dialer</button>
+                        <button class="btn-action-label btn-acted-on" onclick="openConnectedModal(this)"><img src="icons/013_check.svg" alt="">Acted On</button>
+                      </div>
+                    </div>
+                    <div class="cr-highlights">
+                      <div class="cr-highlights-inner">
+                        <div class="cr-highlights-heading">User Highlights</div>
+                        <div class="cr-highlights-row">
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Registered</span><span class="cr-highlights-value">Jul 28 at 8:44 am</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Favorite City</span><span class="cr-highlights-value">Atlanta</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Last Call</span><span class="cr-highlights-value">—</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><span class="cr-highlights-label">Call Count</span><span class="cr-highlights-value">0</span></div></div>
+                          <div class="cr-highlights-col"><div class="cr-highlights-col-body"><div class="cr-highlights-property"><div class="cr-highlights-property-img"></div><div class="cr-highlights-property-info"><div class="cr-highlights-property-label-row"><span class="cr-highlights-label">Last Viewed</span><a href="#" class="cr-highlights-property-link-right" target="_blank">View Property<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><span class="cr-highlights-property-price">$359,000</span><span class="cr-highlights-property-address">610 Ponce De Leon Ave NE, Atlanta, GA</span></div></div></div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cr-card-footer">
+                      <button class="cr-details-toggle" onclick="toggleReg(this, 'agent-tl-marcus')">Recent Activity <svg viewBox="0 0 14 14"><polyline points="2 4 7 9 12 4"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="reg-answers hidden" id="agent-tl-marcus"><div class="reg-answers-divider"></div>
+                  <div class="activity-item"><span class="activity-label">AI Conversation</span><p style="font-size:14px;margin:4px 0 0;">Asked Etta about school districts and commute times near Midtown Atlanta. Expressed interest in speaking with an agent.</p></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div><!-- /.today-panel -->
+      </div><!-- /#agent-dashboard -->
 
       </div><!-- /.page-body-inner -->
     </div><!-- /.page-body -->
@@ -10480,6 +11152,7 @@
     }
 
     function addToDialer(btn) {
+      if (document.body.classList.contains('dialer-off')) return;
       const isFuture = document.getElementById('view-mode-select').value === 'future';
       if (btn && btn.closest('.lead-card')) {
         // Called from individual card button
@@ -10704,7 +11377,6 @@
       contactNoteFromComplete = false;
       const card = btn.closest('.lead-card');
       const leadName = card.querySelector('.lead-name').textContent;
-      document.getElementById('post-connected-modal-title').textContent = 'Congrats on connecting!';
       document.getElementById('post-save-lead-name').textContent = leadName;
       // Reset note section
       document.getElementById('ps-note-text').value = '';
@@ -10728,9 +11400,188 @@
       document.querySelectorAll('#post-connected-modal .reminder-modal-section-body').forEach(b => {
         b.classList.remove('open');
       });
+
+      const isFollowUp = !!card.closest('#tab-followup') || !!card.closest('#tab-deal-reminders');
+      const editSection = document.getElementById('ps-section-edit-reminder');
+      const sections = document.getElementById('ps-sections');
+
+      if (isFollowUp) {
+        document.getElementById('post-connected-modal-title').textContent = card.closest('#tab-deal-reminders') ? 'Complete this Reminder' : 'Complete this Follow Up';
+        document.getElementById('post-connected-modal-body').textContent = 'What action do you want to take?';
+        editSection.style.display = '';
+        // Pre-populate edit reminder fields from the card
+        const regToggle = card.querySelector('.reg-toggle');
+        const titleTextNode = regToggle ? Array.from(regToggle.childNodes).find(n => n.nodeType === 3 && n.textContent.trim()) : null;
+        const reminderEl = card.querySelector('.fu-reminder');
+        const reminderTitleEl = reminderEl ? reminderEl.querySelector('.fu-reminder-title') : null;
+        document.getElementById('ps-er-title').value = titleTextNode ? titleTextNode.textContent.trim() : (reminderTitleEl ? reminderTitleEl.textContent.trim() : '');
+        if (reminderEl) {
+          const clone = reminderEl.cloneNode(true);
+          const cloneTitle = clone.querySelector('.fu-reminder-title');
+          if (cloneTitle) cloneTitle.remove();
+          document.getElementById('ps-er-description').value = clone.textContent.trim();
+        } else {
+          document.getElementById('ps-er-description').value = '';
+        }
+        document.getElementById('ps-er-date').value = '';
+        document.getElementById('ps-er-time').value = '';
+        document.getElementById('ps-er-assignee').value = '';
+        // Order: Edit this Reminder → Create a New Reminder → Create a Note → Update Pipeline Stage
+        sections.appendChild(document.getElementById('ps-section-edit-reminder'));
+        sections.appendChild(document.getElementById('ps-section-reminder'));
+        sections.appendChild(document.getElementById('ps-section-note'));
+        sections.appendChild(document.getElementById('ps-section-pipeline'));
+      } else {
+        document.getElementById('post-connected-modal-title').textContent = 'Congrats on connecting!';
+        document.getElementById('post-connected-modal-body').textContent = 'Would you like to do anything else?';
+        editSection.style.display = 'none';
+        // Default order: Create a Note → Create a New Reminder → Update Pipeline Stage
+        sections.appendChild(document.getElementById('ps-section-note'));
+        sections.appendChild(document.getElementById('ps-section-reminder'));
+        sections.appendChild(document.getElementById('ps-section-pipeline'));
+      }
+
+      psIsFollowUp = isFollowUp;
       document.getElementById('post-save-done-btn').textContent = 'Not Right Now';
-      document.getElementById('post-save-save-btn').disabled = true;
+      document.getElementById('post-save-save-btn').textContent = isFollowUp ? 'Save & Complete' : 'Save';
+      document.getElementById('post-save-save-btn').disabled = !isFollowUp;
       document.getElementById('post-connected-modal').classList.add('open');
+    }
+
+    var upmSourceCard = null;
+    var upmMode = 'pipeline'; // 'pipeline' for P1/P2, 'note' for P3
+
+    function upmReset() {
+      // Collapse all expandable sections in both bodies
+      document.querySelectorAll('#update-pipeline-modal .reminder-modal-section-header').forEach(h => h.classList.remove('open', 'saved'));
+      document.querySelectorAll('#update-pipeline-modal .reminder-modal-section-body').forEach(b => b.classList.remove('open'));
+    }
+
+    function openUpdatePipelineModal(btn) {
+      upmMode = 'pipeline';
+      upmSourceCard = btn.closest('.lead-card');
+      const leadName = upmSourceCard.querySelector('.lead-name').textContent;
+      document.getElementById('upm-title').textContent = 'Update Pipeline Stage';
+      document.getElementById('upm-lead-name').textContent = leadName;
+      document.getElementById('upm-body-pipeline').style.display = '';
+      document.getElementById('upm-body-note').style.display = 'none';
+      upmReset();
+      // Reset pipeline body fields
+      document.getElementById('upm-note-text-p').value = '';
+      document.getElementById('upm-pin-note-p').checked = false;
+      document.querySelectorAll('#upm-section-note-p .note-type-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('#upm-section-note-p .note-type-btn').classList.add('active');
+      document.getElementById('upm-reminder-date-p').value = '';
+      document.getElementById('upm-reminder-time-p').value = '';
+      document.getElementById('upm-reminder-assignee-p').value = '';
+      document.getElementById('upm-reminder-note-p').value = '';
+      // Pre-select stage from card badge
+      const stageSelect = document.getElementById('upm-pipeline-stage');
+      const stageBadge = upmSourceCard.querySelector('.badge-new-lead, .badge-attempted, .badge-contacted, .badge-active-client');
+      if (stageBadge) stageSelect.value = stageBadge.textContent.trim();
+      document.getElementById('update-pipeline-modal').classList.add('open');
+    }
+
+    function openAddNoteModal(btn) {
+      upmMode = 'note';
+      upmSourceCard = btn.closest('.lead-card');
+      const leadName = upmSourceCard.querySelector('.lead-name').textContent;
+      document.getElementById('upm-title').textContent = 'Add a New Contact Note';
+      document.getElementById('upm-lead-name').textContent = leadName;
+      document.getElementById('upm-body-pipeline').style.display = 'none';
+      document.getElementById('upm-body-note').style.display = '';
+      upmReset();
+      // Reset note body fields
+      document.getElementById('upm-note-text-n').value = '';
+      document.getElementById('upm-pin-note-n').checked = false;
+      document.querySelectorAll('#upm-body-note .note-type-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('#upm-body-note .note-type-btn').classList.add('active');
+      document.getElementById('upm-reminder-date-n').value = '';
+      document.getElementById('upm-reminder-time-n').value = '';
+      document.getElementById('upm-reminder-assignee-n').value = '';
+      document.getElementById('upm-reminder-note-n').value = '';
+      // Pre-select stage from card badge
+      const stageSelect = document.getElementById('upm-pipeline-stage-n');
+      const stageBadge = upmSourceCard.querySelector('.badge-new-lead, .badge-attempted, .badge-contacted, .badge-active-client');
+      if (stageBadge) stageSelect.value = stageBadge.textContent.trim();
+      document.getElementById('update-pipeline-modal').classList.add('open');
+    }
+
+    function closeUpdatePipelineModal() {
+      document.getElementById('update-pipeline-modal').classList.remove('open');
+    }
+
+    function saveUpdatePipeline() {
+      if (!upmSourceCard) { closeUpdatePipelineModal(); return; }
+      var cardToMove = upmSourceCard;
+      closeUpdatePipelineModal();
+
+      if (upmMode === 'note') {
+        // P3 Add Note: move card to bottom of P3 list, decrement P3 pill + tab badge
+        cardToMove.classList.add('dismissing');
+        setTimeout(function() {
+          cardToMove.classList.remove('dismissing');
+          // Update meta line
+          var meta = cardToMove.querySelector('.lead-meta');
+          if (meta) meta.innerHTML = 'Acted on <span class="lead-meta-time">&middot; just now</span>';
+          // Set timestamps so sort always places this card last in both sort modes:
+          // last-call-least-recent sorts ascending → far future = last
+          // most-recent-activity sorts descending → epoch = last
+          cardToMove.dataset.loginTs = '1970-01-01T00:00';
+          cardToMove.dataset.lastCallTs = '9999-12-31T23:59';
+          // Decrement P3 pill badge
+          var p3Pill = document.querySelector('#tab-prospecting .filter-pill[data-filter="p3"] .pill-badge');
+          if (p3Pill) {
+            var p3Count = parseInt(p3Pill.textContent, 10);
+            if (p3Count > 0) p3Pill.textContent = p3Count - 1;
+          }
+          // Decrement prospecting tab badge
+          var tabBadge = document.querySelector('.tab-badge.prospecting');
+          if (tabBadge) {
+            var tabCount = parseInt(tabBadge.textContent, 10);
+            if (tabCount > 0) tabBadge.textContent = tabCount - 1;
+          }
+          applyProspectingFilter();
+        }, 280);
+        return;
+      }
+
+      // P1/P2 Update Pipeline: move card to new filter group
+      var stageToFilter = {
+        'New Lead':           'p1',
+        'Attempted Contact':  'p2',
+        'Contacted':          'p3',
+        'Active Client':      'p3'
+      };
+      var newStage = document.getElementById('upm-pipeline-stage').value;
+      var newFilter = stageToFilter[newStage] || 'p1';
+      var currentFilter = cardToMove.dataset.filter;
+      if (newFilter === currentFilter) return;
+      cardToMove.classList.add('dismissing');
+      setTimeout(function() {
+        cardToMove.dataset.filter = newFilter;
+        var badge = cardToMove.querySelector('.badge-new-lead, .badge-attempted, .badge-contacted, .badge-active-client');
+        if (badge) {
+          badge.classList.remove('badge-new-lead', 'badge-attempted', 'badge-contacted', 'badge-active-client');
+          var badgeMap = {
+            'New Lead': 'badge-new-lead',
+            'Attempted Contact': 'badge-attempted',
+            'Contacted': 'badge-contacted',
+            'Active Client': 'badge-active-client'
+          };
+          badge.classList.add(badgeMap[newStage]);
+          badge.textContent = newStage;
+        }
+        cardToMove.classList.remove('dismissing');
+        applyProspectingFilter();
+      }, 280);
+    }
+
+    function toggleUpmSection(header) {
+      const body = header.nextElementSibling;
+      const isOpen = header.classList.contains('open');
+      header.classList.toggle('open', !isOpen);
+      body.classList.toggle('open', !isOpen);
     }
 
     function openEditNoteModal(btn) {
@@ -10779,6 +11630,7 @@
     }
 
     var psOriginalStage = '';
+    var psIsFollowUp = false;
 
     function saveContactNote() {
       closeContactNoteModal();
@@ -10817,14 +11669,21 @@
     }
 
     function updatePostSaveState() {
+      if (psIsFollowUp) return;
       const hasChanges = sectionHasContent('ps-section-note') ||
                          sectionHasContent('ps-section-reminder') ||
-                         sectionHasContent('ps-section-pipeline');
+                         sectionHasContent('ps-section-pipeline') ||
+                         sectionHasContent('ps-section-edit-reminder');
       document.getElementById('post-save-save-btn').disabled = !hasChanges;
     }
 
-    function closePostSaveModal() {
+    function closePostSaveModal(dismissCard_) {
       document.getElementById('post-connected-modal').classList.remove('open');
+      // Skip card dismissal if Follow Up "Close" button (not Save & Complete)
+      if (psIsFollowUp && !dismissCard_) {
+        contactNoteSourceBtn = null;
+        return;
+      }
       // Now dismiss the source card
       if (contactNoteFromComplete) {
         dismissReminderCard();
@@ -10856,9 +11715,11 @@
       const noteSection = document.querySelector('#ps-section-note .reminder-modal-section-body');
       const reminderSection = document.querySelector('#ps-section-reminder .reminder-modal-section-body');
       const pipelineSection = document.querySelector('#ps-section-pipeline .reminder-modal-section-body');
+      const editSection = document.querySelector('#ps-section-edit-reminder .reminder-modal-section-body');
       const noteOpen = noteSection && noteSection.classList.contains('open');
       const reminderOpen = reminderSection && reminderSection.classList.contains('open');
       const pipelineOpen = pipelineSection && pipelineSection.classList.contains('open');
+      const editOpen = editSection && editSection.classList.contains('open');
       const noteFilled = noteOpen && document.getElementById('ps-note-text').value.trim();
       const reminderFilled = reminderOpen && (
         document.getElementById('ps-reminder-date').value ||
@@ -10867,12 +11728,50 @@
         document.getElementById('ps-reminder-note').value.trim()
       );
       const pipelineChanged = pipelineOpen && document.getElementById('ps-pipeline-stage').value !== psOriginalStage;
+      const editChanged = editOpen && sectionHasContent('ps-section-edit-reminder');
+
+      // Apply edit reminder changes to the source card
+      if (editChanged && contactNoteSourceBtn) {
+        const card = contactNoteSourceBtn.closest('.lead-card');
+        if (card) {
+          const newTitle = document.getElementById('ps-er-title').value.trim();
+          const newDesc = document.getElementById('ps-er-description').value.trim();
+          const newDate = document.getElementById('ps-er-date').value;
+          const newTime = document.getElementById('ps-er-time').value;
+          const titleEl = card.querySelector('.fu-reminder-title');
+          const descEl = card.querySelector('.fu-reminder');
+          const regToggle = card.querySelector('.reg-toggle');
+          if (newTitle && titleEl) titleEl.textContent = newTitle;
+          if (newTitle && regToggle) {
+            const textNode = Array.from(regToggle.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
+            if (textNode) textNode.textContent = newTitle;
+          }
+          if (newDesc && descEl && titleEl) {
+            descEl.innerHTML = '';
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'fu-reminder-title';
+            titleSpan.textContent = newTitle || titleEl.textContent;
+            descEl.appendChild(titleSpan);
+            descEl.appendChild(document.createTextNode(newDesc));
+          }
+          if (newDate) {
+            const dateEl = card.querySelector('.lead-meta-time');
+            if (dateEl) {
+              const d = new Date(newDate + 'T' + (newTime || '00:00'));
+              dateEl.textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+                (newTime ? ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : '');
+            }
+          }
+        }
+      }
+
       const parts = [];
+      if (editChanged) parts.push('Reminder updated');
       if (noteFilled) parts.push('Note saved');
       if (reminderFilled) parts.push('Reminder created');
       if (pipelineChanged) parts.push('Pipeline updated');
       const msg = parts.length ? parts.join(', ') + ' for ' + leadName + '.' : '';
-      closePostSaveModal();
+      closePostSaveModal(true);
       if (msg) showToast(msg);
     }
 
@@ -10891,6 +11790,15 @@
       if (sectionId === 'ps-section-pipeline') {
         return document.getElementById('ps-pipeline-stage').value !== psOriginalStage;
       }
+      if (sectionId === 'ps-section-edit-reminder') {
+        return !!(
+          document.getElementById('ps-er-title').value.trim() ||
+          document.getElementById('ps-er-description').value.trim() ||
+          document.getElementById('ps-er-date').value ||
+          document.getElementById('ps-er-time').value ||
+          document.getElementById('ps-er-assignee').value.trim()
+        );
+      }
       return false;
     }
 
@@ -10904,13 +11812,13 @@
           const h = s.querySelector('.reminder-modal-section-header');
           const b = s.querySelector('.reminder-modal-section-body');
           h.classList.remove('open');
-          b.classList.remove('open');
+          if (b) b.classList.remove('open');
           h.classList.toggle('saved', sectionHasContent(s.id));
         }
       });
       // Toggle this section
       header.classList.toggle('open', !isOpen);
-      body.classList.toggle('open', !isOpen);
+      if (body) body.classList.toggle('open', !isOpen);
       // If closing, mark saved if it has content
       if (isOpen) {
         header.classList.toggle('saved', sectionHasContent(section.id));
@@ -10941,6 +11849,12 @@
       if (e.target === this) closePostSaveModal();
     });
 
+    function toggleDialerActive(input) {
+      const wrap = document.getElementById('dialer-toggle-wrap');
+      wrap.classList.toggle('is-active', input.checked);
+      document.body.classList.toggle('dialer-off', !input.checked);
+    }
+
     function switchTab(name, tab) {
       document.querySelectorAll('.primary-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
@@ -10965,16 +11879,20 @@
       const tab = document.getElementById('tab-deal-reminders');
       const activePill = tab.querySelector('.filter-pill[data-dr-due].active');
       const val = activePill ? activePill.dataset.drDue : 'all';
-      const pondOnly = isPondActive(tab);
+      const pondOnly = isPondActive();
       let visible = 0;
       tab.querySelectorAll('.lead-card').forEach(card => {
-        const due = card.dataset.drDue;
-        let dueMatch;
-        if      (val === 'all')           dueMatch = true;
-        else if (val === 'today-overdue') dueMatch = due === 'today' || due === 'overdue';
-        else                              dueMatch = due === val;
-        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
-        const show = dueMatch && pondMatch;
+        let show;
+        if (pondOnly) {
+          show = !!card.querySelector('.badge-pond-lead');
+        } else {
+          const due = card.dataset.drDue;
+          let dueMatch;
+          if      (val === 'all')           dueMatch = true;
+          else if (val === 'today-overdue') dueMatch = due === 'today' || due === 'overdue';
+          else                              dueMatch = due === val;
+          show = dueMatch;
+        }
         card.style.display = show ? '' : 'none';
         if (show) visible++;
       });
@@ -10996,18 +11914,21 @@
       const tab = document.getElementById('tab-trending');
       const activePill = tab.querySelector('.filter-pill[data-tl-type].active');
       const selectedType = activePill ? activePill.dataset.tlType : 'all';
-      const pondOnly = isPondActive(tab);
+      const pondOnly = isPondActive();
       tab.querySelectorAll('.lead-card').forEach(card => {
-        let typeMatch;
-        if (selectedType === 'all') {
-          typeMatch = true;
+        let show;
+        if (pondOnly) {
+          show = !!card.querySelector('.badge-pond-lead');
         } else {
-          const primaryType = card.dataset.tlType;
-          const allTypes = (card.dataset.tlTypes || primaryType).split(' ');
-          typeMatch = allTypes.includes(selectedType);
+          if (selectedType === 'all') {
+            show = true;
+          } else {
+            const primaryType = card.dataset.tlType;
+            const allTypes = (card.dataset.tlTypes || primaryType).split(' ');
+            show = allTypes.includes(selectedType);
+          }
         }
-        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
-        card.style.display = (typeMatch && pondMatch) ? '' : 'none';
+        card.style.display = show ? '' : 'none';
       });
     }
 
@@ -11018,13 +11939,18 @@
       const status  = activeStatusPill ? activeStatusPill.dataset.crStatus : 'awaiting';
       const showAll = allTypePill && allTypePill.classList.contains('active');
       const activeTypes = Array.from(tab.querySelectorAll('.filter-bar [data-cr-type]:not([data-cr-type="all"]).active')).map(p => p.dataset.crType);
-      const pondOnly = isPondActive(tab);
+      const pondOnly = isPondActive();
       tab.querySelectorAll('.lead-card').forEach(card => {
-        const isOlder30 = card.dataset.crStatus === 'older-30';
-        const statusMatch = isOlder30 ? status === 'older-30' : card.dataset.crStatus === status;
-        const typeMatch   = showAll || activeTypes.includes(card.dataset.crType);
-        const pondMatch   = !pondOnly || card.querySelector('.badge-pond-lead');
-        card.style.display = (statusMatch && typeMatch && pondMatch) ? '' : 'none';
+        let show;
+        if (pondOnly) {
+          show = !!card.querySelector('.badge-pond-lead');
+        } else {
+          const isOlder30 = card.dataset.crStatus === 'older-30';
+          const statusMatch = isOlder30 ? status === 'older-30' : card.dataset.crStatus === status;
+          const typeMatch   = showAll || activeTypes.includes(card.dataset.crType);
+          show = statusMatch && typeMatch;
+        }
+        card.style.display = show ? '' : 'none';
       });
     }
 
@@ -11055,17 +11981,21 @@
       const activeTypePill = tab.querySelector('.filter-bar [data-type].active');
       const due  = activeDuePill  ? activeDuePill.dataset.due  : 'all';
       const type = activeTypePill ? activeTypePill.dataset.type : 'all';
-      const pondOnly = isPondActive(tab);
+      const pondOnly = isPondActive();
       tab.querySelectorAll('.lead-card').forEach(card => {
-        const cardDue = card.dataset.due;
-        let dueMatch = false;
-        if      (due === 'all')           dueMatch = true;
-        else if (due === 'today-overdue') dueMatch = cardDue === 'today' || cardDue === 'overdue';
-        else if (due === 'this-week')     dueMatch = cardDue === 'today' || cardDue === 'this-week';
-        else                              dueMatch = cardDue === due;
-        const typeMatch = type === 'all' || card.dataset.type === type;
-        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
-        card.style.display = (dueMatch && typeMatch && pondMatch) ? '' : 'none';
+        let show;
+        if (pondOnly) {
+          show = !!card.querySelector('.badge-pond-lead');
+        } else {
+          const cardDue = card.dataset.due;
+          let dueMatch = false;
+          if      (due === 'all')           dueMatch = true;
+          else if (due === 'today-overdue') dueMatch = cardDue === 'today' || cardDue === 'overdue';
+          else if (due === 'this-week')     dueMatch = cardDue === 'today' || cardDue === 'this-week';
+          else                              dueMatch = cardDue === due;
+          show = dueMatch && (type === 'all' || card.dataset.type === type);
+        }
+        card.style.display = show ? '' : 'none';
       });
     }
 
@@ -11418,108 +12348,44 @@
 
     // ─── VIEW DROPDOWN ────────────────────────────────────────
 
-    function isViewFilterActive() {
-      return document.getElementById('reset-view-item').style.display !== 'none';
+    var vmActiveView = 'default';
+
+    function vmSetView(v) {
+      var vmLabels = { default: 'VIEW: Default', pond: 'VIEW: Pond Leads', dashboard: 'VIEW: Launchpad of...' };
+      vmActiveView = v;
+      if (v === 'default') returnToDefaultDashboard();
+      document.getElementById('view-menu').classList.remove('vm-open');
+      document.getElementById('view-label').textContent = vmLabels[v];
+      document.getElementById('view-toggle').classList.toggle('vt-active', v !== 'default');
+      ['default', 'pond', 'dashboard'].forEach(function(k) {
+        document.getElementById('vm-' + k).classList.toggle('vm-active', k === v);
+      });
+      var pondOn = (v === 'pond');
+      document.querySelectorAll('.pond-filter-pill').forEach(function(p) {
+        p.style.display = pondOn ? '' : 'none';
+        p.classList.toggle('active', pondOn);
+      });
+      applyProspectingFilter();
+      applyFollowUpFilters();
+      applyDrFilters();
+      applyCrFilters();
+      applyTlFilters();
     }
 
-    function toggleViewDropdown() {
-      const dropdown = document.getElementById('tab-view-dropdown');
-      const btn = document.getElementById('tab-view-btn');
-      const isOpen = dropdown.classList.contains('open');
-      dropdown.classList.toggle('open', !isOpen);
-      // Only sync active state when no view filter is set
-      if (!isViewFilterActive()) btn.classList.toggle('active', !isOpen);
-    }
+    function isPondActive() { return vmActiveView === 'pond'; }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      const dropdown = document.getElementById('tab-view-dropdown');
-      const btn = document.getElementById('tab-view-btn');
-      if (!dropdown || !btn) return;
-      if (dropdown.contains(e.target) || btn.contains(e.target)) return;
-      dropdown.classList.remove('open');
-      // Only remove active state when no view filter is set
-      if (!isViewFilterActive()) btn.classList.remove('active');
+    document.addEventListener('mousedown', function(e) {
+      var wrap = document.getElementById('view-wrap');
+      if (wrap && !wrap.contains(e.target)) {
+        document.getElementById('view-menu').classList.remove('vm-open');
+      }
     });
-
-    function viewAllPondLeads() {
-      document.getElementById('tab-view-dropdown').classList.remove('open');
-      // Show and activate all pond filter pills
-      document.querySelectorAll('.pond-filter-pill').forEach(pill => {
-        pill.style.display = '';
-        pill.classList.add('active');
-      });
-      // Mark button as active (gradient) and update label
-      document.getElementById('tab-view-btn').classList.add('active');
-      document.getElementById('tab-view-label').textContent = 'VIEW: Pond Leads';
-      // Show Reset View option
-      document.getElementById('reset-view-item').style.display = '';
-      // Re-run each tab's filter so pond filter takes effect
-      applyProspectingFilter();
-      applyFollowUpFilters();
-      applyDrFilters();
-      applyCrFilters();
-      applyTlFilters();
-    }
-
-    function resetView() {
-      document.getElementById('tab-view-dropdown').classList.remove('open');
-      // Restore greeting and label
-      document.getElementById('greeting-name').textContent = 'Good morning, Alice.';
-      document.getElementById('tab-view-label').textContent = 'VIEW: Default';
-      // Hide and deactivate all pond filter pills
-      document.querySelectorAll('.pond-filter-pill').forEach(pill => {
-        pill.style.display = 'none';
-        pill.classList.remove('active');
-      });
-      // Reset button state
-      document.getElementById('tab-view-btn').classList.remove('active');
-      // Hide Reset View option
-      document.getElementById('reset-view-item').style.display = 'none';
-      // Re-run all filters to restore normal state
-      applyProspectingFilter();
-      applyFollowUpFilters();
-      applyDrFilters();
-      applyCrFilters();
-      applyTlFilters();
-    }
-
-    function isPondActive(tabEl) {
-      const pill = tabEl ? tabEl.querySelector('.pond-filter-pill') : null;
-      return pill ? pill.classList.contains('active') : false;
-    }
-
-    function togglePondFilter(pill) {
-      pill.classList.toggle('active');
-      // Re-run the appropriate tab's filter
-      const tab = pill.closest('[id^="tab-"]');
-      if (!tab) return;
-      if (tab.id === 'tab-prospecting')       applyProspectingFilter();
-      else if (tab.id === 'tab-followup')      applyFollowUpFilters();
-      else if (tab.id === 'tab-deal-reminders') applyDrFilters();
-      else if (tab.id === 'tab-contact-requested') applyCrFilters();
-      else if (tab.id === 'tab-trending')      applyTlFilters();
-    }
-
-    function togglePondView(btn) {
-      const activating = !btn.classList.contains('active');
-      btn.classList.toggle('active');
-      document.querySelectorAll('.pond-filter-pill').forEach(pill => {
-        pill.style.display = activating ? '' : 'none';
-        pill.classList.toggle('active', activating);
-      });
-      applyProspectingFilter();
-      applyFollowUpFilters();
-      applyDrFilters();
-      applyCrFilters();
-      applyTlFilters();
-    }
 
     function applyProspectingFilter() {
       const tab = document.getElementById('tab-prospecting');
       const activePill = tab.querySelector('.filter-pill[data-filter].active');
       const filter = activePill ? activePill.dataset.filter : 'p1';
-      const pondOnly = isPondActive(tab);
+      const pondOnly = isPondActive();
       const sortGroup = document.getElementById('p3-sort-group');
       const sortSelect = document.getElementById('p3-sort-select');
       const sort = sortSelect ? sortSelect.value : 'last-call-least-recent';
@@ -11530,8 +12396,12 @@
       const cardList = tab.querySelector('.lead-cards');
       tab.querySelectorAll('.lead-card').forEach(card => {
         const filterMatch = card.dataset.filter === filter;
-        const pondMatch = !pondOnly || card.querySelector('.badge-pond-lead');
-        card.style.display = (filterMatch && pondMatch) ? '' : 'none';
+        const hasPond = !!card.querySelector('.badge-pond-lead');
+        if (pondOnly) {
+          card.style.display = hasPond ? '' : 'none';
+        } else {
+          card.style.display = filterMatch ? '' : 'none';
+        }
       });
 
       // Sort P3 cards in the DOM
@@ -11546,13 +12416,12 @@
         });
         p3Cards.forEach(card => cardList.appendChild(card));
       }
+
     }
 
     // ─── USER PICKER MODAL ────────────────────────────────────
 
     function openUserPickerModal() {
-      document.getElementById('tab-view-dropdown').classList.remove('open');
-      document.getElementById('tab-view-btn').classList.remove('active');
       document.getElementById('user-picker-search').value = '';
       filterUserList('');
       document.getElementById('user-picker-modal').classList.add('open');
@@ -11571,15 +12440,37 @@
 
     function selectDashboardUser(name) {
       closeUserPickerModal();
-      // Update greeting
       const firstName = name.split(' ')[0];
+      // Update greeting
       document.getElementById('greeting-name').textContent = 'Good morning, ' + firstName + '.';
-      // Set button to active gradient state and update label
-      document.getElementById('tab-view-btn').classList.add('active');
-      document.getElementById('tab-view-label').textContent = 'VIEW: ' + firstName;
-      // Show Reset View option
-      document.getElementById('reset-view-item').style.display = '';
-      showToast('Viewing dashboard: ' + name);
+      // Update VIEW button label
+      document.getElementById('view-label').textContent = 'VIEW: ' + firstName;
+      document.getElementById('view-toggle').classList.add('vt-active');
+      document.getElementById('vm-default').classList.remove('vm-active');
+      document.getElementById('vm-dashboard').classList.add('vm-active');
+      // Swap to agent dashboard
+      document.getElementById('main-dashboard').style.display = 'none';
+      document.getElementById('agent-dashboard').style.display = '';
+      showToast('Viewing launchpad: ' + name);
+    }
+
+    function returnToDefaultDashboard() {
+      document.getElementById('greeting-name').textContent = 'Good morning, Alice.';
+      document.getElementById('agent-dashboard').style.display = 'none';
+      document.getElementById('main-dashboard').style.display = '';
+      document.getElementById('view-label').textContent = 'VIEW: Default';
+      document.getElementById('view-toggle').classList.remove('vt-active');
+      document.getElementById('vm-default').classList.add('vm-active');
+      document.getElementById('vm-dashboard').classList.remove('vm-active');
+      vmActiveView = 'default';
+    }
+
+    function switchAgentTab(name, el) {
+      document.querySelectorAll('#agent-dashboard .primary-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      ['contact-requested','prospecting','followup','deal-reminders','trending'].forEach(function(id) {
+        document.getElementById('atab-' + id).style.display = id === name ? '' : 'none';
+      });
     }
 
     document.getElementById('user-picker-modal').addEventListener('click', function(e) {
@@ -11655,6 +12546,10 @@
 
     // Apply default filters on page load
     document.addEventListener('DOMContentLoaded', function() {
+      // Initialize dialer toggle state
+      const dialerToggleWrap = document.getElementById('dialer-toggle-wrap');
+      if (dialerToggleWrap) dialerToggleWrap.classList.add('is-active');
+
       // Default to Contact Requested tab
       const crTab = document.querySelector('.primary-tab[onclick*="contact-requested"]');
       if (crTab) switchTab('contact-requested', crTab);
@@ -11811,6 +12706,188 @@
     </div>
   </div>
 
+  <!-- ─── UPDATE PIPELINE / ADD NOTE MODAL ────────────────── -->
+  <div class="modal-overlay" id="update-pipeline-modal">
+    <div class="modal" style="width:500px">
+      <div class="modal-header">
+        <div>
+          <h3 id="upm-title">Update Pipeline Stage</h3>
+          <div class="modal-lead-name" id="upm-lead-name"></div>
+        </div>
+        <button class="modal-close" onclick="closeUpdatePipelineModal()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Update Pipeline layout (P1/P2) -->
+      <div id="upm-body-pipeline" class="modal-body" style="gap:10px;">
+        <p style="margin:0; font-size:14px; color:#5a6475; line-height:1.5;">Updating the pipeline stage will move this lead card to the corresponding list and update their status badge.</p>
+        <div class="modal-field" style="margin-bottom:0;">
+          <select class="pipeline-stage-select" id="upm-pipeline-stage">
+            <option value="New Lead">New Lead</option>
+            <option value="Attempted Contact">Attempted Contact</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Active Client">Active Client</option>
+          </select>
+        </div>
+        <p style="margin:0; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:#9aa5b4;">Additional Actions</p>
+        <div class="reminder-modal-sections">
+          <div class="reminder-modal-section" id="upm-section-note-p">
+            <div class="reminder-modal-section-header" onclick="toggleUpmSection(this)">
+              <div class="reminder-modal-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Create a Note
+              </div>
+              <div class="section-header-right">
+                <svg class="reminder-modal-section-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg class="reminder-modal-section-chevron" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 6 8 10 4"/></svg>
+              </div>
+            </div>
+            <div class="reminder-modal-section-body">
+              <div class="modal-field" style="margin-bottom:0">
+                <div class="note-type-options">
+                  <button class="note-type-btn active" data-type="Call" onclick="selectNoteType(this)">Call</button>
+                  <button class="note-type-btn" data-type="General" onclick="selectNoteType(this)">General</button>
+                </div>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <textarea class="modal-reminder-note" id="upm-note-text-p" placeholder="Add a note..."></textarea>
+              </div>
+              <div class="modal-reminder-row" style="margin-top:8px;">
+                <label class="modal-reminder-toggle">
+                  <input type="checkbox" id="upm-pin-note-p">
+                  <span class="modal-reminder-slider"></span>
+                </label>
+                <span class="modal-reminder-label" style="display:inline-flex;align-items:center;gap:5px;">
+                  <img src="icons/134_sticky.svg" width="14" height="14" style="flex-shrink:0;opacity:0.6;">
+                  Pin this note
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="reminder-modal-section" id="upm-section-reminder-p">
+            <div class="reminder-modal-section-header" onclick="toggleUpmSection(this)">
+              <div class="reminder-modal-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                Create a Reminder
+              </div>
+              <div class="section-header-right">
+                <svg class="reminder-modal-section-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg class="reminder-modal-section-chevron" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 6 8 10 4"/></svg>
+              </div>
+            </div>
+            <div class="reminder-modal-section-body">
+              <div class="modal-field" style="margin-bottom:0">
+                <div class="modal-reminder-datetime-row">
+                  <input type="date" class="modal-date-input" id="upm-reminder-date-p" />
+                  <input type="time" class="modal-date-input" id="upm-reminder-time-p" />
+                </div>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <textarea class="modal-reminder-note" id="upm-reminder-note-p" placeholder="Reminder note..."></textarea>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <span class="modal-label">Assign To</span>
+                <input type="text" class="modal-text-input" id="upm-reminder-assignee-p" placeholder="Assignee name" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Note layout (P3) -->
+      <div id="upm-body-note" class="modal-body" style="gap:10px; display:none;">
+        <div class="modal-field" style="margin-bottom:0">
+          <div class="note-type-options">
+            <button class="note-type-btn active" data-type="Call" onclick="selectNoteType(this)">Call</button>
+            <button class="note-type-btn" data-type="General" onclick="selectNoteType(this)">General</button>
+          </div>
+        </div>
+        <div class="modal-field" style="margin-bottom:0;">
+          <textarea class="modal-reminder-note" id="upm-note-text-n" placeholder="Add a note..."></textarea>
+        </div>
+        <div class="modal-reminder-row">
+          <label class="modal-reminder-toggle">
+            <input type="checkbox" id="upm-pin-note-n">
+            <span class="modal-reminder-slider"></span>
+          </label>
+          <span class="modal-reminder-label" style="display:inline-flex;align-items:center;gap:5px;">
+            <img src="icons/134_sticky.svg" width="14" height="14" style="flex-shrink:0;opacity:0.6;">
+            Pin this note
+          </span>
+        </div>
+        <p style="margin:0; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:#9aa5b4;">Additional Actions</p>
+        <div class="reminder-modal-sections">
+          <div class="reminder-modal-section" id="upm-section-pipeline-n">
+            <div class="reminder-modal-section-header" onclick="toggleUpmSection(this)">
+              <div class="reminder-modal-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 3h6l2 3-2.5 1.5a11 11 0 0 0 5 5L15 10l3 2v6a2 2 0 0 1-2 2A16 16 0 0 1 1 5a2 2 0 0 1 2-2z"/>
+                </svg>
+                Update Pipeline Stage
+              </div>
+              <div class="section-header-right">
+                <svg class="reminder-modal-section-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg class="reminder-modal-section-chevron" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 6 8 10 4"/></svg>
+              </div>
+            </div>
+            <div class="reminder-modal-section-body">
+              <div class="modal-field" style="margin-bottom:0">
+                <select class="pipeline-stage-select" id="upm-pipeline-stage-n">
+                  <option value="New Lead">New Lead</option>
+                  <option value="Attempted Contact">Attempted Contact</option>
+                  <option value="Contacted">Contacted</option>
+                  <option value="Active Client">Active Client</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="reminder-modal-section" id="upm-section-reminder-n">
+            <div class="reminder-modal-section-header" onclick="toggleUpmSection(this)">
+              <div class="reminder-modal-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                Create a Reminder
+              </div>
+              <div class="section-header-right">
+                <svg class="reminder-modal-section-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg class="reminder-modal-section-chevron" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polyline points="2 4 6 8 10 4"/></svg>
+              </div>
+            </div>
+            <div class="reminder-modal-section-body">
+              <div class="modal-field" style="margin-bottom:0">
+                <div class="modal-reminder-datetime-row">
+                  <input type="date" class="modal-date-input" id="upm-reminder-date-n" />
+                  <input type="time" class="modal-date-input" id="upm-reminder-time-n" />
+                </div>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <textarea class="modal-reminder-note" id="upm-reminder-note-n" placeholder="Reminder note..."></textarea>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <span class="modal-label">Assign To</span>
+                <input type="text" class="modal-text-input" id="upm-reminder-assignee-n" placeholder="Assignee name" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="modal-btn-cancel" onclick="closeUpdatePipelineModal()">Cancel</button>
+        <button class="modal-btn-save" id="upm-save-btn" onclick="saveUpdatePipeline()">Save</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ─── POST-SAVE MODAL ──────────────────────────────────── -->
   <div class="modal-overlay" id="post-connected-modal">
     <div class="modal" style="width:500px">
@@ -11827,8 +12904,47 @@
         </button>
       </div>
       <div class="modal-body" style="gap:10px;">
-        <p style="margin:0; font-size:14px; color:#5a6475;">Would you like to do anything else?</p>
-        <div class="reminder-modal-sections">
+        <p id="post-connected-modal-body" style="margin:0; font-size:14px; color:#5a6475;">Would you like to do anything else?</p>
+        <div class="reminder-modal-sections" id="ps-sections">
+          <div class="reminder-modal-section" id="ps-section-edit-reminder" style="display:none;">
+            <div class="reminder-modal-section-header" onclick="togglePostSaveSection(this)">
+              <div class="reminder-modal-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Edit this Reminder
+              </div>
+              <div class="section-header-right">
+                <svg class="reminder-modal-section-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <svg class="reminder-modal-section-chevron" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                  <polyline points="2 4 6 8 10 4"/>
+                </svg>
+              </div>
+            </div>
+            <div class="reminder-modal-section-body">
+              <div class="modal-field" style="margin-bottom:0">
+                <span class="modal-label">Title</span>
+                <input type="text" class="modal-text-input" id="ps-er-title" placeholder="Reminder title" oninput="updatePostSaveState()" />
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <span class="modal-label">Description</span>
+                <textarea class="modal-reminder-note" id="ps-er-description" placeholder="Reminder details..." oninput="updatePostSaveState()"></textarea>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <span class="modal-label">Due Date &amp; Time</span>
+                <div class="modal-reminder-datetime-row">
+                  <input type="date" class="modal-date-input" id="ps-er-date" oninput="updatePostSaveState()" />
+                  <input type="time" class="modal-date-input" id="ps-er-time" oninput="updatePostSaveState()" />
+                </div>
+              </div>
+              <div class="modal-field" style="margin-bottom:0; margin-top:8px;">
+                <span class="modal-label">Assignee</span>
+                <input type="text" class="modal-text-input" id="ps-er-assignee" placeholder="Assignee name" oninput="updatePostSaveState()" />
+              </div>
+            </div>
+          </div>
           <div class="reminder-modal-section" id="ps-section-note">
             <div class="reminder-modal-section-header" onclick="togglePostSaveSection(this)">
               <div class="reminder-modal-section-title">
@@ -11874,7 +12990,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                 </svg>
-                Create a Reminder
+                Create a New Reminder
               </div>
               <div class="section-header-right">
                 <svg class="reminder-modal-section-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
@@ -12047,7 +13163,7 @@
     <div class="modal" style="width:380px;">
       <div class="modal-header">
         <div>
-          <h3>View Dashboard of...</h3>
+          <h3>View Launchpad of...</h3>
         </div>
         <button class="modal-close" onclick="closeUserPickerModal()">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -12056,9 +13172,16 @@
           </svg>
         </button>
       </div>
-      <div class="modal-body">
-        <input class="user-picker-search" id="user-picker-search" type="text" placeholder="Search agents..." oninput="filterUserList(this.value)">
+      <div class="modal-body" style="gap:0;">
+        <div class="user-picker-search-wrap">
+          <svg class="user-picker-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input class="user-picker-search" id="user-picker-search" type="text" placeholder="Search agents..." oninput="filterUserList(this.value)">
+        </div>
         <div class="user-picker-list" id="user-picker-list">
+          <div class="user-picker-item" onclick="selectDashboardUser('Amber Collins')">Amber Collins</div>
           <div class="user-picker-item" onclick="selectDashboardUser('Brian Torres')">Brian Torres</div>
           <div class="user-picker-item" onclick="selectDashboardUser('Carmen Diaz')">Carmen Diaz</div>
           <div class="user-picker-item" onclick="selectDashboardUser('David Kim')">David Kim</div>
@@ -12066,6 +13189,18 @@
           <div class="user-picker-item" onclick="selectDashboardUser('Frank Okafor')">Frank Okafor</div>
           <div class="user-picker-item" onclick="selectDashboardUser('Grace Liu')">Grace Liu</div>
           <div class="user-picker-item" onclick="selectDashboardUser('Henry Patel')">Henry Patel</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Isabel Nguyen')">Isabel Nguyen</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Jason Mercer')">Jason Mercer</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Karen Brooks')">Karen Brooks</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Liam Foster')">Liam Foster</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Monica Stern')">Monica Stern</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Nathan Wolfe')">Nathan Wolfe</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Olivia Grant')">Olivia Grant</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Patrick Yuen')">Patrick Yuen</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Rachel Stone')">Rachel Stone</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Samuel Hart')">Samuel Hart</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Tessa Flynn')">Tessa Flynn</div>
+          <div class="user-picker-item" onclick="selectDashboardUser('Victor Amos')">Victor Amos</div>
         </div>
       </div>
     </div>

@@ -202,6 +202,56 @@
 
     /* ─── TOP BAR ───────────────────────────────────────────── */
 
+    /* ─── STYLE BAR ─────────────────────────────────────────── */
+
+    .style-bar {
+      height: 34px;
+      background: #f0f2f5;
+      border-bottom: 1px solid #e4e8ed;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 4px;
+      position: sticky;
+      top: 0;
+      z-index: 51;
+    }
+
+    .style-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #9aa5b4;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-right: 6px;
+    }
+
+    .style-bar-btn {
+      font-size: 12px;
+      font-weight: 500;
+      color: #5a6475;
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+    }
+
+    .style-bar-btn:hover {
+      color: #1a1f2e;
+      background: #e4e8ed;
+    }
+
+    .style-bar-btn.sb-active {
+      color: #0080A3;
+      background: #e8f5fa;
+      border-color: #b3dce8;
+      font-weight: 600;
+    }
+
+    /* ─── TOP BAR ───────────────────────────────────────────── */
+
     .topbar {
       height: 52px;
       background: #ffffff;
@@ -210,7 +260,7 @@
       align-items: center;
       padding: 0 28px;
       position: sticky;
-      top: 0;
+      top: 34px;
       z-index: 50;
     }
 
@@ -423,7 +473,6 @@
     /* ─── DIALER OFF — disabled state ───────────────────────── */
 
     /* Disabled appearance */
-    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"],
     body.dialer-off .btn-action-label[onclick*="addToDialer"],
     body.dialer-off .lead-tip-action[onclick*="addToDialer"],
     body.dialer-off .actions-dropdown-item[onclick*="addToDialer"] {
@@ -434,7 +483,6 @@
       pointer-events: none;
     }
 
-    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"] img,
     body.dialer-off .btn-action-label[onclick*="addToDialer"] img {
       filter: brightness(0) saturate(100%) invert(63%) sepia(5%) saturate(300%) hue-rotate(180deg) brightness(95%);
     }
@@ -444,7 +492,6 @@
     }
 
     /* Re-enable pointer-events so tooltip is hoverable */
-    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"],
     body.dialer-off .btn-action-label[onclick*="addToDialer"],
     body.dialer-off .lead-tip-action[onclick*="addToDialer"] {
       pointer-events: auto;
@@ -452,7 +499,6 @@
     }
 
     /* Override tooltip content with broker message */
-    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"]::after,
     body.dialer-off .btn-action-label[onclick*="addToDialer"]::after,
     body.dialer-off .lead-tip-action[onclick*="addToDialer"]::after {
       content: "Reach out to your broker to activate this feature.";
@@ -478,7 +524,6 @@
       z-index: 9999;
     }
 
-    body.dialer-off .btn-action-icon[data-tooltip="Send Text Message"]:hover::after,
     body.dialer-off .btn-action-label[onclick*="addToDialer"]:hover::after,
     body.dialer-off .lead-tip-action[onclick*="addToDialer"]:hover::after {
       opacity: 1;
@@ -1708,7 +1753,14 @@
     }
 
     .filter-bar-spacer {
-      display: none;
+      flex: 1;
+    }
+
+    .filter-active-label {
+      font-size: 14px;
+      color: #1a1f2e;
+      white-space: nowrap;
+      margin-left: auto;
     }
 
     .filter-select-group {
@@ -1741,6 +1793,7 @@
     .body-min .filter-bar {
       flex-wrap: nowrap;
     }
+
 
     /* Future Updates: center pills, pin left group to far left */
     body:not(.body-min) .filter-bar {
@@ -5352,6 +5405,192 @@
         margin-left: 0;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       LESS BOXES STYLE
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Page background */
+    .style-less-boxes .main-content {
+      background: #f0f3f6;
+    }
+
+    .style-less-boxes .greeting-row {
+      background: #f0f3f6;
+    }
+
+    /* Today panel — flat, no outer box */
+    .style-less-boxes .today-panel {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* Tabs + filter bar card */
+    .style-less-boxes .primary-tabs {
+      background: #ffffff;
+      border: 1px solid #e0e4e8;
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      margin: 0 12px;
+      align-items: center;
+      padding: 8px 8px 0;
+    }
+
+    .style-less-boxes .primary-tab {
+      height: auto;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    .style-less-boxes .primary-tab.active {
+      background: #e8f5fa;
+      border: 1.5px solid #0080A3;
+      border-radius: 999px;
+    }
+
+    .style-less-boxes .primary-tab.active::after {
+      display: none;
+    }
+
+    .style-less-boxes .filter-bar {
+      background: #ffffff;
+      border-left: 1px solid #e0e4e8;
+      border-right: 1px solid #e0e4e8;
+      margin: 0 12px;
+    }
+
+    /* Close the card on the last visible filter-bar for each tab */
+    .style-less-boxes #tab-prospecting .filter-bar,
+    .style-less-boxes #tab-deal-reminders .filter-bar,
+    .style-less-boxes #tab-followup .filter-bar-row1,
+    .style-less-boxes #tab-contact-requested .filter-bar-row1,
+    .style-less-boxes #tab-trending .filter-bar-row1 {
+      border-bottom: 1px solid #e0e4e8;
+      border-radius: 0 0 6px 6px;
+      margin-bottom: 16px;
+    }
+
+    /* Lead card list */
+    .style-less-boxes .lead-cards {
+      padding: 0 12px 8px;
+      gap: 8px;
+    }
+
+    /* Lead cards — lighter border + left accent */
+    .style-less-boxes .lead-card {
+      background: #ffffff;
+      border: 1px solid #e0e4e8;
+      border-left: 4px solid #0080A3;
+      border-radius: 6px;
+    }
+
+    /* Left border color matches pipeline badge */
+    .style-less-boxes .lead-card:has(.badge-new-lead)      { border-left-color: #dc2626; }
+    .style-less-boxes .lead-card:has(.badge-attempted)     { border-left-color: #E97F04; }
+    .style-less-boxes .lead-card:has(.badge-contacted),
+    .style-less-boxes .lead-card:has(.badge-active-client) { border-left-color: #10b981; }
+
+    /* Overdue always red, regardless of badge */
+    .style-less-boxes #tab-followup .lead-card[data-due="overdue"],
+    .style-less-boxes #tab-deal-reminders .lead-card[data-dr-due="overdue"] {
+      border-left-color: #dc2626;
+    }
+
+    /* Hide property highlights column (content surfaced in lb-property-panel instead) */
+    .style-less-boxes .cr-highlights-col:last-child {
+      display: none;
+    }
+
+    /* CR cards: reserve space on the right for the property panel */
+    .style-less-boxes #tab-contact-requested .lead-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .style-less-boxes #tab-contact-requested .lead-card-main {
+      padding-right: 200px;
+    }
+
+    /* Property panel — hidden by default */
+    .lb-property-panel {
+      display: none;
+    }
+
+    /* Shown in Less Boxes: absolutely positioned right panel */
+    .style-less-boxes #tab-contact-requested .lb-property-panel {
+      display: flex;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 200px;
+      align-items: center;
+      border-left: 1px solid #e0e4e8;
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+
+    /* Flatten cr-highlights: remove gradient border box, show as plain columns */
+    .style-less-boxes .cr-highlights {
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      margin-left: 0;
+      border-top: 1px solid #e0e4e8;
+    }
+
+    .style-less-boxes .cr-highlights-inner {
+      background: none;
+      border-radius: 0;
+    }
+
+    .style-less-boxes .cr-highlights-heading {
+      display: none;
+    }
+
+    .style-less-boxes .cr-highlights-row {
+      border-top: none;
+    }
+
+    .style-less-boxes .cr-highlights-col {
+      border-right-color: #e0e4e8;
+    }
+
+    .style-less-boxes .cr-highlights-value {
+      font-size: 14px;
+    }
+
+    /* cr-quote: chat bubble */
+    .style-less-boxes .cr-quote {
+      background: #f0f2f5;
+      border-radius: 12px 12px 12px 2px;
+      border-left: none;
+      padding: 10px 14px;
+      color: #1a1f2e;
+      font-style: normal;
+    }
+
+    /* Reminder note: blockquote style */
+    .style-less-boxes .fu-reminder {
+      background: none;
+      border-radius: 0;
+      border-left: 3px solid #BEC3C8;
+      padding: 4px 12px;
+      color: #5a6475;
+      font-style: italic;
+    }
+
+    /* Playbook pill — add border */
+    .style-less-boxes .playbook-pill {
+      border: 1px solid #0080A3;
+    }
+
+    /* Lead name — slightly reduced for the lighter visual weight */
+    .style-less-boxes .lead-name {
+      font-size: 17px;
+    }
+
   </style>
 </head>
 <body class="body-min">
@@ -5510,6 +5749,14 @@
   <!-- ─── MAIN CONTENT ───────────────────────────────────── -->
   <div class="main-content">
 
+    <!-- Style Bar -->
+    <div class="style-bar">
+      <span class="style-bar-label">Style</span>
+      <button class="style-bar-btn sb-active" id="sb-default" onclick="setStyle('default')">Default</button>
+      <button class="style-bar-btn" id="sb-less-boxes" onclick="setStyle('less-boxes')">Less Boxes</button>
+      <button class="style-bar-btn" id="sb-quiet" onclick="setStyle('quiet')">Quiet</button>
+    </div>
+
     <!-- Top Bar -->
     <header class="topbar">
       <span class="topbar-title">
@@ -5587,6 +5834,7 @@
             </button>
             <div id="view-menu">
               <button class="vm-item vm-active" id="vm-default" onclick="vmSetView('default')">Default</button>
+              <button class="vm-item" id="vm-my-leads" onclick="vmSetView('my-leads')">My Leads</button>
               <button class="vm-item" id="vm-pond" onclick="vmSetView('pond')">Pond Leads</button>
               <button class="vm-item" id="vm-dashboard" onclick="vmSetView('dashboard'); openUserPickerModal()">Launchpad of...</button>
             </div>
@@ -5675,12 +5923,6 @@
                     </svg>
                     Add to Dialer
                   </button>
-                  <button class="actions-dropdown-item" onclick="">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
-                    </svg>
-                    Send Mass Email
-                  </button>
                 </div>
               </div>
             </div>
@@ -5720,7 +5962,8 @@
                 <option value="most-recent-activity">Most Recent Activity</option>
               </select>
             </div>
-            <div class="icon-btn-sm" title="Refresh" style="margin-left: auto;">
+            <span class="filter-active-label" id="p-active-label" style="margin-left: 0;">Active Cards</span>
+            <div class="icon-btn-sm" title="Refresh">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline points="23 4 23 10 17 10"/>
                 <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -6947,12 +7190,6 @@
                       </svg>
                       Add to Dialer
                     </button>
-                    <button class="actions-dropdown-item" onclick="">
-                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
-                      </svg>
-                      Send Mass Email
-                    </button>
                   </div>
                 </div>
               </div>
@@ -6967,7 +7204,6 @@
               <button class="filter-pill" data-due="overdue" onclick="switchDueFilter(this)">Overdue</button>
               <button class="filter-pill" data-due="all" onclick="switchDueFilter(this)">Anytime</button>
             </div>
-            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Due</span>
               <select class="filter-select" id="fu-due-select" onchange="switchDueSelect(this)">
@@ -6988,6 +7224,7 @@
                 <option value="other">Other</option>
               </select>
             </div>
+            <span class="filter-active-label" id="fu-active-label">Active Cards</span>
           </div>
           <div class="filter-bar fu-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
             <span class="filter-label">Type</span>
@@ -7575,12 +7812,6 @@
                       </svg>
                       Add to Dialer
                     </button>
-                    <button class="actions-dropdown-item" onclick="">
-                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
-                      </svg>
-                      Send Mass Email
-                    </button>
                   </div>
                 </div>
               </div>
@@ -7594,7 +7825,6 @@
               <button class="filter-pill" data-dr-due="overdue" onclick="switchDrDueFilter(this)">Overdue</button>
               <button class="filter-pill" data-dr-due="all" onclick="switchDrDueFilter(this)">Anytime</button>
             </div>
-            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Due</span>
               <select class="filter-select" id="dr-due-select" onchange="switchDrDueSelect(this)">
@@ -7606,6 +7836,7 @@
                 <option value="all">Anytime</option>
               </select>
             </div>
+            <span class="filter-active-label" id="dr-active-label">Active Cards</span>
           </div>
           <div class="lead-cards">
 
@@ -8157,12 +8388,6 @@
                       </svg>
                       Dismiss All
                     </button>
-                    <button class="actions-dropdown-item" onclick="">
-                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
-                      </svg>
-                      Send Mass Email
-                    </button>
                   </div>
                 </div>
               </div>
@@ -8175,7 +8400,6 @@
               <button class="filter-pill" data-cr-status="dismissed" onclick="switchCrStatusFilter(this)">Dismissed</button>
               <button class="filter-pill" data-cr-status="older-30" onclick="switchCrStatusFilter(this)">Older than 30 Days</button>
             </div>
-            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Status</span>
               <select class="filter-select" id="cr-status-select" onchange="switchCrStatusSelect(this)">
@@ -8197,6 +8421,7 @@
                 <option value="showing-request">Showing Request</option>
               </select>
             </div>
+            <span class="filter-active-label" id="cr-active-label">Active Cards</span>
           </div>
           <div class="filter-bar cr-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
             <span class="filter-label">Type</span>
@@ -9217,12 +9442,6 @@
                       </svg>
                       Add to Dialer
                     </button>
-                    <button class="actions-dropdown-item" onclick="">
-                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
-                      </svg>
-                      Send Mass Email
-                    </button>
                   </div>
                 </div>
               </div>
@@ -9236,7 +9455,6 @@
               <button class="filter-pill" data-tl-type="high-favorites" onclick="switchTlTypeFilter(this)">High Favorites</button>
               <button class="filter-pill" data-tl-type="high-property-views" onclick="switchTlTypeFilter(this)">High Property Views</button>
             </div>
-            <div class="filter-bar-spacer"></div>
             <div class="filter-select-group">
               <span class="filter-label">Type</span>
               <select class="filter-select" id="tl-type-select" onchange="switchTlTypeSelect(this)">
@@ -9253,6 +9471,7 @@
                 <option value="verified-account">Verified Account</option>
               </select>
             </div>
+            <span class="filter-active-label" id="tl-active-label">Active Cards</span>
           </div>
           <div class="filter-bar tl-filter-row-2" style="padding-top: 4px; padding-bottom: 10px;">
             <span class="filter-label" style="visibility: hidden;">Type</span>
@@ -10585,10 +10804,6 @@
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Add to Dialer
                       </button>
-                      <button class="actions-dropdown-item" onclick="">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
-                        Send Mass Email
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -10677,10 +10892,6 @@
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Add to Dialer
                       </button>
-                      <button class="actions-dropdown-item" onclick="">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
-                        Send Mass Email
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -10710,10 +10921,6 @@
                       <button class="actions-dropdown-item" onclick="addToDialer()">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Add to Dialer
-                      </button>
-                      <button class="actions-dropdown-item" onclick="">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
-                        Send Mass Email
                       </button>
                     </div>
                   </div>
@@ -10756,10 +10963,6 @@
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Add to Dialer
                       </button>
-                      <button class="actions-dropdown-item" onclick="">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
-                        Send Mass Email
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -10792,10 +10995,6 @@
                       <button class="actions-dropdown-item" onclick="addToDialer()">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l1.65-1.65a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Add to Dialer
-                      </button>
-                      <button class="actions-dropdown-item" onclick="">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>
-                        Send Mass Email
                       </button>
                     </div>
                   </div>
@@ -11880,11 +12079,14 @@
       const activePill = tab.querySelector('.filter-pill[data-dr-due].active');
       const val = activePill ? activePill.dataset.drDue : 'all';
       const pondOnly = isPondActive();
+      const myLeadsOnly = isMyLeadsActive();
       let visible = 0;
       tab.querySelectorAll('.lead-card').forEach(card => {
         let show;
         if (pondOnly) {
           show = !!card.querySelector('.badge-pond-lead');
+        } else if (myLeadsOnly) {
+          show = !card.querySelector('.badge-pond-lead');
         } else {
           const due = card.dataset.drDue;
           let dueMatch;
@@ -11898,6 +12100,8 @@
       });
       const badge = document.getElementById('dr-tab-badge');
       if (badge) badge.textContent = visible;
+      const drLabel = document.getElementById('dr-active-label');
+      if (drLabel) drLabel.textContent = visible + ' Active Cards';
     }
 
     function switchTlTypeFilter(pill) {
@@ -11915,10 +12119,13 @@
       const activePill = tab.querySelector('.filter-pill[data-tl-type].active');
       const selectedType = activePill ? activePill.dataset.tlType : 'all';
       const pondOnly = isPondActive();
+      const myLeadsOnly = isMyLeadsActive();
       tab.querySelectorAll('.lead-card').forEach(card => {
         let show;
         if (pondOnly) {
           show = !!card.querySelector('.badge-pond-lead');
+        } else if (myLeadsOnly) {
+          show = !card.querySelector('.badge-pond-lead');
         } else {
           if (selectedType === 'all') {
             show = true;
@@ -11930,6 +12137,9 @@
         }
         card.style.display = show ? '' : 'none';
       });
+      const tlVisible = Array.from(tab.querySelectorAll('.lead-card')).filter(c => c.style.display !== 'none').length;
+      const tlLabel = document.getElementById('tl-active-label');
+      if (tlLabel) tlLabel.textContent = tlVisible + ' Active Cards';
     }
 
     function applyCrFilters() {
@@ -11940,10 +12150,13 @@
       const showAll = allTypePill && allTypePill.classList.contains('active');
       const activeTypes = Array.from(tab.querySelectorAll('.filter-bar [data-cr-type]:not([data-cr-type="all"]).active')).map(p => p.dataset.crType);
       const pondOnly = isPondActive();
+      const myLeadsOnly = isMyLeadsActive();
       tab.querySelectorAll('.lead-card').forEach(card => {
         let show;
         if (pondOnly) {
           show = !!card.querySelector('.badge-pond-lead');
+        } else if (myLeadsOnly) {
+          show = !card.querySelector('.badge-pond-lead');
         } else {
           const isOlder30 = card.dataset.crStatus === 'older-30';
           const statusMatch = isOlder30 ? status === 'older-30' : card.dataset.crStatus === status;
@@ -11952,6 +12165,9 @@
         }
         card.style.display = show ? '' : 'none';
       });
+      const crVisible = Array.from(tab.querySelectorAll('.lead-card')).filter(c => c.style.display !== 'none').length;
+      const crLabel = document.getElementById('cr-active-label');
+      if (crLabel) crLabel.textContent = crVisible + ' Active Cards';
     }
 
     function switchCrStatusFilter(pill) {
@@ -11982,10 +12198,13 @@
       const due  = activeDuePill  ? activeDuePill.dataset.due  : 'all';
       const type = activeTypePill ? activeTypePill.dataset.type : 'all';
       const pondOnly = isPondActive();
+      const myLeadsOnly = isMyLeadsActive();
       tab.querySelectorAll('.lead-card').forEach(card => {
         let show;
         if (pondOnly) {
           show = !!card.querySelector('.badge-pond-lead');
+        } else if (myLeadsOnly) {
+          show = !card.querySelector('.badge-pond-lead');
         } else {
           const cardDue = card.dataset.due;
           let dueMatch = false;
@@ -11997,6 +12216,9 @@
         }
         card.style.display = show ? '' : 'none';
       });
+      const fuVisible = Array.from(tab.querySelectorAll('.lead-card')).filter(c => c.style.display !== 'none').length;
+      const fuLabel = document.getElementById('fu-active-label');
+      if (fuLabel) fuLabel.textContent = fuVisible + ' Active Cards';
     }
 
     function switchDueFilter(pill) {
@@ -12351,13 +12573,13 @@
     var vmActiveView = 'default';
 
     function vmSetView(v) {
-      var vmLabels = { default: 'VIEW: Default', pond: 'VIEW: Pond Leads', dashboard: 'VIEW: Launchpad of...' };
+      var vmLabels = { default: 'VIEW: Default', 'my-leads': 'VIEW: My Leads', pond: 'VIEW: Pond Leads', dashboard: 'VIEW: Launchpad of...' };
       vmActiveView = v;
       if (v === 'default') returnToDefaultDashboard();
       document.getElementById('view-menu').classList.remove('vm-open');
       document.getElementById('view-label').textContent = vmLabels[v];
       document.getElementById('view-toggle').classList.toggle('vt-active', v !== 'default');
-      ['default', 'pond', 'dashboard'].forEach(function(k) {
+      ['default', 'my-leads', 'pond', 'dashboard'].forEach(function(k) {
         document.getElementById('vm-' + k).classList.toggle('vm-active', k === v);
       });
       var pondOn = (v === 'pond');
@@ -12373,6 +12595,19 @@
     }
 
     function isPondActive() { return vmActiveView === 'pond'; }
+    function isMyLeadsActive() { return vmActiveView === 'my-leads'; }
+
+    var activeStyle = 'default';
+    function setStyle(s) {
+      activeStyle = s;
+      document.body.classList.remove('style-less-boxes', 'style-quiet');
+      if (s === 'less-boxes') document.body.classList.add('style-less-boxes');
+      if (s === 'quiet') document.body.classList.add('style-quiet');
+      ['default', 'less-boxes', 'quiet'].forEach(function(k) {
+        var btn = document.getElementById('sb-' + k);
+        if (btn) btn.classList.toggle('sb-active', k === s);
+      });
+    }
 
     document.addEventListener('mousedown', function(e) {
       var wrap = document.getElementById('view-wrap');
@@ -12386,6 +12621,7 @@
       const activePill = tab.querySelector('.filter-pill[data-filter].active');
       const filter = activePill ? activePill.dataset.filter : 'p1';
       const pondOnly = isPondActive();
+      const myLeadsOnly = isMyLeadsActive();
       const sortGroup = document.getElementById('p3-sort-group');
       const sortSelect = document.getElementById('p3-sort-select');
       const sort = sortSelect ? sortSelect.value : 'last-call-least-recent';
@@ -12417,6 +12653,9 @@
         p3Cards.forEach(card => cardList.appendChild(card));
       }
 
+      const pVisible = Array.from(tab.querySelectorAll('.lead-card')).filter(c => c.style.display !== 'none').length;
+      const pLabel = document.getElementById('p-active-label');
+      if (pLabel) pLabel.textContent = pVisible + ' Active Cards';
     }
 
     // ─── USER PICKER MODAL ────────────────────────────────────
@@ -12577,6 +12816,18 @@
       const tlPill = document.querySelector('#tab-trending .filter-bar [data-tl-type="all"]');
       if (tlPill) switchTlTypeFilter(tlPill);
 
+      // Build Less Boxes property panels for CR cards
+      document.querySelectorAll('#tab-contact-requested .lead-card').forEach(function(card) {
+        var src = card.querySelector('.cr-highlights-col:last-child .cr-highlights-property');
+        if (!src) return;
+        var panel = document.createElement('div');
+        panel.className = 'lb-property-panel';
+        panel.appendChild(src.cloneNode(true));
+        var main = card.querySelector('.lead-card-main');
+        if (main) main.appendChild(panel);
+      });
+
+      setTimeout(applyCrFilters, 0);
     });
 
   </script>
@@ -13287,5 +13538,6 @@
       if (welcomeEl) welcomeEl.textContent = "Midweek momentum — check your Trending Leads and set follow-up reminders for anyone you've contacted.";
     })();
   </script>
+  <script>applyCrFilters(); applyFollowUpFilters(); applyDrFilters(); applyTlFilters(); applyProspectingFilter();</script>
 </body>
 </html>
